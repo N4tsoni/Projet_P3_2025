@@ -1,0 +1,61 @@
+# Graphiti Configuration
+
+# Neo4j Database Configuration
+database:
+  type: neo4j
+  uri: ${NEO4J_URI}
+  user: ${NEO4J_USER}
+  password: ${NEO4J_PASSWORD}
+  database: neo4j
+
+# LLM Configuration
+llm:
+  provider: openai # options: openai, anthropic, gemini
+  model: gpt-4-turbo-preview
+  temperature: 0.0
+  max_tokens: 4096
+  structured_output: true # Graphiti works best with structured output
+
+# Embedder Configuration
+embedder:
+  provider: openai # options: openai, huggingface
+  model: text-embedding-3-small
+  dimensions: 1536
+
+# Graphiti Runtime Configuration
+graphiti:
+  # Controls concurrency to prevent rate limiting
+  semaphore_limit: 10
+
+  # Update mode: incremental or batch
+  update_mode: incremental
+
+  # Maximum graph depth for traversal
+  max_depth: 3
+
+  # Similarity threshold for entity matching
+  similarity_threshold: 0.75
+
+# Accounting Domain Specific Configuration
+domain:
+  entity_types:
+    - Invoice
+    - Transaction
+    - Client
+    - Supplier
+    - Account
+    - Payment
+
+  relation_types:
+    - ISSUES
+    - RECEIVES
+    - PAYS
+    - BELONGS_TO
+    - RELATES_TO
+    - CATEGORIZES
+
+  # Temporal configuration for accounting data
+  temporal:
+    enable_time_tracking: true
+    fiscal_year_start: "01-01"
+    default_currency: EUR

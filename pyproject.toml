@@ -1,0 +1,142 @@
+[tool.poetry]
+name = "jarvis-voice-assistant"
+version = "0.1.0"
+description = "Assistant vocal intelligent type Jarvis utilisant GraphRAG, Graphiti et ESP32"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+# Core dependencies
+python-dotenv = "^1.0.0"
+pydantic = "^2.5.3"
+pydantic-settings = "^2.1.0"
+
+# Graph Database
+neo4j = "^5.15.0"
+
+# Graphiti (Knowledge Graph Framework)
+graphiti-core = "^0.3.0"
+
+# LLM Framework - LangChain
+langchain = "^0.1.0"
+langchain-community = "^0.0.10"
+langchain-openai = "^0.0.5"
+langchain-anthropic = "^0.0.1"
+
+# LLM APIs
+openai = "^1.7.0"  # OpenRouter uses OpenAI SDK
+tiktoken = "^0.5.2"
+httpx = "^0.26.0"
+
+# Voice Processing
+openai-whisper = "^20231117"
+edge-tts = "^6.1.9"
+pydub = "^0.25.1"
+
+# Embeddings
+sentence-transformers = "^2.2.2"
+
+# Vector similarity
+numpy = "^1.26.2"
+faiss-cpu = "^1.7.4"
+
+# Data processing
+pandas = "^2.1.4"
+
+# API and Web
+fastapi = "^0.108.0"
+uvicorn = {extras = ["standard"], version = "^0.25.0"}
+python-multipart = "^0.0.6"
+aiofiles = "^23.2.1"
+websockets = "^12.0"
+
+# Logging
+loguru = "^0.7.2"
+
+# Utilities
+tqdm = "^4.66.1"
+python-dateutil = "^2.8.2"
+
+[tool.poetry.group.dev.dependencies]
+# Testing
+pytest = "^7.4.3"
+pytest-asyncio = "^0.21.1"
+pytest-cov = "^4.1.0"
+
+# Code Quality
+black = "^23.12.1"
+ruff = "^0.1.9"
+mypy = "^1.8.0"
+
+# Development tools
+ipython = "^8.19.0"
+jupyter = "^1.0.0"
+
+[tool.poetry.scripts]
+graphrag = "src.main:main"
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.isort]
+known-first-party = ["src"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+follow_imports = "normal"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --cov=src --cov-report=html --cov-report=term-missing"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
