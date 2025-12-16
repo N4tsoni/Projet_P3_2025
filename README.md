@@ -1,8 +1,9 @@
 # 🤖 Jarvis - Assistant Vocal Intelligent avec GraphRAG
 
-> Assistant personnel vocal type "Jarvis" utilisant GraphRAG et Graphiti avec interface web et ESP32 (à venir)
+> Assistant personnel vocal type "Jarvis" utilisant GraphRAG et Graphiti avec interface Vue.js moderne et ESP32 (à venir)
 
-[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Vue](https://img.shields.io/badge/Vue-3.5+-4FC08D.svg)](https://vuejs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.108.0-009688.svg)](https://fastapi.tiangolo.com)
 [![Neo4j](https://img.shields.io/badge/Neo4j-5.15-008CC1.svg)](https://neo4j.com)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -19,7 +20,6 @@
 - [Documentation](#-documentation)
 - [Développement](#-développement)
 - [Roadmap](#-roadmap)
-- [Contribution](#-contribution)
 
 ---
 
@@ -31,7 +31,7 @@
 - 🧠 **Agent conversationnel** (Claude 3.5 Sonnet via OpenRouter)
 - 🔊 **Synthèse vocale** (Edge TTS Microsoft - gratuit)
 - 🕸️ **Knowledge Graph** (Neo4j + Graphiti)
-- 🌐 **Interface web** moderne avec push-to-talk
+- 🌐 **Interface Vue.js 3** moderne avec Atomic Design
 - 📡 **ESP32** (à venir) pour interaction vocale physique
 
 ### Cas d'Usage
@@ -45,21 +45,24 @@
 
 ## ✅ État Actuel
 
-### **Phase 2-3: OPÉRATIONNEL** ✅
+### **Phase 3: OPÉRATIONNEL** ✅
 
-Le pipeline vocal complet est **fonctionnel et testé**:
+Le pipeline vocal complet est **fonctionnel et testé** avec une interface moderne:
 
 ```
 Audio → Whisper STT → Claude Agent → Edge TTS → Audio Response
 ```
 
 **Ce qui fonctionne aujourd'hui:**
-- ✅ Interface web avec push-to-talk (http://localhost:8000)
+- ✅ **Frontend Vue.js 3** avec TypeScript et Atomic Design
+- ✅ Interface moderne avec glassmorphism et animations
+- ✅ Push-to-talk vocal avec visualisation waveform temps réel
+- ✅ Historique des conversations avec lecture audio
+- ✅ Visualisation du knowledge graph
 - ✅ Transcription vocale en français (Whisper local)
 - ✅ Agent conversationnel intelligent (Claude via OpenRouter)
 - ✅ Synthèse vocale en français (Edge TTS - voix Denise)
-- ✅ Visualisation waveform temps réel
-- ✅ Docker + Docker Compose configuré
+- ✅ Docker + Docker Compose avec 3 services
 - ✅ Neo4j prêt pour knowledge graph
 - ✅ API REST FastAPI complète
 
@@ -81,7 +84,7 @@ Audio → Whisper STT → Claude Agent → Edge TTS → Audio Response
 
 - **Docker** et **Docker Compose** installés
 - **4GB RAM** minimum
-- Ports **7474**, **7687**, et **8000** disponibles
+- Ports **5173**, **7474**, **7687**, et **8000** disponibles
 
 ### Installation (5 minutes)
 
@@ -90,22 +93,25 @@ Audio → Whisper STT → Claude Agent → Edge TTS → Audio Response
 git clone <repository-url>
 cd Projet_P3
 
-# 2. Vérifier que le .env contient votre clé OpenRouter
-cat .env
-# OPENROUTER_API_KEY=sk-or-v1-xxxxx (remplacez par votre clé)
+# 2. Configuration backend
+cd backend
+cp .env.example .env
+# Éditer .env et ajouter votre clé OpenRouter:
+# OPENROUTER_API_KEY=sk-or-v1-xxxxx
 
-# 3. Lancer avec Docker
+# 3. Retour à la racine et lancement
+cd ..
 docker compose build
 docker compose up -d
 
 # 4. Vérifier que tout fonctionne
 docker compose ps
-# Devrait afficher graphrag-neo4j (healthy) et graphrag-app (running)
+# Devrait afficher 3 services: jarvis-neo4j (healthy), jarvis-backend, jarvis-frontend
 ```
 
 ### Utilisation
 
-1. **Ouvrir l'interface**: http://localhost:8000
+1. **Ouvrir l'interface**: http://localhost:5173
 2. **Maintenir** le bouton microphone
 3. **Parler** en français
 4. **Relâcher** le bouton
@@ -120,110 +126,153 @@ docker compose ps
 
 | Service | URL | Identifiants |
 |---------|-----|--------------|
-| **Interface Web** | http://localhost:8000 | - |
+| **Frontend Vue.js** | http://localhost:5173 | - |
+| **Backend API** | http://localhost:8000 | - |
 | **API Docs** | http://localhost:8000/docs | - |
 | **Neo4j Browser** | http://localhost:7474 | neo4j / graphrag2024 |
-| **API Health** | http://localhost:8000/health | - |
 
 ---
 
 ## 🏗️ Architecture
 
-### Pipeline Vocal (Fonctionnel)
+### Vue d'Ensemble
 
 ```
-┌─────────────────┐
-│  Web Interface  │  Push-to-talk, Waveform visualization
-│   (HTML/JS)     │
-└────────┬────────┘
-         │ WebM audio (16kHz mono)
-         ▼
-┌─────────────────┐
-│   FastAPI API   │  POST /api/voice/process
-│   (src/api)     │
-└────────┬────────┘
-         │
-    ┌────┴─────────────────────┐
-    │                          │
-    ▼                          ▼
-┌──────────┐           ┌──────────────┐
-│ Whisper  │           │  Edge TTS    │
-│   STT    │           │     TTS      │
-│(src/voice│           │ (src/voice)  │
-└────┬─────┘           └──────▲───────┘
-     │                        │
-     │ "Bonjour Jarvis"       │ MP3 audio
-     │                        │
-     ▼                        │
-┌────────────────────────────┴──┐
-│   Claude 3.5 Sonnet Agent     │
-│      (src/agents)             │
-│   via OpenRouter              │
-└───────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                     FRONTEND (Vue.js 3)                     │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │  Voice       │  │ Conversation │  │  Knowledge   │      │
+│  │  Recorder    │  │  History     │  │  Graph Viz   │      │
+│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│         │                  │                  │             │
+│         └──────────────────┴──────────────────┘             │
+│                            │ Axios API calls                │
+└────────────────────────────┼────────────────────────────────┘
+                             │ http://localhost:5173/api
+                             ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   BACKEND (FastAPI)                         │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  /api/voice/process    POST  (Audio → Response)      │  │
+│  │  /api/health           GET   (Health check)          │  │
+│  │  /api/knowledge/graph  GET   (Graph data)            │  │
+│  └──────────────────────────────────────────────────────┘  │
+│         │                      │                            │
+│         ▼                      ▼                            │
+│  ┌────────────┐         ┌────────────┐                     │
+│  │  Whisper   │         │  Edge TTS  │                     │
+│  │    STT     │         │    TTS     │                     │
+│  └────────────┘         └────────────┘                     │
+│         │                      ▲                            │
+│         │    "Bonjour"         │ MP3 audio                 │
+│         ▼                      │                            │
+│  ┌─────────────────────────────┴──────────────────┐        │
+│  │   Claude 3.5 Sonnet Agent (OpenRouter)         │        │
+│  └─────────────────────────────┬──────────────────┘        │
+│                                 │                           │
+│                                 ▼                           │
+│  ┌──────────────────────────────────────────────┐          │
+│  │   Graphiti + Neo4j Knowledge Graph           │          │
+│  └──────────────────────────────────────────────┘          │
+└─────────────────────────────────────────────────────────────┘
+                                 │
+                                 ▼
+                        ┌──────────────┐
+                        │   Neo4j DB   │
+                        └──────────────┘
 ```
 
-### Knowledge Graph (En intégration)
-
-```
-┌──────────────────┐
-│  Conversations   │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐      ┌─────────────┐
-│    Graphiti      │◄────►│   Neo4j     │
-│  (src/graph)     │      │  Database   │
-└────────┬─────────┘      └─────────────┘
-         │
-         ▼
-┌──────────────────┐
-│   Entities &     │  Person, Event, Task,
-│   Relations      │  Preference, Note
-└──────────────────┘
-```
-
-### Structure des Fichiers
+### Structure des Dossiers
 
 ```
 Projet_P3/
-├── src/                          # Code source (959 lignes)
-│   ├── main.py                   # Point d'entrée (26 lignes)
-│   ├── api/
-│   │   └── main.py              # FastAPI app (188 lignes)
-│   ├── agents/
-│   │   └── jarvis_agent.py      # Agent conversationnel (144 lignes)
-│   ├── voice/
-│   │   ├── stt.py               # Speech-to-Text (177 lignes)
-│   │   └── tts.py               # Text-to-Speech (161 lignes)
-│   ├── graph/
-│   │   ├── graphiti_client.py   # Knowledge graph (170 lignes)
-│   │   └── test_connection.py   # Tests connexion (93 lignes)
-│   ├── models/                  # Modèles Pydantic (à implémenter)
-│   ├── rag/                     # GraphRAG (à implémenter)
-│   └── tools/                   # Outils agent (à implémenter)
-├── static/
-│   ├── index.html               # Interface web (244 lignes)
-│   └── app.js                   # Frontend logic (237 lignes)
-├── tests/                       # Tests (à implémenter)
-├── esp32/                       # Firmware ESP32 (à implémenter)
-├── config/
-│   └── graphiti_config.yaml     # Config Graphiti
-├── docs/
-│   ├── QUICK_START.md           # Guide démarrage
-│   └── WEB_INTERFACE.md         # Doc interface web
-├── docker-compose.yml           # Orchestration services
-├── Dockerfile                   # Image Python 3.11
-├── pyproject.toml              # Dépendances Poetry
+├── frontend/                      # Frontend Vue.js 3
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── atoms/            # Composants de base (BaseButton, BaseBadge, etc.)
+│   │   │   ├── molecules/        # Combinaisons (StatCard, MessageBubble, etc.)
+│   │   │   └── organisms/        # Sections complexes (VoiceRecorder, etc.)
+│   │   ├── stores/               # Pinia state management
+│   │   ├── services/             # API client (Axios)
+│   │   ├── types/                # TypeScript types
+│   │   ├── styles/               # SCSS global + mixins
+│   │   ├── App.vue               # Composant racine
+│   │   └── main.ts               # Point d'entrée
+│   ├── public/                   # Assets statiques
+│   ├── index.html
+│   ├── vite.config.ts            # Configuration Vite
+│   ├── tailwind.config.js        # Configuration Tailwind
+│   ├── tsconfig.json             # Configuration TypeScript
+│   ├── package.json              # Dépendances npm
+│   ├── Dockerfile                # Image Node 20
+│   └── CLAUDE.md                 # Documentation frontend
+│
+├── backend/                       # Backend FastAPI
+│   ├── src/
+│   │   ├── main.py               # Point d'entrée
+│   │   ├── api/
+│   │   │   └── main.py          # FastAPI app
+│   │   ├── agents/
+│   │   │   └── jarvis_agent.py  # Agent conversationnel
+│   │   ├── voice/
+│   │   │   ├── stt.py           # Speech-to-Text
+│   │   │   └── tts.py           # Text-to-Speech
+│   │   ├── graph/
+│   │   │   └── graphiti_client.py # Knowledge graph
+│   │   └── models/              # Modèles Pydantic
+│   ├── tests/                   # Tests
+│   ├── config/
+│   │   └── graphiti_config.yaml
+│   ├── pyproject.toml           # Dépendances Poetry
+│   ├── Dockerfile               # Image Python 3.11
+│   └── .env                     # Configuration
+│
+├── docker-compose.yml           # Orchestration 3 services
 ├── Makefile                    # Commandes dev
-├── .env                        # Configuration
-├── TODO.md                     # Roadmap détaillée
-├── CLAUDE.md                   # Instructions techniques
+├── CLAUDE.md                   # Instructions projet
+├── TODO.md                     # Roadmap
 └── README.md                   # Ce fichier
 ```
+
+### Atomic Design (Frontend)
+
+Le frontend suit la méthodologie **Atomic Design** pour une réutilisabilité maximale:
+
+```
+Atoms (Composants de base)
+  ↓
+Molecules (Combinaisons simples)
+  ↓
+Organisms (Sections complexes)
+  ↓
+Templates (Layouts)
+  ↓
+Pages (Vues complètes)
+```
+
+**Exemples:**
+- **Atoms**: BaseButton, BaseBadge, BaseIcon, BaseSpinner, BaseAvatar
+- **Molecules**: StatCard, MessageBubble, AudioPlayer
+- **Organisms**: VoiceRecorder, ConversationHistory, KnowledgeGraphViz
+
+Voir `frontend/CLAUDE.md` pour la documentation complète.
 
 ---
 
 ## 🛠️ Technologies
+
+### Frontend
+
+| Technologie | Version | Usage |
+|------------|---------|-------|
+| **Vue 3** | 3.5.24 | Framework JavaScript progressif |
+| **Vite** | 7.2.4 | Build tool ultra-rapide |
+| **TypeScript** | 5.9.3 | Type safety |
+| **Tailwind CSS** | 3.4.17 | Utility-first CSS |
+| **SCSS** | 1.97.0 | Styles personnalisés |
+| **Element Plus** | 2.12.0 | Bibliothèque UI Vue 3 |
+| **Pinia** | 3.0.4 | State management |
+| **Axios** | 1.13.2 | Client HTTP |
 
 ### Backend
 
@@ -247,272 +296,300 @@ Projet_P3/
 | **TTS** | Edge TTS | Gratuit | Microsoft, voix fr-FR-DeniseNeural |
 | **TTS (alt)** | Coqui TTS | Gratuit | Local, plus lent |
 
-### Frontend
-
-- **HTML5** + **CSS3** (design moderne avec gradients)
-- **Vanilla JavaScript** (pas de framework)
-- **MediaRecorder API** (capture audio)
-- **Canvas API** (visualisation waveform)
-
-### Hardware (Planifié)
-
-- **ESP32** (WiFi/Bluetooth)
-- **Microphone I2S** INMP441
-- **Amplificateur I2S** MAX98357A
-- **Speaker** 3W 4Ω
-
 ---
 
 ## 📚 Documentation
 
 | Document | Description |
 |----------|-------------|
-| **[START.md](START.md)** | Guide démarrage ultra-rapide (5 min) |
-| **[TODO.md](TODO.md)** | Roadmap complète et progression |
-| **[CLAUDE.md](CLAUDE.md)** | Instructions techniques pour Claude |
+| **[CLAUDE.md](CLAUDE.md)** | Instructions projet pour Claude Code |
+| **[frontend/CLAUDE.md](frontend/CLAUDE.md)** | Documentation frontend complète |
+| **[TODO.md](TODO.md)** | Roadmap et progression |
+| **[START.md](START.md)** | Guide démarrage ultra-rapide |
 | **[docs/QUICK_START.md](docs/QUICK_START.md)** | Configuration détaillée |
-| **[docs/WEB_INTERFACE.md](docs/WEB_INTERFACE.md)** | Documentation interface web |
 
 ---
 
 ## 💻 Développement
 
-### Commandes Makefile
+### Commandes Docker
 
 ```bash
 # Démarrage
-make build              # Build Docker images
-make up                 # Lancer les services
-make down               # Arrêter les services
-make restart            # Redémarrer
+docker compose build            # Build images
+docker compose up -d            # Lancer services
+docker compose down             # Arrêter services
 
 # Logs
-make logs               # Tous les logs
-make logs-app           # Logs application seulement
-make logs-neo4j         # Logs Neo4j seulement
+docker compose logs -f          # Tous les logs
+docker compose logs frontend    # Logs frontend
+docker compose logs backend     # Logs backend
+docker compose logs neo4j       # Logs Neo4j
 
-# Développement
-make shell              # Accéder au container
-make test               # Exécuter tests
-make test-connection    # Tester connexion Neo4j/Graphiti
-
-# Qualité code
-make format             # Formater avec Black
-make lint               # Vérifier avec Ruff
-make lint-fix           # Auto-fix Ruff
-make type-check         # Type checking MyPy
-make quality            # format + lint + type-check
-
-# Nettoyage
-make clean              # Nettoyer fichiers temp
-make clean-docker       # Supprimer volumes Docker (⚠️ perte données)
-make reset              # Reset complet projet
+# État
+docker compose ps               # Voir les services
+docker compose restart frontend # Redémarrer un service
 ```
 
-### Développement Local (sans Docker)
-
-Pour un développement plus rapide sans rebuild Docker:
+### Développement Frontend
 
 ```bash
-# 1. Installer Poetry
-curl -sSL https://install.python-poetry.org | python3 -
+cd frontend
 
-# 2. Installer les dépendances
-poetry install
+# Installation (si pas de Docker)
+npm install
 
-# 3. Garder Neo4j en Docker
-docker compose up neo4j -d
+# Développement local (HMR)
+npm run dev
 
-# 4. Modifier .env pour pointer vers localhost
-# NEO4J_URI=bolt://localhost:7687
+# Build de production
+npm run build
 
-# 5. Lancer l'app localement
-poetry run uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
+# Preview du build
+npm run preview
+
+# Type checking
+npm run type-check
 ```
 
-**Avantages**: Hot-reload instantané, pas de rebuild, debug plus facile.
+### Développement Backend
+
+```bash
+cd backend
+
+# Installation Poetry
+poetry install
+
+# Lancer en local (sans Docker)
+poetry run uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
+
+# Tests
+poetry run pytest
+
+# Qualité code
+poetry run black src/
+poetry run ruff check src/
+poetry run mypy src/
+```
 
 ### Ajouter des Dépendances
 
+**Frontend:**
 ```bash
-# Avec Docker
-docker compose exec app poetry add package-name
-docker compose exec app poetry add --group dev package-dev
+# Via Docker
+docker compose exec frontend npm install package-name
 
-# Avec Poetry local
-poetry add package-name
-poetry add --group dev package-dev
+# En local
+cd frontend && npm install package-name
+```
+
+**Backend:**
+```bash
+# Via Docker
+docker compose exec backend poetry add package-name
+
+# En local
+cd backend && poetry add package-name
 ```
 
 ### Configuration
 
-Toute la configuration se fait via `.env`:
-
+**Backend** (`.env` dans `backend/`):
 ```bash
-# Neo4j (requis)
+# Neo4j
 NEO4J_URI=bolt://neo4j:7687
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=graphrag2024
 
-# OpenRouter (requis - obtenez une clé sur openrouter.ai)
+# OpenRouter (requis)
 OPENROUTER_API_KEY=sk-or-v1-xxxxx
 
-# Modèle LLM (modifiable)
+# Modèle LLM
 LLM_MODEL=anthropic/claude-3.5-sonnet
-# Alternatives: meta-llama/llama-3.1-70b-instruct, google/gemini-flash-1.5
 
-# Speech-to-Text (modifiable)
-STT_PROVIDER=whisper-local  # ou "groq"
-STT_MODEL=base              # tiny, base, small, medium, large
+# Speech-to-Text
+STT_PROVIDER=whisper-local
+STT_MODEL=base
 
-# Text-to-Speech (modifiable)
-TTS_PROVIDER=edge-tts       # ou "coqui-tts"
-TTS_VOICE=fr-FR-DeniseNeural  # ou fr-FR-HenriNeural (homme)
+# Text-to-Speech
+TTS_PROVIDER=edge-tts
+TTS_VOICE=fr-FR-DeniseNeural
 
 # Logging
 LOG_LEVEL=INFO
 ```
 
+**Frontend** :
+Les variables d'environnement sont gérées via `vite.config.ts` avec proxy vers le backend.
+
 ---
 
 ## 🗺️ Roadmap
 
-### Phase 1: Infrastructure ✅ (Complété)
+### ✅ Phase 1-3: Infrastructure, API, Frontend (Complété)
 
-- [x] Configuration Docker + Docker Compose
-- [x] Neo4j containerisé avec APOC
-- [x] Structure projet avec Poetry
-- [x] Configuration environnement (.env)
+- [x] Architecture backend/frontend séparée
+- [x] Docker Compose avec 3 services
+- [x] Frontend Vue 3 + TypeScript + Atomic Design
+- [x] Interface moderne avec glassmorphism
+- [x] Backend FastAPI complet
+- [x] Pipeline vocal fonctionnel
+- [x] Whisper STT + Edge TTS
+- [x] Agent Claude 3.5 Sonnet
 
-### Phase 2: Backend API ✅ (Complété)
+### 🔄 Phase 4: Knowledge Graph (En cours)
 
-- [x] FastAPI avec endpoints voice/process
-- [x] Intégration Neo4j driver
-- [x] Client Graphiti basique
-- [x] Logging avec Loguru
-- [x] CORS pour ESP32
-
-### Phase 3: Voice Processing ✅ (Complété)
-
-- [x] Whisper local STT (gratuit)
-- [x] Edge TTS synthèse vocale (gratuit)
-- [x] Agent conversationnel OpenRouter
-- [x] Pipeline complet audio → texte → réponse → audio
-- [x] Interface web avec push-to-talk
-- [x] Visualisation waveform temps réel
-
-### Phase 4: Knowledge Graph 🔄 (En cours)
-
-- [ ] Définir schéma entités personnelles (Person, Event, Task, Preference, Note)
+- [ ] Définir schéma entités (Person, Event, Task, Preference, Note)
 - [ ] Extraction automatique entités depuis conversations
-- [ ] Mise à jour automatique knowledge graph après chaque conversation
-- [ ] Implémentation GraphRAG pour enrichissement contexte
+- [ ] Mise à jour automatique knowledge graph
+- [ ] GraphRAG pour enrichissement contexte
 - [ ] Recherche sémantique dans le graphe
-- [ ] Modèles Pydantic pour entités
+- [ ] Visualisation interactive du graphe (D3.js/Cytoscape)
 
-### Phase 5: ESP32 Hardware 📦 (Matériel en commande)
+### 📦 Phase 5: ESP32 Hardware (Matériel en commande)
 
-- [ ] Firmware ESP32 avec wake word detection
+- [ ] Firmware ESP32 avec wake word
 - [ ] Driver microphone I2S
 - [ ] Driver speaker I2S
 - [ ] Communication WiFi avec backend
-- [ ] Upload/download audio
 - [ ] LED feedback
 
-### Phase 6: Fonctionnalités Avancées 📦
+### 📦 Phase 6: Fonctionnalités Avancées
 
 - [ ] Multi-utilisateurs
 - [ ] Home automation (MQTT/Zigbee)
-- [ ] Tests unitaires et d'intégration
+- [ ] Tests E2E frontend + backend
 - [ ] CI/CD
-- [ ] Monitoring et métriques
+- [ ] Monitoring
 
 **Voir [TODO.md](TODO.md) pour les détails complets.**
 
 ---
 
-## 🧪 Tests
+## 🔧 Git Workflow
+
+### Structure Git
+
+Le projet utilise un **mono-repo** avec deux sous-projets:
+- `frontend/` - Application Vue.js
+- `backend/` - Application FastAPI
+
+Chaque sous-projet a son propre `.gitignore` et peut être géré indépendamment.
+
+### Conventions de Commit
+
+Format : `type(scope): message`
+
+**Types:**
+- `feat` - Nouvelle fonctionnalité
+- `fix` - Correction de bug
+- `style` - Changements de style/CSS
+- `refactor` - Refactoring de code
+- `docs` - Documentation
+- `test` - Tests
+- `chore` - Maintenance
+
+**Exemples:**
+```bash
+git commit -m "feat(frontend): add voice recorder component"
+git commit -m "fix(backend): resolve whisper memory leak"
+git commit -m "style(frontend): update glassmorphism effects"
+git commit -m "docs: update README with new architecture"
+```
+
+### Workflow
 
 ```bash
-# Tests connexion Neo4j/Graphiti
-make test-connection
+# 1. Créer une branche feature
+git checkout -b feature/amazing-feature
 
-# Tests unitaires (à implémenter)
-make test
+# 2. Faire vos modifications (frontend et/ou backend)
+# ...
 
-# Tests avec coverage (à implémenter)
-make test-cov
+# 3. Commit avec message descriptif
+git commit -m "feat(frontend): add feature X"
+
+# 4. Push la branche
+git push origin feature/amazing-feature
+
+# 5. Créer une Pull Request sur GitHub
 ```
 
 ---
 
 ## 🐛 Dépannage
 
-### Neo4j ne démarre pas
+### Frontend ne démarre pas
 
 ```bash
 # Vérifier les logs
-docker compose logs neo4j
+docker compose logs frontend
 
-# Nettoyer et redémarrer
-docker compose down
-docker compose up -d
+# Rebuild le frontend
+docker compose build --no-cache frontend
+docker compose up -d frontend
 ```
 
-### L'app ne se connecte pas à Neo4j
+### Backend ne se connecte pas à Neo4j
 
 ```bash
 # Vérifier que Neo4j est healthy
 docker compose ps
 
-# Tester la connexion
-make test-connection
+# Redémarrer Neo4j
+docker compose restart neo4j
+
+# Voir les logs
+docker compose logs neo4j
 ```
 
-### Erreur "OpenRouter API key not configured"
+### Erreur "Cannot apply unknown utility class"
 
-Vérifiez que `.env` contient:
-```
-OPENROUTER_API_KEY=sk-or-v1-votre-vraie-clé
-```
+Si Tailwind CSS affiche des erreurs de classes:
+```bash
+# Vérifier la version de Tailwind
+docker compose exec frontend npm list tailwindcss
 
-Obtenez une clé sur https://openrouter.ai
+# Devrait afficher v3.4.17
+# Si v4.x, rebuild le frontend
+```
 
 ### Whisper est lent
 
 ```bash
-# Utiliser un modèle plus petit dans .env
-STT_MODEL=tiny  # ou base (actuel), small, medium, large
+# Dans backend/.env, utiliser un modèle plus petit
+STT_MODEL=tiny  # ou base, small, medium, large
 
-# Ou passer à Groq (cloud, gratuit)
+# Ou passer à Groq (cloud)
 STT_PROVIDER=groq
-GROQ_API_KEY=votre-clé-groq
+GROQ_API_KEY=votre-clé
 ```
 
 ---
 
 ## 🤝 Contribution
 
-Les contributions sont bienvenues! Voir les issues GitHub pour les tâches disponibles.
-
-### Workflow
-
-1. Fork le projet
-2. Créer une branche (`git checkout -b feature/AmazingFeature`)
-3. Commit (`git commit -m 'Add AmazingFeature'`)
-4. Push (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
+Les contributions sont bienvenues!
 
 ### Standards Code
 
-- **Black** pour le formatage (line length 100)
-- **Ruff** pour le linting
-- **MyPy** pour le type checking
-- **Pytest** pour les tests
+**Frontend:**
+- Vue 3 Composition API (`<script setup>`)
+- TypeScript strict mode
+- Atomic Design
+- Tailwind pour layouts, SCSS pour styles custom
+- ESLint + Prettier
+
+**Backend:**
+- Black pour formatage (line length 100)
+- Ruff pour linting
+- MyPy pour type checking
+- Pytest pour tests
 
 ```bash
 # Vérifier avant commit
-make quality
+cd frontend && npm run type-check
+cd backend && poetry run black src/ && poetry run ruff check src/
 ```
 
 ---
@@ -525,6 +602,7 @@ MIT License - voir [LICENSE](LICENSE) pour les détails.
 
 ## 🙏 Remerciements
 
+- **Vue.js** pour le framework réactif moderne
 - **OpenAI Whisper** pour le STT open-source
 - **Microsoft Edge TTS** pour la synthèse vocale gratuite
 - **OpenRouter** pour l'accès unifié aux LLMs
@@ -536,9 +614,9 @@ MIT License - voir [LICENSE](LICENSE) pour les détails.
 
 ## 📞 Support
 
-- **Documentation**: Voir dossier `docs/`
+- **Documentation**: Voir `CLAUDE.md` et `frontend/CLAUDE.md`
 - **Issues**: Ouvrir un ticket GitHub
-- **Questions**: Voir [CLAUDE.md](CLAUDE.md) pour les détails techniques
+- **Questions**: Consulter [TODO.md](TODO.md) pour la roadmap
 
 ---
 
