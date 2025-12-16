@@ -18,43 +18,52 @@ restart: ## Redémarrer tous les services
 logs: ## Voir les logs de tous les services
 	docker compose logs -f
 
-logs-app: ## Voir les logs de l'application
-	docker compose logs -f app
+logs-backend: ## Voir les logs du backend
+	docker compose logs -f backend
+
+logs-frontend: ## Voir les logs du frontend
+	docker compose logs -f frontend
 
 logs-neo4j: ## Voir les logs de Neo4j
 	docker compose logs -f neo4j
 
-shell: ## Accéder au shell du container app
-	docker compose exec app bash
+shell-backend: ## Accéder au shell du container backend
+	docker compose exec backend bash
+
+shell-frontend: ## Accéder au shell du container frontend
+	docker compose exec frontend sh
 
 test: ## Exécuter les tests
-	docker compose exec app poetry run pytest
+	docker compose exec backend poetry run pytest
 
 test-cov: ## Exécuter les tests avec couverture
-	docker compose exec app poetry run pytest --cov=src --cov-report=html
+	docker compose exec backend poetry run pytest --cov=src --cov-report=html
 
 test-connection: ## Tester la connexion à Neo4j et Graphiti
-	docker compose exec app poetry run python src/graph/test_connection.py
+	docker compose exec backend poetry run python src/graph/test_connection.py
 
 format: ## Formater le code avec Black
-	docker compose exec app poetry run black src/ tests/
+	docker compose exec backend poetry run black src/ tests/
 
 lint: ## Vérifier le code avec Ruff
-	docker compose exec app poetry run ruff check src/ tests/
+	docker compose exec backend poetry run ruff check src/ tests/
 
 lint-fix: ## Corriger automatiquement les problèmes Ruff
-	docker compose exec app poetry run ruff check --fix src/ tests/
+	docker compose exec backend poetry run ruff check --fix src/ tests/
 
 type-check: ## Vérifier les types avec MyPy
-	docker compose exec app poetry run mypy src/
+	docker compose exec backend poetry run mypy src/
 
 quality: format lint type-check ## Vérifier la qualité du code (format, lint, types)
 
-add: ## Ajouter une dépendance (usage: make add PACKAGE=nom-du-package)
-	docker compose exec app poetry add $(PACKAGE)
+add: ## Ajouter une dépendance backend (usage: make add PACKAGE=nom-du-package)
+	docker compose exec backend poetry add $(PACKAGE)
 
-add-dev: ## Ajouter une dépendance de dev (usage: make add-dev PACKAGE=nom-du-package)
-	docker compose exec app poetry add --group dev $(PACKAGE)
+add-dev: ## Ajouter une dépendance de dev backend (usage: make add-dev PACKAGE=nom-du-package)
+	docker compose exec backend poetry add --group dev $(PACKAGE)
+
+add-frontend: ## Ajouter une dépendance frontend (usage: make add-frontend PACKAGE=nom-du-package)
+	docker compose exec frontend npm install $(PACKAGE)
 
 clean: ## Nettoyer les fichiers temporaires
 	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
@@ -78,8 +87,11 @@ neo4j: ## Ouvrir Neo4j Browser
 install-local: ## Installer les dépendances localement avec Poetry
 	poetry install
 
-update: ## Mettre à jour les dépendances
-	docker compose exec app poetry update
+update: ## Mettre à jour les dépendances backend
+	docker compose exec backend poetry update
 
 lock: ## Mettre à jour poetry.lock
-	docker compose exec app poetry lock
+	docker compose exec backend poetry lock
+
+update-frontend: ## Mettre à jour les dépendances frontend
+	docker compose exec frontend npm update

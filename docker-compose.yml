@@ -2,7 +2,7 @@ services:
   # Neo4j Graph Database
   neo4j:
     image: neo4j:5.15-community
-    container_name: graphrag-neo4j
+    container_name: jarvis-neo4j
     ports:
       - "7474:7474"  # HTTP
       - "7687:7687"  # Bolt
@@ -19,7 +19,7 @@ services:
       - neo4j_import:/var/lib/neo4j/import
       - neo4j_plugins:/plugins
     networks:
-      - graphrag-network
+      - jarvis-network
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
       interval: 10s
@@ -27,37 +27,57 @@ services:
       retries: 10
       start_period: 40s
 
-  # Python Application
-  app:
+  # FastAPI Backend
+  backend:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
-    container_name: graphrag-app
+    container_name: jarvis-backend
     env_file:
-      - .env
+      - ./backend/.env
     environment:
       - NEO4J_URI=bolt://neo4j:7687
       - NEO4J_USER=${NEO4J_USER:-neo4j}
       - NEO4J_PASSWORD=${NEO4J_PASSWORD:-graphrag2024}
       - PYTHONUNBUFFERED=1
     volumes:
-      - ./src:/app/src
-      - ./tests:/app/tests
-      - ./data:/app/data
-      - ./config:/app/config
+      - ./backend/src:/app/src
+      - ./backend/tests:/app/tests
+      - ./backend/data:/app/data
+      - ./backend/config:/app/config
       - ./notebooks:/app/notebooks
-      - app_logs:/app/logs
+      - backend_logs:/app/logs
     ports:
-      - "8000:8000"  # FastAPI web interface
+      - "8000:8000"  # FastAPI API
     networks:
-      - graphrag-network
+      - jarvis-network
     depends_on:
       neo4j:
         condition: service_healthy
     command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 
+  # Vue.js Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: jarvis-frontend
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - /app/node_modules  # Avoid overwriting node_modules
+    ports:
+      - "5173:5173"  # Vite dev server
+    networks:
+      - jarvis-network
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    command: npm run dev -- --host
+
 networks:
-  graphrag-network:
+  jarvis-network:
     driver: bridge
 
 volumes:
@@ -65,4 +85,4 @@ volumes:
   neo4j_logs:
   neo4j_import:
   neo4j_plugins:
-  app_logs:
+  backend_logs:

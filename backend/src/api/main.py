@@ -54,6 +54,21 @@ async def health_check():
     }
 
 
+@app.get("/api/health")
+async def api_health_check():
+    """API Health check endpoint."""
+    return {
+        "status": "healthy",
+        "service": "Jarvis Voice Assistant",
+        "version": "0.1.0",
+        "services": {
+            "neo4j": True,  # TODO: Check actual Neo4j status
+            "whisper": True,
+            "tts": True,
+        }
+    }
+
+
 @app.post("/api/voice/process")
 async def process_voice(audio: UploadFile = File(...)):
     """
@@ -172,6 +187,48 @@ async def add_knowledge(data: dict):
 
     except Exception as e:
         logger.error(f"Error adding knowledge: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/knowledge/graph")
+async def get_knowledge_graph():
+    """
+    Get the knowledge graph structure.
+
+    Returns:
+        Graph nodes and edges
+    """
+    try:
+        # TODO: Implement actual graph retrieval from Neo4j/Graphiti
+        # For now, return a mock structure
+        return {
+            "nodes": [
+                {
+                    "id": "1",
+                    "label": "Utilisateur",
+                    "type": "Person",
+                    "properties": {"name": "Sofian"}
+                },
+                {
+                    "id": "2",
+                    "label": "Jarvis",
+                    "type": "Assistant",
+                    "properties": {"version": "0.1.0"}
+                }
+            ],
+            "edges": [
+                {
+                    "id": "e1",
+                    "source": "1",
+                    "target": "2",
+                    "type": "INTERACTS_WITH",
+                    "properties": {}
+                }
+            ]
+        }
+
+    except Exception as e:
+        logger.error(f"Error getting knowledge graph: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
