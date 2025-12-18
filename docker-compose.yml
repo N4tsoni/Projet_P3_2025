@@ -54,7 +54,7 @@ services:
     depends_on:
       neo4j:
         condition: service_healthy
-    command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn src.app:app --host 0.0.0.0 --port 8000 --reload
 
   # Vue.js Frontend
   frontend:
