@@ -49,10 +49,12 @@ async def test_graphiti_initialization():
 
         # Test adding a simple episode
         logger.info("Testing episode addition...")
+        from datetime import datetime
         nodes = await client.add_episode(
             name="test_episode",
             content="This is a test transaction of 100 EUR for office supplies.",
             source_description="Test data",
+            reference_time=datetime.now().isoformat(),
         )
         logger.info(f"✅ Episode added: {len(nodes)} nodes created")
 

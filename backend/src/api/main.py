@@ -107,6 +107,18 @@ async def process_voice(audio: UploadFile = File(...)):
         transcription = await transcribe_audio(audio_path, language="fr")
         logger.info(f"Transcription: {transcription}")
 
+        # Validate transcription
+        if not transcription or len(transcription.strip()) == 0:
+            logger.warning("Empty transcription received")
+            return JSONResponse(
+                status_code=400,
+                content={
+                    "error": "Aucune parole détectée dans l'audio. Veuillez parler plus fort ou plus longtemps.",
+                    "transcription": "",
+                    "response": "",
+                }
+            )
+
         # Step 2: Agent processes the message
         logger.info("Step 2: Processing with agent...")
         agent = get_agent()
