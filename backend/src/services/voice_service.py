@@ -115,6 +115,10 @@ class VoiceService:
             logger.error(f"Conversation {conversation_id} not found")
             raise ValueError(f"Conversation {conversation_id} not found")
 
+        # Check if this is the first interaction (for auto-naming)
+        existing_messages = conversation_service.get_conversation_history(conversation_id)
+        is_first_message = len(existing_messages) == 0
+
         # Add user and assistant messages
         conversation_service.add_interaction(
             conversation_id=conversation_id,
@@ -122,6 +126,11 @@ class VoiceService:
             response=response,
             audio_url=audio_url,
         )
+
+        # Auto-name conversation based on first user message
+        if is_first_message:
+            conversation_service.auto_name_conversation(conversation_id)
+            logger.info(f"Auto-named conversation {conversation_id}")
 
         logger.info(f"Interaction persisted to conversation {conversation_id}")
 
