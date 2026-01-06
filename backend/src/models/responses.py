@@ -62,3 +62,41 @@ class KnowledgeGraphResponse(BaseModel):
     """Response containing knowledge graph structure."""
     nodes: List[GraphNode] = Field(default_factory=list, description="Graph nodes")
     edges: List[GraphEdge] = Field(default_factory=list, description="Graph edges")
+
+
+# ==================== Conversation Models ====================
+
+class MessageResponse(BaseModel):
+    """Single message in a conversation."""
+    id: int = Field(..., description="Message ID")
+    role: str = Field(..., description="Message role (user or assistant)")
+    content: str = Field(..., description="Message text content")
+    audio_url: Optional[str] = Field(None, description="URL to audio file (for assistant messages)")
+    created_at: str = Field(..., description="Message creation timestamp")
+
+    class Config:
+        from_attributes = True
+
+
+class ConversationResponse(BaseModel):
+    """Conversation with optional messages."""
+    id: str = Field(..., description="Conversation ID")
+    name: str = Field(..., description="Conversation name/title")
+    created_at: str = Field(..., description="Creation timestamp")
+    updated_at: str = Field(..., description="Last update timestamp")
+    messages: Optional[List[MessageResponse]] = Field(None, description="Messages in conversation")
+
+    class Config:
+        from_attributes = True
+
+
+class ConversationListResponse(BaseModel):
+    """List of conversations."""
+    conversations: List[ConversationResponse] = Field(..., description="List of conversations")
+    total: int = Field(..., description="Total number of conversations")
+
+
+class ConversationCreateResponse(BaseModel):
+    """Response after creating a conversation."""
+    success: bool = Field(..., description="Whether creation succeeded")
+    conversation: ConversationResponse = Field(..., description="Created conversation")

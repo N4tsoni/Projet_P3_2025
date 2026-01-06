@@ -28,6 +28,26 @@ services:
       retries: 10
       start_period: 40s
 
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: jarvis-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=jarvis
+      - POSTGRES_USER=jarvis
+      - POSTGRES_PASSWORD=jarvis2024
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - jarvis-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jarvis"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   # FastAPI Backend
   backend:
     build:
@@ -46,14 +66,17 @@ services:
       - ./backend/tests:/app/tests
       - ./backend/data:/app/data
       - ./backend/config:/app/config
-      - ./notebooks:/app/notebooks
+      - ./backend/notebooks:/app/notebooks
       - backend_logs:/app/logs
     ports:
       - "8000:8000"  # FastAPI API
+      - "8888:8888"  # Jupyter Notebook
     networks:
       - jarvis-network
     depends_on:
       neo4j:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
     command: uvicorn src.api.main:app --host 0.0.0.0 --port 8000 --reload
 
@@ -86,4 +109,5 @@ volumes:
   neo4j_logs:
   neo4j_import:
   neo4j_plugins:
+  postgres_data:
   backend_logs:

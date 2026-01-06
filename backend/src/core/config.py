@@ -34,10 +34,22 @@ class Settings(BaseSettings):
     openai_api_key: str = os.getenv("OPENAI_API_KEY", "")
     openai_base_url: str = os.getenv("OPENAI_BASE_URL", "https://openrouter.ai/api/v1")
 
+    # PostgreSQL
+    postgres_host: str = os.getenv("POSTGRES_HOST", "postgres")
+    postgres_port: int = int(os.getenv("POSTGRES_PORT", "5432"))
+    postgres_db: str = os.getenv("POSTGRES_DB", "jarvis")
+    postgres_user: str = os.getenv("POSTGRES_USER", "jarvis")
+    postgres_password: str = os.getenv("POSTGRES_PASSWORD", "jarvis2024")
+
     # Neo4j
     neo4j_uri: str = os.getenv("NEO4J_URI", "bolt://neo4j:7687")
     neo4j_user: str = os.getenv("NEO4J_USER", "neo4j")
     neo4j_password: str = os.getenv("NEO4J_PASSWORD", "graphrag2024")
+
+    @property
+    def database_url(self) -> str:
+        """PostgreSQL database URL for SQLAlchemy."""
+        return f"postgresql://{self.postgres_user}:{self.postgres_password}@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
 
     # Voice Settings
     stt_provider: str = os.getenv("STT_PROVIDER", "groq")  # whisper or groq

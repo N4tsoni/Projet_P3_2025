@@ -16,3 +16,15 @@ class KnowledgeQueryRequest(BaseModel):
     """Request to query the knowledge graph."""
     query: str = Field(..., description="Query string", min_length=1)
     num_results: int = Field(default=10, description="Number of results to return", ge=1, le=100)
+
+
+# ==================== Conversation Requests ====================
+
+class ConversationCreateRequest(BaseModel):
+    """Request to create a new conversation."""
+    name: Optional[str] = Field(None, description="Name for the conversation (auto-generated if not provided)")
+
+
+class ConversationRenameRequest(BaseModel):
+    """Request to rename a conversation."""
+    name: str = Field(..., description="New name for the conversation", min_length=1)

@@ -1,22 +1,30 @@
 """
 Voice processing routes.
 """
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import APIRouter, File, UploadFile, HTTPException, Depends, Query
+from sqlalchemy.orm import Session
+from typing import Optional
 from loguru import logger
 
 from src.models.responses import VoiceProcessResponse, ErrorResponse
 from src.services.voice_service import get_voice_service
+from src.core.database import get_db
 
 router = APIRouter(prefix="/api/voice", tags=["voice"])
 
 
 @router.post("/process", response_model=VoiceProcessResponse)
-async def process_voice(audio: UploadFile = File(...)):
+async def process_voice(
+    audio: UploadFile = File(...),
+    conversation_id: Optional[str] = Query(None, description="Conversation ID to add this interaction to"),
+    db: Session = Depends(get_db),
+):
     """
     Process voice input through the complete pipeline: STT → Agent → TTS.
 
     Args:
         audio: Audio file (WAV, WebM, MP3, etc.)
+        conversation_id: Optional conversation ID to persist this interaction
 
     Returns:
         VoiceProcessResponse with transcription, response, and audio URL
@@ -26,7 +34,9 @@ async def process_voice(audio: UploadFile = File(...)):
     """
     try:
         voice_service = get_voice_service()
-        transcription, response, audio_url = await voice_service.process_voice_input(audio)
+        transcription, response, audio_url = await voice_service.process_voice_input(
+            audio, conversation_id=conversation_id, db=db
+        )
 
         return VoiceProcessResponse(
             success=True,

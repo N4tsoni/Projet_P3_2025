@@ -8,7 +8,8 @@ from fastapi.staticfiles import StaticFiles
 from loguru import logger
 
 from src.core.config import get_settings
-from src.api.routes import voice_router, knowledge_router, health_router
+from src.core.database import init_db
+from src.api.routes import voice_router, knowledge_router, health_router, conversations_router
 
 # Get settings
 settings = get_settings()
@@ -37,6 +38,7 @@ app.mount("/static", StaticFiles(directory=str(settings.static_dir)), name="stat
 app.include_router(health_router)  # Health checks at root level
 app.include_router(voice_router)  # /api/voice/*
 app.include_router(knowledge_router)  # /api/knowledge/*
+app.include_router(conversations_router)  # /api/conversations/*
 
 
 @app.on_event("startup")
@@ -47,6 +49,14 @@ async def startup_event():
     logger.info(f"STT Provider: {settings.stt_provider}")
     logger.info(f"TTS Provider: {settings.tts_provider}")
     logger.info(f"LLM Model: {settings.openrouter_model}")
+
+    # Initialize database
+    try:
+        init_db()
+        logger.info("Database initialized successfully")
+    except Exception as e:
+        logger.error(f"Failed to initialize database: {e}")
+        raise
 
 
 @app.on_event("shutdown")
