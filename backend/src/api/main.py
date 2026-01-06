@@ -1,257 +1,67 @@
 """
 FastAPI application for Jarvis voice assistant.
+Refactored with Layered Architecture.
 """
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse
-from pathlib import Path
-import os
 from loguru import logger
-from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+from src.core.config import get_settings
+from src.api.routes import voice_router, knowledge_router, health_router
+
+# Get settings
+settings = get_settings()
 
 # Create FastAPI app
 app = FastAPI(
-    title="Jarvis Voice Assistant API",
-    description="Backend API for Jarvis voice assistant with GraphRAG",
-    version="0.1.0",
+    title=settings.app_name,
+    description="Backend API for Jarvis voice assistant with GraphRAG and Layered Architecture",
+    version=settings.app_version,
+    debug=settings.debug,
 )
 
-# CORS configuration for web interface
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual origins
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Serve static files (web interface)
-static_dir = Path(__file__).parent.parent.parent / "static"
-static_dir.mkdir(exist_ok=True)
-app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+# Serve static files
+app.mount("/static", StaticFiles(directory=str(settings.static_dir)), name="static")
+
+# Include routers
+app.include_router(health_router)  # Health checks at root level
+app.include_router(voice_router)  # /api/voice/*
+app.include_router(knowledge_router)  # /api/knowledge/*
 
 
-@app.get("/")
-async def root():
-    """Serve the web interface."""
-    web_interface = static_dir / "index.html"
-    if web_interface.exists():
-        return FileResponse(web_interface)
-    return {"message": "Jarvis Voice Assistant API", "status": "running"}
+@app.on_event("startup")
+async def startup_event():
+    """Application startup - Initialize services."""
+    logger.info(f"Starting {settings.app_name} v{settings.app_version}")
+    logger.info(f"Debug mode: {settings.debug}")
+    logger.info(f"STT Provider: {settings.stt_provider}")
+    logger.info(f"TTS Provider: {settings.tts_provider}")
+    logger.info(f"LLM Model: {settings.openrouter_model}")
 
 
-@app.get("/health")
-async def health_check():
-    """Health check endpoint."""
-    return {
-        "status": "healthy",
-        "service": "Jarvis Voice Assistant",
-        "version": "0.1.0",
-    }
-
-
-@app.get("/api/health")
-async def api_health_check():
-    """API Health check endpoint."""
-    return {
-        "status": "healthy",
-        "service": "Jarvis Voice Assistant",
-        "version": "0.1.0",
-        "services": {
-            "neo4j": True,  # TODO: Check actual Neo4j status
-            "whisper": True,
-            "tts": True,
-        }
-    }
-
-
-@app.post("/api/voice/process")
-async def process_voice(audio: UploadFile = File(...)):
-    """
-    Process voice input: STT -> Agent -> TTS -> Return audio response.
-
-    Args:
-        audio: Audio file (WAV, WebM, etc.)
-
-    Returns:
-        JSON with transcription, response text, and audio URL
-    """
-    try:
-        from src.voice.stt import transcribe_audio
-        from src.voice.tts import synthesize_speech
-        from src.agents.jarvis_agent import get_agent
-        import uuid
-
-        logger.info(f"Received audio file: {audio.filename}, type: {audio.content_type}")
-
-        # Save uploaded audio temporarily
-        temp_dir = Path("/app/data/temp")
-        temp_dir.mkdir(parents=True, exist_ok=True)
-
-        # Generate unique ID for this request
-        request_id = str(uuid.uuid4())[:8]
-
-        audio_path = temp_dir / f"input_{request_id}.webm"
-        with open(audio_path, "wb") as f:
-            content = await audio.read()
-            f.write(content)
-
-        logger.info(f"Saved audio to {audio_path}, size: {len(content)} bytes")
-
-        # Step 1: Speech-to-Text
-        logger.info("Step 1: Transcribing audio...")
-        transcription = await transcribe_audio(audio_path, language="fr")
-        logger.info(f"Transcription: {transcription}")
-
-        # Validate transcription
-        if not transcription or len(transcription.strip()) == 0:
-            logger.warning("Empty transcription received")
-            return JSONResponse(
-                status_code=400,
-                content={
-                    "error": "Aucune parole détectée dans l'audio. Veuillez parler plus fort ou plus longtemps.",
-                    "transcription": "",
-                    "response": "",
-                }
-            )
-
-        # Step 2: Agent processes the message
-        logger.info("Step 2: Processing with agent...")
-        agent = get_agent()
-        agent_response = await agent.chat(transcription)
-        logger.info(f"Agent response: {agent_response}")
-
-        # Step 3: Text-to-Speech
-        logger.info("Step 3: Synthesizing speech...")
-        response_audio_path = static_dir / f"response_{request_id}.mp3"
-        await synthesize_speech(agent_response, response_audio_path)
-
-        response_audio_url = f"/static/response_{request_id}.mp3"
-        logger.info(f"Audio response: {response_audio_url}")
-
-        # Step 4: TODO - Update knowledge graph with conversation
-
-        # Clean up input audio
-        audio_path.unlink(missing_ok=True)
-
-        return JSONResponse({
-            "success": True,
-            "transcription": transcription,
-            "response": agent_response,
-            "audio_url": response_audio_url,
-        })
-
-    except Exception as e:
-        logger.error(f"Error processing voice: {e}")
-        logger.exception(e)
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.get("/api/knowledge/query")
-async def query_knowledge(q: str):
-    """
-    Query the knowledge graph.
-
-    Args:
-        q: Query string
-
-    Returns:
-        Results from knowledge graph
-    """
-    try:
-        # TODO: Implement GraphRAG query
-        results = {
-            "query": q,
-            "results": [],
-            "message": "GraphRAG query à implémenter"
-        }
-
-        return results
-
-    except Exception as e:
-        logger.error(f"Error querying knowledge: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/api/knowledge/add")
-async def add_knowledge(data: dict):
-    """
-    Manually add knowledge to the graph.
-
-    Args:
-        data: Knowledge data to add
-
-    Returns:
-        Success status
-    """
-    try:
-        # TODO: Implement knowledge addition
-        logger.info(f"Adding knowledge: {data}")
-
-        return {
-            "success": True,
-            "message": "Knowledge addition à implémenter"
-        }
-
-    except Exception as e:
-        logger.error(f"Error adding knowledge: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.get("/api/knowledge/graph")
-async def get_knowledge_graph():
-    """
-    Get the knowledge graph structure.
-
-    Returns:
-        Graph nodes and edges
-    """
-    try:
-        # TODO: Implement actual graph retrieval from Neo4j/Graphiti
-        # For now, return a mock structure
-        return {
-            "nodes": [
-                {
-                    "id": "1",
-                    "label": "Utilisateur",
-                    "type": "Person",
-                    "properties": {"name": "Sofian"}
-                },
-                {
-                    "id": "2",
-                    "label": "Jarvis",
-                    "type": "Assistant",
-                    "properties": {"version": "0.1.0"}
-                }
-            ],
-            "edges": [
-                {
-                    "id": "e1",
-                    "source": "1",
-                    "target": "2",
-                    "type": "INTERACTS_WITH",
-                    "properties": {}
-                }
-            ]
-        }
-
-    except Exception as e:
-        logger.error(f"Error getting knowledge graph: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Application shutdown - Cleanup resources."""
+    logger.info("Shutting down Jarvis backend")
 
 
 if __name__ == "__main__":
     import uvicorn
 
-    port = int(os.getenv("API_PORT", 8000))
     uvicorn.run(
         "src.api.main:app",
         host="0.0.0.0",
-        port=port,
-        reload=True,
-        log_level="info",
+        port=settings.api_port,
+        reload=settings.debug,
+        log_level=settings.log_level.lower(),
     )
