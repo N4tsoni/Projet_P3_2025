@@ -30,7 +30,7 @@ class JarvisAgent:
         if not self.api_key:
             raise ValueError("OPENROUTER_API_KEY not found")
 
-        self.model = model or os.getenv("LLM_MODEL", "anthropic/claude-3.5-sonnet")
+        self.model = model or os.getenv("OPENROUTER_MODEL", "anthropic/claude-3.5-sonnet")
         self.temperature = temperature
 
         # OpenRouter uses OpenAI SDK with custom base URL

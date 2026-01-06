@@ -1,0 +1,4311 @@
+{
+  "project": {
+    "name": "app",
+    "path": "/app",
+    "language": "python",
+    "version": null,
+    "description": null,
+    "created_at": null,
+    "analyzed_at": "2025-12-20 14:58:36.986936"
+  },
+  "modules": [
+    {
+      "name": "main",
+      "path": "/app/src/main.py",
+      "language": "python",
+      "lines_of_code": 15,
+      "docstring": "Main entry point for the GraphRAG Accounting Agent application.",
+      "imports_count": 3,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/tools/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "code_entities",
+      "path": "/app/src/models/code_entities.py",
+      "language": "python",
+      "lines_of_code": 292,
+      "docstring": "Mod\u00e8les Pydantic pour les entit\u00e9s du knowledge graph de code.\nCes mod\u00e8les repr\u00e9sentent les diff\u00e9rents \u00e9l\u00e9ments d'un codebase.",
+      "imports_count": 4,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/models/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/data/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/agents/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "jarvis_agent",
+      "path": "/app/src/agents/jarvis_agent.py",
+      "language": "python",
+      "lines_of_code": 103,
+      "docstring": "Jarvis conversational agent using OpenRouter.",
+      "imports_count": 4,
+      "complexity_score": null
+    },
+    {
+      "name": "main",
+      "path": "/app/src/api/main.py",
+      "language": "python",
+      "lines_of_code": 184,
+      "docstring": "FastAPI application for Jarvis voice assistant.",
+      "imports_count": 13,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/api/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/rag/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "tts",
+      "path": "/app/src/voice/tts.py",
+      "language": "python",
+      "lines_of_code": 116,
+      "docstring": "Text-to-Speech module.\nSupports multiple providers: Edge TTS (free), Coqui, ElevenLabs, etc.",
+      "imports_count": 7,
+      "complexity_score": null
+    },
+    {
+      "name": "stt",
+      "path": "/app/src/voice/stt.py",
+      "language": "python",
+      "lines_of_code": 131,
+      "docstring": "Speech-to-Text module.\nSupports multiple providers: Whisper (local), Groq, etc.",
+      "imports_count": 6,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/voice/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "graphiti_client",
+      "path": "/app/src/graph/graphiti_client.py",
+      "language": "python",
+      "lines_of_code": 130,
+      "docstring": "Graphiti client initialization and configuration.",
+      "imports_count": 9,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/graph/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    },
+    {
+      "name": "test_connection",
+      "path": "/app/src/graph/test_connection.py",
+      "language": "python",
+      "lines_of_code": 65,
+      "docstring": "Script to test Neo4j and Graphiti connection.",
+      "imports_count": 6,
+      "complexity_score": null
+    },
+    {
+      "name": "python_parser",
+      "path": "/app/src/code_analysis/python_parser.py",
+      "language": "python",
+      "lines_of_code": 427,
+      "docstring": "Parser Python utilisant AST pour extraire les entit\u00e9s de code.\nAnalyse un fichier Python et extrait classes, fonctions, variables, imports, etc.",
+      "imports_count": 6,
+      "complexity_score": null
+    },
+    {
+      "name": "test_analyzer",
+      "path": "/app/src/code_analysis/test_analyzer.py",
+      "language": "python",
+      "lines_of_code": 127,
+      "docstring": "Script de test pour l'analyseur de code.\nPermet de tester le parsing et l'extraction d'entit\u00e9s.",
+      "imports_count": 5,
+      "complexity_score": null
+    },
+    {
+      "name": "entity_extractor",
+      "path": "/app/src/code_analysis/entity_extractor.py",
+      "language": "python",
+      "lines_of_code": 255,
+      "docstring": "Extracteur d'entit\u00e9s et relations pour le knowledge graph de code.\nConstruit les relations entre classes, fonctions, variables, etc.",
+      "imports_count": 5,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/src/code_analysis/__init__.py",
+      "language": "python",
+      "lines_of_code": 16,
+      "docstring": "Module d'analyse de code pour knowledge graph.\nParsers pour diff\u00e9rents langages et extracteurs d'entit\u00e9s.",
+      "imports_count": 1,
+      "complexity_score": null
+    },
+    {
+      "name": "__init__",
+      "path": "/app/tests/__init__.py",
+      "language": "python",
+      "lines_of_code": 0,
+      "docstring": null,
+      "imports_count": 0,
+      "complexity_score": null
+    }
+  ],
+  "classes": [
+    {
+      "name": "Language",
+      "full_name": "code_entities.Language",
+      "docstring": "Langages de programmation support\u00e9s",
+      "line_start": 14,
+      "line_end": 22,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "name": "AccessModifier",
+      "full_name": "code_entities.AccessModifier",
+      "docstring": "Modificateurs d'acc\u00e8s",
+      "line_start": 25,
+      "line_end": 29,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "name": "Scope",
+      "full_name": "code_entities.Scope",
+      "docstring": "Port\u00e9e d'une variable",
+      "line_start": 32,
+      "line_end": 37,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "name": "ImportType",
+      "full_name": "code_entities.ImportType",
+      "docstring": "Type d'import",
+      "line_start": 40,
+      "line_end": 44,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "name": "CommentType",
+      "full_name": "code_entities.CommentType",
+      "docstring": "Type de commentaire",
+      "line_start": 47,
+      "line_end": 53,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "name": "CodeBlockType",
+      "full_name": "code_entities.CodeBlockType",
+      "docstring": "Type de bloc de code",
+      "line_start": 56,
+      "line_end": 64,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "str",
+        "Enum"
+      ]
+    },
+    {
+      "name": "ProjectModel",
+      "full_name": "code_entities.ProjectModel",
+      "docstring": "Repr\u00e9sente un projet/repository de code",
+      "line_start": 69,
+      "line_end": 88,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.ProjectModel.Config",
+      "docstring": null,
+      "line_start": 79,
+      "line_end": 88,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "ModuleModel",
+      "full_name": "code_entities.ModuleModel",
+      "docstring": "Repr\u00e9sente un fichier source (module)",
+      "line_start": 91,
+      "line_end": 110,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.ModuleModel.Config",
+      "docstring": null,
+      "line_start": 101,
+      "line_end": 110,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "ClassModel",
+      "full_name": "code_entities.ClassModel",
+      "docstring": "Repr\u00e9sente une classe/type dans le code",
+      "line_start": 113,
+      "line_end": 135,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.ClassModel.Config",
+      "docstring": null,
+      "line_start": 125,
+      "line_end": 135,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "ParameterModel",
+      "full_name": "code_entities.ParameterModel",
+      "docstring": "Repr\u00e9sente un param\u00e8tre de fonction",
+      "line_start": 138,
+      "line_end": 144,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "FunctionModel",
+      "full_name": "code_entities.FunctionModel",
+      "docstring": "Repr\u00e9sente une fonction/m\u00e9thode dans le code",
+      "line_start": 147,
+      "line_end": 176,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.FunctionModel.Config",
+      "docstring": null,
+      "line_start": 165,
+      "line_end": 176,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "VariableModel",
+      "full_name": "code_entities.VariableModel",
+      "docstring": "Repr\u00e9sente une variable/constante dans le code",
+      "line_start": 179,
+      "line_end": 198,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.VariableModel.Config",
+      "docstring": null,
+      "line_start": 189,
+      "line_end": 198,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "ImportModel",
+      "full_name": "code_entities.ImportModel",
+      "docstring": "Repr\u00e9sente une d\u00e9claration d'import",
+      "line_start": 201,
+      "line_end": 218,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.ImportModel.Config",
+      "docstring": null,
+      "line_start": 210,
+      "line_end": 218,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "PackageModel",
+      "full_name": "code_entities.PackageModel",
+      "docstring": "Repr\u00e9sente un package/d\u00e9pendance externe",
+      "line_start": 221,
+      "line_end": 236,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.PackageModel.Config",
+      "docstring": null,
+      "line_start": 228,
+      "line_end": 236,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "CommentModel",
+      "full_name": "code_entities.CommentModel",
+      "docstring": "Repr\u00e9sente un commentaire ou TODO dans le code",
+      "line_start": 239,
+      "line_end": 253,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.CommentModel.Config",
+      "docstring": null,
+      "line_start": 246,
+      "line_end": 253,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "CodeBlockModel",
+      "full_name": "code_entities.CodeBlockModel",
+      "docstring": "Repr\u00e9sente un bloc de code significatif",
+      "line_start": 256,
+      "line_end": 273,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.CodeBlockModel.Config",
+      "docstring": null,
+      "line_start": 264,
+      "line_end": 273,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "RelationshipModel",
+      "full_name": "code_entities.RelationshipModel",
+      "docstring": "Mod\u00e8le de base pour une relation entre entit\u00e9s",
+      "line_start": 278,
+      "line_end": 283,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "ContainsRelation",
+      "full_name": "code_entities.ContainsRelation",
+      "docstring": "Relation CONTAINS (Project->Module, Class->Method, etc.)",
+      "line_start": 286,
+      "line_end": 289,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "RelationshipModel"
+      ]
+    },
+    {
+      "name": "ImportsRelation",
+      "full_name": "code_entities.ImportsRelation",
+      "docstring": "Relation IMPORTS (Module->Module/Package)",
+      "line_start": 292,
+      "line_end": 296,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "RelationshipModel"
+      ]
+    },
+    {
+      "name": "InheritsRelation",
+      "full_name": "code_entities.InheritsRelation",
+      "docstring": "Relation INHERITS (Class->Class)",
+      "line_start": 299,
+      "line_end": 303,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "RelationshipModel"
+      ]
+    },
+    {
+      "name": "CallsRelation",
+      "full_name": "code_entities.CallsRelation",
+      "docstring": "Relation CALLS (Function->Function)",
+      "line_start": 306,
+      "line_end": 311,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "RelationshipModel"
+      ]
+    },
+    {
+      "name": "UsesRelation",
+      "full_name": "code_entities.UsesRelation",
+      "docstring": "Relation USES (Function/Class->Variable/Class)",
+      "line_start": 314,
+      "line_end": 318,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "RelationshipModel"
+      ]
+    },
+    {
+      "name": "ComplexityMetrics",
+      "full_name": "code_entities.ComplexityMetrics",
+      "docstring": "M\u00e9triques de complexit\u00e9 pour une entit\u00e9",
+      "line_start": 323,
+      "line_end": 328,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "QualityMetrics",
+      "full_name": "code_entities.QualityMetrics",
+      "docstring": "M\u00e9triques de qualit\u00e9 pour un projet/module",
+      "line_start": 331,
+      "line_end": 336,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "AnalysisResult",
+      "full_name": "code_entities.AnalysisResult",
+      "docstring": "R\u00e9sultat d'analyse d'un projet",
+      "line_start": 339,
+      "line_end": 361,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "BaseModel"
+      ]
+    },
+    {
+      "name": "Config",
+      "full_name": "code_entities.AnalysisResult.Config",
+      "docstring": null,
+      "line_start": 352,
+      "line_end": 361,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "JarvisAgent",
+      "full_name": "jarvis_agent.JarvisAgent",
+      "docstring": "Conversational agent for Jarvis using OpenRouter.",
+      "line_start": 10,
+      "line_end": 125,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "TTSProvider",
+      "full_name": "tts.TTSProvider",
+      "docstring": "Base class for TTS providers.",
+      "line_start": 13,
+      "line_end": 18,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "EdgeTTSProvider",
+      "full_name": "tts.EdgeTTSProvider",
+      "docstring": "Microsoft Edge TTS.\nFree, unlimited, good quality voices.",
+      "line_start": 21,
+      "line_end": 64,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "TTSProvider"
+      ]
+    },
+    {
+      "name": "CoquiTTSProvider",
+      "full_name": "tts.CoquiTTSProvider",
+      "docstring": "Coqui TTS - Local, open-source TTS.\nRequires more setup but runs locally.",
+      "line_start": 67,
+      "line_end": 117,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "TTSProvider"
+      ]
+    },
+    {
+      "name": "STTProvider",
+      "full_name": "stt.STTProvider",
+      "docstring": "Base class for STT providers.",
+      "line_start": 12,
+      "line_end": 17,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "WhisperLocalSTT",
+      "full_name": "stt.WhisperLocalSTT",
+      "docstring": "Local Whisper STT using OpenAI's open-source model.\nRuns locally, no API key needed.",
+      "line_start": 20,
+      "line_end": 75,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "STTProvider"
+      ]
+    },
+    {
+      "name": "GroqSTT",
+      "full_name": "stt.GroqSTT",
+      "docstring": "Groq STT using their Whisper API.\nFast and has a generous free tier.",
+      "line_start": 78,
+      "line_end": 134,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "STTProvider"
+      ]
+    },
+    {
+      "name": "GraphitiClient",
+      "full_name": "graphiti_client.GraphitiClient",
+      "docstring": "Wrapper class for Graphiti initialization and management.",
+      "line_start": 14,
+      "line_end": 151,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "ParseResult",
+      "full_name": "python_parser.ParseResult",
+      "docstring": "R\u00e9sultat de l'analyse d'un fichier Python",
+      "line_start": 29,
+      "line_end": 37,
+      "is_abstract": false,
+      "decorators": [
+        "dataclass"
+      ],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "PythonCodeParser",
+      "full_name": "python_parser.PythonCodeParser",
+      "docstring": "Visiteur AST pour extraire les entit\u00e9s d'un fichier Python.\nUtilise le pattern Visitor pour parcourir l'arbre syntaxique.",
+      "line_start": 40,
+      "line_end": 524,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": [
+        "ast.NodeVisitor"
+      ]
+    },
+    {
+      "name": "CodeGraph",
+      "full_name": "entity_extractor.CodeGraph",
+      "docstring": "Repr\u00e9sente un knowledge graph de code complet.\nContient toutes les entit\u00e9s et leurs relations.",
+      "line_start": 29,
+      "line_end": 71,
+      "is_abstract": false,
+      "decorators": [
+        "dataclass"
+      ],
+      "access_modifier": "public",
+      "base_classes": []
+    },
+    {
+      "name": "CodeEntityExtractor",
+      "full_name": "entity_extractor.CodeEntityExtractor",
+      "docstring": "Extracteur d'entit\u00e9s et relations pour construire un knowledge graph de code.",
+      "line_start": 74,
+      "line_end": 333,
+      "is_abstract": false,
+      "decorators": [],
+      "access_modifier": "public",
+      "base_classes": []
+    }
+  ],
+  "functions": [
+    {
+      "name": "main",
+      "full_name": "main.main",
+      "docstring": "Main application entry point.",
+      "signature": "def main()",
+      "line_start": 11,
+      "line_end": 23,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "jarvis_agent.JarvisAgent.__init__",
+      "docstring": "Initialize Jarvis agent.\n\nArgs:\n    api_key: OpenRouter API key\n    model: Model to use (e.g., 'anthropic/claude-3.5-sonnet')\n    temperature: Generation temperature",
+      "signature": "def __init__(self, api_key: Optional[str] = None, model: Optional[str] = None, temperature: float = 0.7)",
+      "line_start": 15,
+      "line_end": 48,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "api_key",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        },
+        {
+          "name": "model",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        },
+        {
+          "name": "temperature",
+          "type_annotation": "float",
+          "default_value": "0.7",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_build_system_prompt",
+      "full_name": "jarvis_agent.JarvisAgent._build_system_prompt",
+      "docstring": "Build the system prompt for Jarvis.",
+      "signature": "def _build_system_prompt(self) -> str",
+      "line_start": 50,
+      "line_end": 67,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "chat",
+      "full_name": "jarvis_agent.JarvisAgent.chat",
+      "docstring": "Process a user message and return response.\n\nArgs:\n    user_message: User's message\n\nReturns:\n    Agent's response",
+      "signature": "async def chat(self, user_message: str) -> str",
+      "line_start": 69,
+      "line_end": 116,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "user_message",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "clear_history",
+      "full_name": "jarvis_agent.JarvisAgent.clear_history",
+      "docstring": "Clear conversation history.",
+      "signature": "def clear_history(self)",
+      "line_start": 118,
+      "line_end": 121,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "get_history",
+      "full_name": "jarvis_agent.JarvisAgent.get_history",
+      "docstring": "Get conversation history.",
+      "signature": "def get_history(self) -> List[Dict[str, str]]",
+      "line_start": 123,
+      "line_end": 125,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "List[Dict[str, str]]",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "get_agent",
+      "full_name": "jarvis_agent.get_agent",
+      "docstring": "Get or create Jarvis agent singleton.\n\nReturns:\n    JarvisAgent instance",
+      "signature": "def get_agent() -> JarvisAgent",
+      "line_start": 132,
+      "line_end": 144,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": "JarvisAgent",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "root",
+      "full_name": "main.root",
+      "docstring": "Serve the web interface.",
+      "signature": "async def root()",
+      "line_start": 39,
+      "line_end": 44,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": [
+        "app.get"
+      ]
+    },
+    {
+      "name": "health_check",
+      "full_name": "main.health_check",
+      "docstring": "Health check endpoint.",
+      "signature": "async def health_check()",
+      "line_start": 48,
+      "line_end": 54,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": [
+        "app.get"
+      ]
+    },
+    {
+      "name": "api_health_check",
+      "full_name": "main.api_health_check",
+      "docstring": "API Health check endpoint.",
+      "signature": "async def api_health_check()",
+      "line_start": 58,
+      "line_end": 69,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": [
+        "app.get"
+      ]
+    },
+    {
+      "name": "process_voice",
+      "full_name": "main.process_voice",
+      "docstring": "Process voice input: STT -> Agent -> TTS -> Return audio response.\n\nArgs:\n    audio: Audio file (WAV, WebM, etc.)\n\nReturns:\n    JSON with transcription, response text, and audio URL",
+      "signature": "async def process_voice(audio: UploadFile = File(...))",
+      "line_start": 73,
+      "line_end": 139,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "audio",
+          "type_annotation": "UploadFile",
+          "default_value": "File(...)",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": [
+        "app.post"
+      ]
+    },
+    {
+      "name": "query_knowledge",
+      "full_name": "main.query_knowledge",
+      "docstring": "Query the knowledge graph.\n\nArgs:\n    q: Query string\n\nReturns:\n    Results from knowledge graph",
+      "signature": "async def query_knowledge(q: str)",
+      "line_start": 143,
+      "line_end": 165,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "q",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": [
+        "app.get"
+      ]
+    },
+    {
+      "name": "add_knowledge",
+      "full_name": "main.add_knowledge",
+      "docstring": "Manually add knowledge to the graph.\n\nArgs:\n    data: Knowledge data to add\n\nReturns:\n    Success status",
+      "signature": "async def add_knowledge(data: dict)",
+      "line_start": 169,
+      "line_end": 190,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "data",
+          "type_annotation": "dict",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": [
+        "app.post"
+      ]
+    },
+    {
+      "name": "get_knowledge_graph",
+      "full_name": "main.get_knowledge_graph",
+      "docstring": "Get the knowledge graph structure.\n\nReturns:\n    Graph nodes and edges",
+      "signature": "async def get_knowledge_graph()",
+      "line_start": 194,
+      "line_end": 232,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": [
+        "app.get"
+      ]
+    },
+    {
+      "name": "synthesize",
+      "full_name": "tts.TTSProvider.synthesize",
+      "docstring": "Synthesize speech from text.",
+      "signature": "async def synthesize(self, text: str, output_path: Path) -> Path",
+      "line_start": 16,
+      "line_end": 18,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "text",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "output_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Path",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "tts.EdgeTTSProvider.__init__",
+      "docstring": "Initialize Edge TTS.\n\nArgs:\n    voice: Voice ID to use\n           French: fr-FR-DeniseNeural (female), fr-FR-HenriNeural (male)\n           English: en-US-AriaNeural, en-US-GuyNeural",
+      "signature": "def __init__(self, voice: str = 'fr-FR-DeniseNeural')",
+      "line_start": 27,
+      "line_end": 37,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "voice",
+          "type_annotation": "str",
+          "default_value": "'fr-FR-DeniseNeural'",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "synthesize",
+      "full_name": "tts.EdgeTTSProvider.synthesize",
+      "docstring": "Synthesize speech from text.\n\nArgs:\n    text: Text to synthesize\n    output_path: Where to save audio file\n\nReturns:\n    Path to generated audio file",
+      "signature": "async def synthesize(self, text: str, output_path: Path) -> Path",
+      "line_start": 39,
+      "line_end": 64,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "text",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "output_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Path",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "tts.CoquiTTSProvider.__init__",
+      "docstring": "Initialize Coqui TTS.\n\nArgs:\n    model_name: Model to use",
+      "signature": "def __init__(self, model_name: str = 'tts_models/fr/css10/vits')",
+      "line_start": 73,
+      "line_end": 82,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "model_name",
+          "type_annotation": "str",
+          "default_value": "'tts_models/fr/css10/vits'",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "_load_model",
+      "full_name": "tts.CoquiTTSProvider._load_model",
+      "docstring": "Lazy load the model.",
+      "signature": "def _load_model(self)",
+      "line_start": 84,
+      "line_end": 91,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "synthesize",
+      "full_name": "tts.CoquiTTSProvider.synthesize",
+      "docstring": "Synthesize speech from text.\n\nArgs:\n    text: Text to synthesize\n    output_path: Where to save audio file\n\nReturns:\n    Path to generated audio file",
+      "signature": "async def synthesize(self, text: str, output_path: Path) -> Path",
+      "line_start": 93,
+      "line_end": 117,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "text",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "output_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Path",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "get_tts_provider",
+      "full_name": "tts.get_tts_provider",
+      "docstring": "Get TTS provider based on configuration.\n\nReturns:\n    Configured TTS provider",
+      "signature": "def get_tts_provider() -> TTSProvider",
+      "line_start": 120,
+      "line_end": 138,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": "TTSProvider",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "synthesize_speech",
+      "full_name": "tts.synthesize_speech",
+      "docstring": "Synthesize speech from text using configured provider.\n\nArgs:\n    text: Text to synthesize\n    output_path: Where to save audio file\n\nReturns:\n    Path to generated audio file",
+      "signature": "async def synthesize_speech(text: str, output_path: Path) -> Path",
+      "line_start": 145,
+      "line_end": 161,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "text",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "output_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Path",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "transcribe",
+      "full_name": "stt.STTProvider.transcribe",
+      "docstring": "Transcribe audio file to text.",
+      "signature": "async def transcribe(self, audio_path: Path) -> str",
+      "line_start": 15,
+      "line_end": 17,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "audio_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "stt.WhisperLocalSTT.__init__",
+      "docstring": "Initialize Whisper model.\n\nArgs:\n    model_name: Model size (tiny, base, small, medium, large)",
+      "signature": "def __init__(self, model_name: str = 'base')",
+      "line_start": 26,
+      "line_end": 35,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "model_name",
+          "type_annotation": "str",
+          "default_value": "'base'",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "_load_model",
+      "full_name": "stt.WhisperLocalSTT._load_model",
+      "docstring": "Lazy load the model.",
+      "signature": "def _load_model(self)",
+      "line_start": 37,
+      "line_end": 42,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "transcribe",
+      "full_name": "stt.WhisperLocalSTT.transcribe",
+      "docstring": "Transcribe audio file to text.\n\nArgs:\n    audio_path: Path to audio file\n    language: Language code (fr, en, etc.)\n\nReturns:\n    Transcribed text",
+      "signature": "async def transcribe(self, audio_path: Path, language: str = 'fr') -> str",
+      "line_start": 44,
+      "line_end": 75,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "audio_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "language",
+          "type_annotation": "str",
+          "default_value": "'fr'",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "stt.GroqSTT.__init__",
+      "docstring": "Initialize Groq STT.\n\nArgs:\n    api_key: Groq API key (or set GROQ_API_KEY env var)",
+      "signature": "def __init__(self, api_key: Optional[str] = None)",
+      "line_start": 84,
+      "line_end": 95,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "api_key",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "transcribe",
+      "full_name": "stt.GroqSTT.transcribe",
+      "docstring": "Transcribe audio using Groq API.\n\nArgs:\n    audio_path: Path to audio file\n    language: Language code\n\nReturns:\n    Transcribed text",
+      "signature": "async def transcribe(self, audio_path: Path, language: str = 'fr') -> str",
+      "line_start": 97,
+      "line_end": 134,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "audio_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "language",
+          "type_annotation": "str",
+          "default_value": "'fr'",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "get_stt_provider",
+      "full_name": "stt.get_stt_provider",
+      "docstring": "Get STT provider based on configuration.\n\nReturns:\n    Configured STT provider",
+      "signature": "def get_stt_provider() -> STTProvider",
+      "line_start": 137,
+      "line_end": 154,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": "STTProvider",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "transcribe_audio",
+      "full_name": "stt.transcribe_audio",
+      "docstring": "Transcribe audio file to text using configured provider.\n\nArgs:\n    audio_path: Path to audio file\n    language: Language code (default: fr)\n\nReturns:\n    Transcribed text",
+      "signature": "async def transcribe_audio(audio_path: Path, language: str = 'fr') -> str",
+      "line_start": 161,
+      "line_end": 177,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "audio_path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "language",
+          "type_annotation": "str",
+          "default_value": "'fr'",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "graphiti_client.GraphitiClient.__init__",
+      "docstring": "Initialize Graphiti client with Neo4j backend.\n\nArgs:\n    neo4j_uri: Neo4j connection URI (bolt://...)\n    neo4j_user: Neo4j username\n    neo4j_password: Neo4j password\n    neo4j_database: Neo4j database name (default: \"neo4j\")",
+      "signature": "def __init__(self, neo4j_uri: Optional[str] = None, neo4j_user: Optional[str] = None, neo4j_password: Optional[str] = None, neo4j_database: str = 'neo4j')",
+      "line_start": 19,
+      "line_end": 41,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "neo4j_uri",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        },
+        {
+          "name": "neo4j_user",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        },
+        {
+          "name": "neo4j_password",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        },
+        {
+          "name": "neo4j_database",
+          "type_annotation": "str",
+          "default_value": "'neo4j'",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_initialize_graphiti",
+      "full_name": "graphiti_client.GraphitiClient._initialize_graphiti",
+      "docstring": "Initialize Graphiti with Neo4j driver.",
+      "signature": "def _initialize_graphiti(self)",
+      "line_start": 43,
+      "line_end": 67,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "add_episode",
+      "full_name": "graphiti_client.GraphitiClient.add_episode",
+      "docstring": "Add an episode (document/transaction) to the knowledge graph.\n\nArgs:\n    name: Name/identifier for the episode\n    content: The actual content to process\n    source_description: Description of the source\n    reference_time: Optional timestamp for the episode\n\nReturns:\n    List of created episodic nodes",
+      "signature": "async def add_episode(self, name: str, content: str, source_description: str, reference_time: Optional[str] = None) -> list[EpisodicNode]",
+      "line_start": 69,
+      "line_end": 107,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "content",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "source_description",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "reference_time",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "list[EpisodicNode]",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "search",
+      "full_name": "graphiti_client.GraphitiClient.search",
+      "docstring": "Search the knowledge graph using semantic search.\n\nArgs:\n    query: Search query\n    num_results: Number of results to return\n\nReturns:\n    List of search results",
+      "signature": "async def search(self, query: str, num_results: int = 10) -> list",
+      "line_start": 109,
+      "line_end": 140,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "query",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "num_results",
+          "type_annotation": "int",
+          "default_value": "10",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "list",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "close",
+      "full_name": "graphiti_client.GraphitiClient.close",
+      "docstring": "Close Graphiti connection.",
+      "signature": "async def close(self)",
+      "line_start": 142,
+      "line_end": 151,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "get_graphiti_client",
+      "full_name": "graphiti_client.get_graphiti_client",
+      "docstring": "Get or create the Graphiti client singleton.\n\nReturns:\n    GraphitiClient instance",
+      "signature": "def get_graphiti_client() -> GraphitiClient",
+      "line_start": 158,
+      "line_end": 170,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": "GraphitiClient",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "test_neo4j_connection",
+      "full_name": "test_connection.test_neo4j_connection",
+      "docstring": "Test basic Neo4j connection.",
+      "signature": "async def test_neo4j_connection()",
+      "line_start": 13,
+      "line_end": 37,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "test_graphiti_initialization",
+      "full_name": "test_connection.test_graphiti_initialization",
+      "docstring": "Test Graphiti initialization.",
+      "signature": "async def test_graphiti_initialization()",
+      "line_start": 40,
+      "line_end": 70,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "main",
+      "full_name": "test_connection.main",
+      "docstring": "Run all connection tests.",
+      "signature": "async def main()",
+      "line_start": 73,
+      "line_end": 89,
+      "is_async": true,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [],
+      "return_type": null,
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "python_parser.PythonCodeParser.__init__",
+      "docstring": null,
+      "signature": "def __init__(self, file_path: str, module_name: str)",
+      "line_start": 46,
+      "line_end": 63,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "file_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "module_name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "parse_file",
+      "full_name": "python_parser.PythonCodeParser.parse_file",
+      "docstring": "Parse un fichier Python et extrait toutes les entit\u00e9s.\n\nReturns:\n    ParseResult contenant toutes les entit\u00e9s extraites",
+      "signature": "def parse_file(self) -> ParseResult",
+      "line_start": 65,
+      "line_end": 125,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "ParseResult",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "visit_ClassDef",
+      "full_name": "python_parser.PythonCodeParser.visit_ClassDef",
+      "docstring": "Visite une d\u00e9finition de classe",
+      "signature": "def visit_ClassDef(self, node: ast.ClassDef) -> None",
+      "line_start": 127,
+      "line_end": 168,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.ClassDef",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 7,
+      "decorators": []
+    },
+    {
+      "name": "visit_FunctionDef",
+      "full_name": "python_parser.PythonCodeParser.visit_FunctionDef",
+      "docstring": "Visite une d\u00e9finition de fonction ou m\u00e9thode",
+      "signature": "def visit_FunctionDef(self, node: ast.FunctionDef) -> None",
+      "line_start": 170,
+      "line_end": 172,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.FunctionDef",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "visit_AsyncFunctionDef",
+      "full_name": "python_parser.PythonCodeParser.visit_AsyncFunctionDef",
+      "docstring": "Visite une d\u00e9finition de fonction asynchrone",
+      "signature": "def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None",
+      "line_start": 174,
+      "line_end": 176,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.AsyncFunctionDef",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "_process_function",
+      "full_name": "python_parser.PythonCodeParser._process_function",
+      "docstring": "Traite une d\u00e9finition de fonction (sync ou async)",
+      "signature": "def _process_function(self, node: ast.FunctionDef | ast.AsyncFunctionDef, is_async: bool) -> None",
+      "line_start": 178,
+      "line_end": 239,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.FunctionDef | ast.AsyncFunctionDef",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "is_async",
+          "type_annotation": "bool",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 6,
+      "decorators": []
+    },
+    {
+      "name": "visit_Assign",
+      "full_name": "python_parser.PythonCodeParser.visit_Assign",
+      "docstring": "Visite une assignation de variable",
+      "signature": "def visit_Assign(self, node: ast.Assign) -> None",
+      "line_start": 241,
+      "line_end": 281,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.Assign",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 9,
+      "decorators": []
+    },
+    {
+      "name": "visit_AnnAssign",
+      "full_name": "python_parser.PythonCodeParser.visit_AnnAssign",
+      "docstring": "Visite une assignation avec annotation de type",
+      "signature": "def visit_AnnAssign(self, node: ast.AnnAssign) -> None",
+      "line_start": 283,
+      "line_end": 314,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.AnnAssign",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 6,
+      "decorators": []
+    },
+    {
+      "name": "visit_Import",
+      "full_name": "python_parser.PythonCodeParser.visit_Import",
+      "docstring": "Visite un import simple (import x, import x as y)",
+      "signature": "def visit_Import(self, node: ast.Import) -> None",
+      "line_start": 316,
+      "line_end": 329,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.Import",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "visit_ImportFrom",
+      "full_name": "python_parser.PythonCodeParser.visit_ImportFrom",
+      "docstring": "Visite un import from (from x import y)",
+      "signature": "def visit_ImportFrom(self, node: ast.ImportFrom) -> None",
+      "line_start": 331,
+      "line_end": 351,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.ImportFrom",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "visit_Call",
+      "full_name": "python_parser.PythonCodeParser.visit_Call",
+      "docstring": "Visite un appel de fonction",
+      "signature": "def visit_Call(self, node: ast.Call) -> None",
+      "line_start": 353,
+      "line_end": 360,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.Call",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "None",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "_extract_parameters",
+      "full_name": "python_parser.PythonCodeParser._extract_parameters",
+      "docstring": "Extrait les param\u00e8tres d'une fonction",
+      "signature": "def _extract_parameters(self, args: ast.arguments) -> List[ParameterModel]",
+      "line_start": 364,
+      "line_end": 417,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "args",
+          "type_annotation": "ast.arguments",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "List[ParameterModel]",
+      "complexity": 9,
+      "decorators": []
+    },
+    {
+      "name": "_format_parameter",
+      "full_name": "python_parser.PythonCodeParser._format_parameter",
+      "docstring": "Formate un param\u00e8tre pour la signature",
+      "signature": "def _format_parameter(self, param: ParameterModel) -> str",
+      "line_start": 419,
+      "line_end": 426,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "param",
+          "type_annotation": "ParameterModel",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_get_annotation",
+      "full_name": "python_parser.PythonCodeParser._get_annotation",
+      "docstring": "Extrait une annotation de type sous forme de string",
+      "signature": "def _get_annotation(self, annotation: ast.expr) -> str",
+      "line_start": 428,
+      "line_end": 433,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "annotation",
+          "type_annotation": "ast.expr",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "_get_name",
+      "full_name": "python_parser.PythonCodeParser._get_name",
+      "docstring": "Extrait le nom d'un n\u0153ud (Name, Attribute, etc.)",
+      "signature": "def _get_name(self, node: ast.expr) -> str",
+      "line_start": 435,
+      "line_end": 447,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.expr",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 5,
+      "decorators": []
+    },
+    {
+      "name": "_get_decorator_name",
+      "full_name": "python_parser.PythonCodeParser._get_decorator_name",
+      "docstring": "Extrait le nom d'un d\u00e9corateur",
+      "signature": "def _get_decorator_name(self, decorator: ast.expr) -> str",
+      "line_start": 449,
+      "line_end": 458,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "decorator",
+          "type_annotation": "ast.expr",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_get_access_modifier",
+      "full_name": "python_parser.PythonCodeParser._get_access_modifier",
+      "docstring": "D\u00e9termine le modificateur d'acc\u00e8s bas\u00e9 sur les conventions Python",
+      "signature": "def _get_access_modifier(self, name: str) -> AccessModifier",
+      "line_start": 460,
+      "line_end": 467,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "AccessModifier",
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_determine_import_type",
+      "full_name": "python_parser.PythonCodeParser._determine_import_type",
+      "docstring": "D\u00e9termine si un import est standard, third-party ou local",
+      "signature": "def _determine_import_type(self, module_name: str) -> ImportType",
+      "line_start": 469,
+      "line_end": 485,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "module_name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "ImportType",
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_is_generator",
+      "full_name": "python_parser.PythonCodeParser._is_generator",
+      "docstring": "V\u00e9rifie si une fonction est un g\u00e9n\u00e9rateur (contient yield)",
+      "signature": "def _is_generator(self, node: ast.FunctionDef | ast.AsyncFunctionDef) -> bool",
+      "line_start": 487,
+      "line_end": 492,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.FunctionDef | ast.AsyncFunctionDef",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "bool",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "_calculate_complexity",
+      "full_name": "python_parser.PythonCodeParser._calculate_complexity",
+      "docstring": "Calcule la complexit\u00e9 cyclomatique d'une fonction.\nComplexit\u00e9 = nombre de chemins d'ex\u00e9cution = 1 + nombre de d\u00e9cisions",
+      "signature": "def _calculate_complexity(self, node: ast.FunctionDef | ast.AsyncFunctionDef) -> int",
+      "line_start": 494,
+      "line_end": 511,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "node",
+          "type_annotation": "ast.FunctionDef | ast.AsyncFunctionDef",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "int",
+      "complexity": 5,
+      "decorators": []
+    },
+    {
+      "name": "_count_lines_of_code",
+      "full_name": "python_parser.PythonCodeParser._count_lines_of_code",
+      "docstring": "Compte les lignes de code (sans lignes vides et commentaires)",
+      "signature": "def _count_lines_of_code(self, source_code: str) -> int",
+      "line_start": 513,
+      "line_end": 524,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "source_code",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "int",
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "parse_python_file",
+      "full_name": "python_parser.parse_python_file",
+      "docstring": "Parse un fichier Python et extrait toutes les entit\u00e9s.\n\nArgs:\n    file_path: Chemin du fichier Python \u00e0 analyser\n\nReturns:\n    ParseResult contenant toutes les entit\u00e9s extraites",
+      "signature": "def parse_python_file(file_path: str) -> ParseResult",
+      "line_start": 527,
+      "line_end": 541,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "file_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "ParseResult",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "parse_python_project",
+      "full_name": "python_parser.parse_python_project",
+      "docstring": "Parse tous les fichiers Python d'un projet.\n\nArgs:\n    project_path: Chemin racine du projet\n\nReturns:\n    Liste de ParseResult pour chaque fichier Python",
+      "signature": "def parse_python_project(project_path: str) -> List[ParseResult]",
+      "line_start": 544,
+      "line_end": 570,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "project_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "List[ParseResult]",
+      "complexity": 6,
+      "decorators": []
+    },
+    {
+      "name": "test_parse_single_file",
+      "full_name": "test_analyzer.test_parse_single_file",
+      "docstring": "Test du parsing d'un seul fichier.",
+      "signature": "def test_parse_single_file(file_path: str)",
+      "line_start": 17,
+      "line_end": 70,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "file_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 14,
+      "decorators": []
+    },
+    {
+      "name": "test_extract_project",
+      "full_name": "test_analyzer.test_extract_project",
+      "docstring": "Test de l'extraction compl\u00e8te d'un projet.",
+      "signature": "def test_extract_project(project_path: str)",
+      "line_start": 73,
+      "line_end": 126,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "project_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 10,
+      "decorators": []
+    },
+    {
+      "name": "export_graph_to_json",
+      "full_name": "test_analyzer.export_graph_to_json",
+      "docstring": "Exporte le graph en JSON pour inspection.",
+      "signature": "def export_graph_to_json(graph, output_path: str)",
+      "line_start": 129,
+      "line_end": 145,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "graph",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "output_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 6,
+      "decorators": []
+    },
+    {
+      "name": "build_indices",
+      "full_name": "entity_extractor.CodeGraph.build_indices",
+      "docstring": "Construit les indices pour recherche rapide",
+      "signature": "def build_indices(self)",
+      "line_start": 55,
+      "line_end": 59,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "get_class",
+      "full_name": "entity_extractor.CodeGraph.get_class",
+      "docstring": "R\u00e9cup\u00e8re une classe par son nom complet",
+      "signature": "def get_class(self, full_name: str) -> Optional[ClassModel]",
+      "line_start": 61,
+      "line_end": 63,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "full_name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Optional[ClassModel]",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "get_function",
+      "full_name": "entity_extractor.CodeGraph.get_function",
+      "docstring": "R\u00e9cup\u00e8re une fonction par son nom complet",
+      "signature": "def get_function(self, full_name: str) -> Optional[FunctionModel]",
+      "line_start": 65,
+      "line_end": 67,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "full_name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Optional[FunctionModel]",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "get_module",
+      "full_name": "entity_extractor.CodeGraph.get_module",
+      "docstring": "R\u00e9cup\u00e8re un module par son nom",
+      "signature": "def get_module(self, name: str) -> Optional[ModuleModel]",
+      "line_start": 69,
+      "line_end": 71,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Optional[ModuleModel]",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "__init__",
+      "full_name": "entity_extractor.CodeEntityExtractor.__init__",
+      "docstring": null,
+      "signature": "def __init__(self, project_path: str, project_name: str)",
+      "line_start": 79,
+      "line_end": 89,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "project_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "project_name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "extract_project",
+      "full_name": "entity_extractor.CodeEntityExtractor.extract_project",
+      "docstring": "Extrait toutes les entit\u00e9s et relations d'un projet.\n\nReturns:\n    CodeGraph contenant toutes les entit\u00e9s et relations",
+      "signature": "def extract_project(self) -> CodeGraph",
+      "line_start": 91,
+      "line_end": 117,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "CodeGraph",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "_parse_all_files",
+      "full_name": "entity_extractor.CodeEntityExtractor._parse_all_files",
+      "docstring": "Parse tous les fichiers Python du projet",
+      "signature": "def _parse_all_files(self)",
+      "line_start": 119,
+      "line_end": 135,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_should_ignore_path",
+      "full_name": "entity_extractor.CodeEntityExtractor._should_ignore_path",
+      "docstring": "V\u00e9rifie si un chemin doit \u00eatre ignor\u00e9",
+      "signature": "def _should_ignore_path(self, path: Path) -> bool",
+      "line_start": 137,
+      "line_end": 147,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "path",
+          "type_annotation": "Path",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "bool",
+      "complexity": 4,
+      "decorators": []
+    },
+    {
+      "name": "_track_relationships",
+      "full_name": "entity_extractor.CodeEntityExtractor._track_relationships",
+      "docstring": "Track les relations pour construction ult\u00e9rieure du graph",
+      "signature": "def _track_relationships(self, result: ParseResult)",
+      "line_start": 149,
+      "line_end": 154,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "result",
+          "type_annotation": "ParseResult",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "_build_graph",
+      "full_name": "entity_extractor.CodeEntityExtractor._build_graph",
+      "docstring": "Construit le knowledge graph \u00e0 partir des r\u00e9sultats de parsing",
+      "signature": "def _build_graph(self, project: ProjectModel) -> CodeGraph",
+      "line_start": 158,
+      "line_end": 182,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "project",
+          "type_annotation": "ProjectModel",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "CodeGraph",
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "_extract_packages",
+      "full_name": "entity_extractor.CodeEntityExtractor._extract_packages",
+      "docstring": "Extrait les packages externes depuis les imports",
+      "signature": "def _extract_packages(self, graph: CodeGraph)",
+      "line_start": 184,
+      "line_end": 207,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "graph",
+          "type_annotation": "CodeGraph",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 5,
+      "decorators": []
+    },
+    {
+      "name": "_build_contains_relations",
+      "full_name": "entity_extractor.CodeEntityExtractor._build_contains_relations",
+      "docstring": "Construit les relations CONTAINS (Project->Module, Module->Class, etc.)",
+      "signature": "def _build_contains_relations(self, graph: CodeGraph)",
+      "line_start": 209,
+      "line_end": 251,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "graph",
+          "type_annotation": "CodeGraph",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 9,
+      "decorators": []
+    },
+    {
+      "name": "_build_imports_relations",
+      "full_name": "entity_extractor.CodeEntityExtractor._build_imports_relations",
+      "docstring": "Construit les relations IMPORTS",
+      "signature": "def _build_imports_relations(self, graph: CodeGraph)",
+      "line_start": 253,
+      "line_end": 266,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "graph",
+          "type_annotation": "CodeGraph",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 2,
+      "decorators": []
+    },
+    {
+      "name": "_build_inherits_relations",
+      "full_name": "entity_extractor.CodeEntityExtractor._build_inherits_relations",
+      "docstring": "Construit les relations INHERITS (Class->Class)",
+      "signature": "def _build_inherits_relations(self, graph: CodeGraph)",
+      "line_start": 268,
+      "line_end": 282,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "graph",
+          "type_annotation": "CodeGraph",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": null,
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "_resolve_class_name",
+      "full_name": "entity_extractor.CodeEntityExtractor._resolve_class_name",
+      "docstring": "R\u00e9sout le nom complet d'une classe en utilisant le contexte.\nSimplifi\u00e9 pour l'instant, devrait regarder les imports.",
+      "signature": "def _resolve_class_name(self, class_name: str, context: str, graph: CodeGraph) -> str",
+      "line_start": 284,
+      "line_end": 301,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "class_name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "context",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "graph",
+          "type_annotation": "CodeGraph",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "str",
+      "complexity": 3,
+      "decorators": []
+    },
+    {
+      "name": "_is_stdlib",
+      "full_name": "entity_extractor.CodeEntityExtractor._is_stdlib",
+      "docstring": "V\u00e9rifie si un package est dans la stdlib Python",
+      "signature": "def _is_stdlib(self, package_name: str) -> bool",
+      "line_start": 303,
+      "line_end": 312,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "package_name",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "bool",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "_extract_version",
+      "full_name": "entity_extractor.CodeEntityExtractor._extract_version",
+      "docstring": "Tente d'extraire la version du projet depuis pyproject.toml ou __init__.py",
+      "signature": "def _extract_version(self) -> Optional[str]",
+      "line_start": 314,
+      "line_end": 317,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Optional[str]",
+      "complexity": 1,
+      "decorators": []
+    },
+    {
+      "name": "_extract_description",
+      "full_name": "entity_extractor.CodeEntityExtractor._extract_description",
+      "docstring": "Tente d'extraire la description depuis README ou pyproject.toml",
+      "signature": "def _extract_description(self) -> Optional[str]",
+      "line_start": 319,
+      "line_end": 333,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": true,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "self",
+          "type_annotation": null,
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "Optional[str]",
+      "complexity": 6,
+      "decorators": []
+    },
+    {
+      "name": "extract_code_graph",
+      "full_name": "entity_extractor.extract_code_graph",
+      "docstring": "Extrait le knowledge graph d'un projet de code.\n\nArgs:\n    project_path: Chemin racine du projet\n    project_name: Nom du projet (optionnel, d\u00e9duit du chemin sinon)\n\nReturns:\n    CodeGraph contenant toutes les entit\u00e9s et relations",
+      "signature": "def extract_code_graph(project_path: str, project_name: Optional[str] = None) -> CodeGraph",
+      "line_start": 336,
+      "line_end": 351,
+      "is_async": false,
+      "is_generator": false,
+      "is_method": false,
+      "is_static": false,
+      "is_class_method": false,
+      "parameters": [
+        {
+          "name": "project_path",
+          "type_annotation": "str",
+          "default_value": null,
+          "is_optional": false,
+          "is_variadic": false
+        },
+        {
+          "name": "project_name",
+          "type_annotation": "Optional[str]",
+          "default_value": "None",
+          "is_optional": true,
+          "is_variadic": false
+        }
+      ],
+      "return_type": "CodeGraph",
+      "complexity": 2,
+      "decorators": []
+    }
+  ],
+  "variables": [
+    {
+      "name": "PYTHON",
+      "full_name": "code_entities.Language.PYTHON",
+      "type_annotation": null,
+      "value": "python",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 16
+    },
+    {
+      "name": "JAVASCRIPT",
+      "full_name": "code_entities.Language.JAVASCRIPT",
+      "type_annotation": null,
+      "value": "javascript",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 17
+    },
+    {
+      "name": "TYPESCRIPT",
+      "full_name": "code_entities.Language.TYPESCRIPT",
+      "type_annotation": null,
+      "value": "typescript",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 18
+    },
+    {
+      "name": "GO",
+      "full_name": "code_entities.Language.GO",
+      "type_annotation": null,
+      "value": "go",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 19
+    },
+    {
+      "name": "JAVA",
+      "full_name": "code_entities.Language.JAVA",
+      "type_annotation": null,
+      "value": "java",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 20
+    },
+    {
+      "name": "RUST",
+      "full_name": "code_entities.Language.RUST",
+      "type_annotation": null,
+      "value": "rust",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 21
+    },
+    {
+      "name": "UNKNOWN",
+      "full_name": "code_entities.Language.UNKNOWN",
+      "type_annotation": null,
+      "value": "unknown",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 22
+    },
+    {
+      "name": "PUBLIC",
+      "full_name": "code_entities.AccessModifier.PUBLIC",
+      "type_annotation": null,
+      "value": "public",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 27
+    },
+    {
+      "name": "PRIVATE",
+      "full_name": "code_entities.AccessModifier.PRIVATE",
+      "type_annotation": null,
+      "value": "private",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 28
+    },
+    {
+      "name": "PROTECTED",
+      "full_name": "code_entities.AccessModifier.PROTECTED",
+      "type_annotation": null,
+      "value": "protected",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 29
+    },
+    {
+      "name": "GLOBAL",
+      "full_name": "code_entities.Scope.GLOBAL",
+      "type_annotation": null,
+      "value": "global",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 34
+    },
+    {
+      "name": "CLASS",
+      "full_name": "code_entities.Scope.CLASS",
+      "type_annotation": null,
+      "value": "class",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 35
+    },
+    {
+      "name": "INSTANCE",
+      "full_name": "code_entities.Scope.INSTANCE",
+      "type_annotation": null,
+      "value": "instance",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 36
+    },
+    {
+      "name": "LOCAL",
+      "full_name": "code_entities.Scope.LOCAL",
+      "type_annotation": null,
+      "value": "local",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 37
+    },
+    {
+      "name": "STANDARD",
+      "full_name": "code_entities.ImportType.STANDARD",
+      "type_annotation": null,
+      "value": "standard",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 42
+    },
+    {
+      "name": "THIRD_PARTY",
+      "full_name": "code_entities.ImportType.THIRD_PARTY",
+      "type_annotation": null,
+      "value": "third_party",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 43
+    },
+    {
+      "name": "LOCAL",
+      "full_name": "code_entities.ImportType.LOCAL",
+      "type_annotation": null,
+      "value": "local",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 44
+    },
+    {
+      "name": "COMMENT",
+      "full_name": "code_entities.CommentType.COMMENT",
+      "type_annotation": null,
+      "value": "comment",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 49
+    },
+    {
+      "name": "TODO",
+      "full_name": "code_entities.CommentType.TODO",
+      "type_annotation": null,
+      "value": "todo",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 50
+    },
+    {
+      "name": "FIXME",
+      "full_name": "code_entities.CommentType.FIXME",
+      "type_annotation": null,
+      "value": "fixme",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 51
+    },
+    {
+      "name": "NOTE",
+      "full_name": "code_entities.CommentType.NOTE",
+      "type_annotation": null,
+      "value": "note",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 52
+    },
+    {
+      "name": "HACK",
+      "full_name": "code_entities.CommentType.HACK",
+      "type_annotation": null,
+      "value": "hack",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 53
+    },
+    {
+      "name": "IF",
+      "full_name": "code_entities.CodeBlockType.IF",
+      "type_annotation": null,
+      "value": "if",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 58
+    },
+    {
+      "name": "FOR",
+      "full_name": "code_entities.CodeBlockType.FOR",
+      "type_annotation": null,
+      "value": "for",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 59
+    },
+    {
+      "name": "WHILE",
+      "full_name": "code_entities.CodeBlockType.WHILE",
+      "type_annotation": null,
+      "value": "while",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 60
+    },
+    {
+      "name": "TRY",
+      "full_name": "code_entities.CodeBlockType.TRY",
+      "type_annotation": null,
+      "value": "try",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 61
+    },
+    {
+      "name": "WITH",
+      "full_name": "code_entities.CodeBlockType.WITH",
+      "type_annotation": null,
+      "value": "with",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 62
+    },
+    {
+      "name": "MATCH",
+      "full_name": "code_entities.CodeBlockType.MATCH",
+      "type_annotation": null,
+      "value": "match",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 63
+    },
+    {
+      "name": "SWITCH",
+      "full_name": "code_entities.CodeBlockType.SWITCH",
+      "type_annotation": null,
+      "value": "switch",
+      "is_constant": true,
+      "scope": "class",
+      "line_number": 64
+    },
+    {
+      "name": "name",
+      "full_name": "code_entities.ProjectModel.name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 71
+    },
+    {
+      "name": "path",
+      "full_name": "code_entities.ProjectModel.path",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 72
+    },
+    {
+      "name": "language",
+      "full_name": "code_entities.ProjectModel.language",
+      "type_annotation": "Language",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 73
+    },
+    {
+      "name": "version",
+      "full_name": "code_entities.ProjectModel.version",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 74
+    },
+    {
+      "name": "description",
+      "full_name": "code_entities.ProjectModel.description",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 75
+    },
+    {
+      "name": "created_at",
+      "full_name": "code_entities.ProjectModel.created_at",
+      "type_annotation": "Optional[datetime]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 76
+    },
+    {
+      "name": "analyzed_at",
+      "full_name": "code_entities.ProjectModel.analyzed_at",
+      "type_annotation": "datetime",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 77
+    },
+    {
+      "name": "json_schema_extra",
+      "full_name": "code_entities.Config.json_schema_extra",
+      "type_annotation": null,
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 80
+    },
+    {
+      "name": "name",
+      "full_name": "code_entities.ModuleModel.name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 93
+    },
+    {
+      "name": "path",
+      "full_name": "code_entities.ModuleModel.path",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 94
+    },
+    {
+      "name": "language",
+      "full_name": "code_entities.ModuleModel.language",
+      "type_annotation": "Language",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 95
+    },
+    {
+      "name": "lines_of_code",
+      "full_name": "code_entities.ModuleModel.lines_of_code",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 96
+    },
+    {
+      "name": "docstring",
+      "full_name": "code_entities.ModuleModel.docstring",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 97
+    },
+    {
+      "name": "imports_count",
+      "full_name": "code_entities.ModuleModel.imports_count",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 98
+    },
+    {
+      "name": "complexity_score",
+      "full_name": "code_entities.ModuleModel.complexity_score",
+      "type_annotation": "Optional[float]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 99
+    },
+    {
+      "name": "json_schema_extra",
+      "full_name": "code_entities.Config.json_schema_extra",
+      "type_annotation": null,
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 102
+    },
+    {
+      "name": "name",
+      "full_name": "code_entities.ClassModel.name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 115
+    },
+    {
+      "name": "full_name",
+      "full_name": "code_entities.ClassModel.full_name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 116
+    },
+    {
+      "name": "docstring",
+      "full_name": "code_entities.ClassModel.docstring",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 117
+    },
+    {
+      "name": "line_start",
+      "full_name": "code_entities.ClassModel.line_start",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 118
+    },
+    {
+      "name": "line_end",
+      "full_name": "code_entities.ClassModel.line_end",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 119
+    },
+    {
+      "name": "is_abstract",
+      "full_name": "code_entities.ClassModel.is_abstract",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 120
+    },
+    {
+      "name": "decorators",
+      "full_name": "code_entities.ClassModel.decorators",
+      "type_annotation": "List[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 121
+    },
+    {
+      "name": "access_modifier",
+      "full_name": "code_entities.ClassModel.access_modifier",
+      "type_annotation": "AccessModifier",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 122
+    },
+    {
+      "name": "base_classes",
+      "full_name": "code_entities.ClassModel.base_classes",
+      "type_annotation": "List[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 123
+    },
+    {
+      "name": "json_schema_extra",
+      "full_name": "code_entities.Config.json_schema_extra",
+      "type_annotation": null,
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 126
+    },
+    {
+      "name": "name",
+      "full_name": "code_entities.ParameterModel.name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 140
+    },
+    {
+      "name": "type_annotation",
+      "full_name": "code_entities.ParameterModel.type_annotation",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 141
+    },
+    {
+      "name": "default_value",
+      "full_name": "code_entities.ParameterModel.default_value",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 142
+    },
+    {
+      "name": "is_optional",
+      "full_name": "code_entities.ParameterModel.is_optional",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 143
+    },
+    {
+      "name": "is_variadic",
+      "full_name": "code_entities.ParameterModel.is_variadic",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 144
+    },
+    {
+      "name": "name",
+      "full_name": "code_entities.FunctionModel.name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 149
+    },
+    {
+      "name": "full_name",
+      "full_name": "code_entities.FunctionModel.full_name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 150
+    },
+    {
+      "name": "docstring",
+      "full_name": "code_entities.FunctionModel.docstring",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 151
+    },
+    {
+      "name": "signature",
+      "full_name": "code_entities.FunctionModel.signature",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 152
+    },
+    {
+      "name": "line_start",
+      "full_name": "code_entities.FunctionModel.line_start",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 153
+    },
+    {
+      "name": "line_end",
+      "full_name": "code_entities.FunctionModel.line_end",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 154
+    },
+    {
+      "name": "is_async",
+      "full_name": "code_entities.FunctionModel.is_async",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 155
+    },
+    {
+      "name": "is_generator",
+      "full_name": "code_entities.FunctionModel.is_generator",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 156
+    },
+    {
+      "name": "is_method",
+      "full_name": "code_entities.FunctionModel.is_method",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 157
+    },
+    {
+      "name": "is_static",
+      "full_name": "code_entities.FunctionModel.is_static",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 158
+    },
+    {
+      "name": "is_class_method",
+      "full_name": "code_entities.FunctionModel.is_class_method",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 159
+    },
+    {
+      "name": "parameters",
+      "full_name": "code_entities.FunctionModel.parameters",
+      "type_annotation": "List[ParameterModel]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 160
+    },
+    {
+      "name": "return_type",
+      "full_name": "code_entities.FunctionModel.return_type",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 161
+    },
+    {
+      "name": "complexity",
+      "full_name": "code_entities.FunctionModel.complexity",
+      "type_annotation": "Optional[int]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 162
+    },
+    {
+      "name": "decorators",
+      "full_name": "code_entities.FunctionModel.decorators",
+      "type_annotation": "List[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 163
+    },
+    {
+      "name": "json_schema_extra",
+      "full_name": "code_entities.Config.json_schema_extra",
+      "type_annotation": null,
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 166
+    },
+    {
+      "name": "name",
+      "full_name": "code_entities.VariableModel.name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 181
+    },
+    {
+      "name": "full_name",
+      "full_name": "code_entities.VariableModel.full_name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 182
+    },
+    {
+      "name": "type_annotation",
+      "full_name": "code_entities.VariableModel.type_annotation",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 183
+    },
+    {
+      "name": "value",
+      "full_name": "code_entities.VariableModel.value",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 184
+    },
+    {
+      "name": "is_constant",
+      "full_name": "code_entities.VariableModel.is_constant",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 185
+    },
+    {
+      "name": "scope",
+      "full_name": "code_entities.VariableModel.scope",
+      "type_annotation": "Scope",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 186
+    },
+    {
+      "name": "line_number",
+      "full_name": "code_entities.VariableModel.line_number",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 187
+    },
+    {
+      "name": "json_schema_extra",
+      "full_name": "code_entities.Config.json_schema_extra",
+      "type_annotation": null,
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 190
+    },
+    {
+      "name": "module_name",
+      "full_name": "code_entities.ImportModel.module_name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 203
+    },
+    {
+      "name": "imported_names",
+      "full_name": "code_entities.ImportModel.imported_names",
+      "type_annotation": "List[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 204
+    },
+    {
+      "name": "alias",
+      "full_name": "code_entities.ImportModel.alias",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 205
+    },
+    {
+      "name": "is_relative",
+      "full_name": "code_entities.ImportModel.is_relative",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 206
+    },
+    {
+      "name": "import_type",
+      "full_name": "code_entities.ImportModel.import_type",
+      "type_annotation": "ImportType",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 207
+    },
+    {
+      "name": "line_number",
+      "full_name": "code_entities.ImportModel.line_number",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 208
+    },
+    {
+      "name": "json_schema_extra",
+      "full_name": "code_entities.Config.json_schema_extra",
+      "type_annotation": null,
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 211
+    },
+    {
+      "name": "name",
+      "full_name": "code_entities.PackageModel.name",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 223
+    },
+    {
+      "name": "version",
+      "full_name": "code_entities.PackageModel.version",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 224
+    },
+    {
+      "name": "is_external",
+      "full_name": "code_entities.PackageModel.is_external",
+      "type_annotation": "bool",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 225
+    },
+    {
+      "name": "usage_count",
+      "full_name": "code_entities.PackageModel.usage_count",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 226
+    },
+    {
+      "name": "json_schema_extra",
+      "full_name": "code_entities.Config.json_schema_extra",
+      "type_annotation": null,
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 229
+    },
+    {
+      "name": "content",
+      "full_name": "code_entities.CommentModel.content",
+      "type_annotation": "str",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 241
+    },
+    {
+      "name": "type",
+      "full_name": "code_entities.CommentModel.type",
+      "type_annotation": "CommentType",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 242
+    },
+    {
+      "name": "line_number",
+      "full_name": "code_entities.CommentModel.line_number",
+      "type_annotation": "int",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 243
+    },
+    {
+      "name": "author",
+      "full_name": "code_entities.CommentModel.author",
+      "type_annotation": "Optional[str]",
+      "value": null,
+      "is_constant": false,
+      "scope": "class",
+      "line_number": 244
+    }
+  ],
+  "packages": [
+    {
+      "name": "loguru",
+      "version": null,
+      "is_external": true,
+      "usage_count": 7
+    },
+    {
+      "name": "dotenv",
+      "version": null,
+      "is_external": true,
+      "usage_count": 3
+    },
+    {
+      "name": "pydantic",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "openai",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "fastapi",
+      "version": null,
+      "is_external": true,
+      "usage_count": 4
+    },
+    {
+      "name": "src",
+      "version": null,
+      "is_external": true,
+      "usage_count": 9
+    },
+    {
+      "name": "uuid",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "uvicorn",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "edge_tts",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "TTS",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "whisper",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "httpx",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "graphiti_core",
+      "version": null,
+      "is_external": true,
+      "usage_count": 6
+    },
+    {
+      "name": "neo4j",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    },
+    {
+      "name": "",
+      "version": null,
+      "is_external": true,
+      "usage_count": 1
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+# Knowledge Graph Schema for Code Analysis
+# Ce schéma définit les entités et relations pour analyser du code source
+
+entities:
+  # Entités principales du code
+
+  Project:
+    description: "Un projet/repository de code"
+    properties:
+      - name: "Nom du projet"
+      - path: "Chemin racine du projet"
+      - language: "Langage principal (python, javascript, typescript, etc.)"
+      - version: "Version du projet"
+      - description: "Description du projet"
+      - created_at: "Date de création"
+      - analyzed_at: "Date de dernière analyse"
+
+  Module:
+    description: "Un fichier source (module Python, fichier JS/TS, etc.)"
+    properties:
+      - name: "Nom du module"
+      - path: "Chemin relatif du fichier"
+      - language: "Langage du fichier"
+      - lines_of_code: "Nombre de lignes de code"
+      - docstring: "Documentation du module"
+      - imports_count: "Nombre d'imports"
+      - complexity_score: "Score de complexité"
+
+  Class:
+    description: "Une classe/type défini dans le code"
+    properties:
+      - name: "Nom de la classe"
+      - full_name: "Nom qualifié complet (module.Class)"
+      - docstring: "Documentation de la classe"
+      - line_start: "Ligne de début"
+      - line_end: "Ligne de fin"
+      - is_abstract: "Est une classe abstraite"
+      - decorators: "Liste des décorateurs"
+      - access_modifier: "public, private, protected"
+
+  Function:
+    description: "Une fonction/méthode définie dans le code"
+    properties:
+      - name: "Nom de la fonction"
+      - full_name: "Nom qualifié complet"
+      - docstring: "Documentation de la fonction"
+      - signature: "Signature complète avec types"
+      - line_start: "Ligne de début"
+      - line_end: "Ligne de fin"
+      - is_async: "Est une fonction asynchrone"
+      - is_generator: "Est un générateur"
+      - parameters: "Liste des paramètres avec types"
+      - return_type: "Type de retour"
+      - complexity: "Complexité cyclomatique"
+      - decorators: "Liste des décorateurs"
+
+  Variable:
+    description: "Une variable/constante globale ou attribut de classe"
+    properties:
+      - name: "Nom de la variable"
+      - full_name: "Nom qualifié complet"
+      - type: "Type de la variable"
+      - value: "Valeur initiale (si constante)"
+      - is_constant: "Est une constante"
+      - scope: "global, class, instance"
+      - line_number: "Ligne de déclaration"
+
+  Import:
+    description: "Une déclaration d'import"
+    properties:
+      - module_name: "Nom du module importé"
+      - imported_names: "Noms spécifiques importés"
+      - alias: "Alias utilisé"
+      - is_relative: "Import relatif ou absolu"
+      - line_number: "Ligne de l'import"
+
+  Package:
+    description: "Un package/dépendance externe"
+    properties:
+      - name: "Nom du package"
+      - version: "Version utilisée"
+      - is_external: "Package externe ou interne"
+      - usage_count: "Nombre d'utilisations dans le projet"
+
+  Comment:
+    description: "Commentaire ou TODO dans le code"
+    properties:
+      - content: "Contenu du commentaire"
+      - type: "comment, todo, fixme, note"
+      - line_number: "Ligne du commentaire"
+      - author: "Auteur (si extrait de git blame)"
+
+  CodeBlock:
+    description: "Bloc de code significatif (if, for, try, etc.)"
+    properties:
+      - type: "if, for, while, try, with, etc."
+      - condition: "Condition (pour if/while)"
+      - line_start: "Ligne de début"
+      - line_end: "Ligne de fin"
+      - nesting_level: "Niveau d'imbrication"
+
+relations:
+  # Relations entre entités
+
+  CONTAINS:
+    from: [Project, Module, Class]
+    to: [Module, Class, Function, Variable]
+    description: "Une entité contient une autre (Project->Module, Class->Method)"
+    properties:
+      - order: "Ordre de définition dans le fichier"
+
+  IMPORTS:
+    from: [Module]
+    to: [Module, Package]
+    description: "Un module importe un autre module ou package"
+    properties:
+      - import_type: "standard, third-party, local"
+      - line_number: "Ligne de l'import"
+
+  INHERITS:
+    from: [Class]
+    to: [Class]
+    description: "Une classe hérite d'une autre"
+    properties:
+      - inheritance_order: "Ordre dans la liste des parents"
+      - is_multiple: "Héritage multiple"
+
+  IMPLEMENTS:
+    from: [Class]
+    to: [Class]
+    description: "Une classe implémente une interface/protocole"
+    properties: []
+
+  CALLS:
+    from: [Function]
+    to: [Function]
+    description: "Une fonction appelle une autre fonction"
+    properties:
+      - call_count: "Nombre d'appels estimé"
+      - is_recursive: "Appel récursif"
+      - line_numbers: "Lignes où les appels sont faits"
+
+  USES:
+    from: [Function, Class]
+    to: [Variable, Class]
+    description: "Une fonction/classe utilise une variable ou classe"
+    properties:
+      - usage_type: "read, write, both"
+      - line_numbers: "Lignes d'utilisation"
+
+  RETURNS:
+    from: [Function]
+    to: [Class]
+    description: "Une fonction retourne un type spécifique"
+    properties:
+      - is_optional: "Retour optionnel (Optional[Type])"
+
+  TAKES_PARAMETER:
+    from: [Function]
+    to: [Class]
+    description: "Une fonction prend un paramètre d'un type spécifique"
+    properties:
+      - parameter_name: "Nom du paramètre"
+      - is_optional: "Paramètre optionnel"
+      - default_value: "Valeur par défaut"
+
+  DECORATES:
+    from: [Function]
+    to: [Function, Class]
+    description: "Une fonction décore une autre fonction/classe"
+    properties:
+      - decorator_args: "Arguments du décorateur"
+
+  RAISES:
+    from: [Function]
+    to: [Class]
+    description: "Une fonction peut lever une exception"
+    properties:
+      - is_documented: "Exception documentée dans docstring"
+      - line_numbers: "Lignes où l'exception est levée"
+
+  HANDLES:
+    from: [Function]
+    to: [Class]
+    description: "Une fonction gère une exception dans un try/except"
+    properties:
+      - line_number: "Ligne du bloc try/except"
+
+  DEPENDS_ON:
+    from: [Module, Class, Function]
+    to: [Module, Class, Function]
+    description: "Dépendance générale entre entités"
+    properties:
+      - dependency_type: "strong, weak"
+      - reason: "Raison de la dépendance"
+
+  SIMILAR_TO:
+    from: [Function, Class]
+    to: [Function, Class]
+    description: "Entités similaires (code dupliqué, patterns similaires)"
+    properties:
+      - similarity_score: "Score de similarité 0-1"
+      - similarity_reason: "Raison de la similarité"
+
+  TESTED_BY:
+    from: [Function, Class]
+    to: [Function]
+    description: "Une fonction/classe est testée par une fonction de test"
+    properties:
+      - test_file: "Fichier de test"
+      - coverage: "Couverture de test estimée"
+
+use_cases:
+  # Exemples de requêtes GraphRAG possibles
+
+  - name: "Trouver toutes les fonctions qui utilisent une classe"
+    query: "MATCH (f:Function)-[:USES]->(c:Class {name: 'MyClass'}) RETURN f"
+
+  - name: "Identifier les dépendances circulaires"
+    query: "MATCH (m1:Module)-[:IMPORTS*]->(m2:Module)-[:IMPORTS*]->(m1) RETURN m1, m2"
+
+  - name: "Trouver du code mort (fonctions jamais appelées)"
+    query: "MATCH (f:Function) WHERE NOT (f)<-[:CALLS]-() RETURN f"
+
+  - name: "Analyser l'impact d'un changement"
+    query: "MATCH (f:Function {name: 'target'})<-[:CALLS*]-(caller) RETURN caller"
+
+  - name: "Trouver du code dupliqué"
+    query: "MATCH (f1:Function)-[s:SIMILAR_TO]->(f2:Function) WHERE s.similarity_score > 0.8 RETURN f1, f2"
+
+  - name: "Identifier les classes avec trop de responsabilités"
+    query: "MATCH (c:Class)-[r:CONTAINS]->() WITH c, count(r) as methods WHERE methods > 20 RETURN c"
+
+  - name: "Tracer le flux d'exécution"
+    query: "MATCH path=(start:Function)-[:CALLS*]->(end:Function) WHERE start.name='main' RETURN path"
+
+analysis_metrics:
+  # Métriques calculées automatiquement
+
+  complexity:
+    - cyclomatic_complexity: "Complexité cyclomatique par fonction"
+    - cognitive_complexity: "Complexité cognitive"
+    - nesting_depth: "Profondeur d'imbrication max"
+
+  quality:
+    - code_duplication: "Pourcentage de code dupliqué"
+    - test_coverage: "Couverture de tests estimée"
+    - documentation_coverage: "Pourcentage de fonctions documentées"
+
+  architecture:
+    - coupling: "Couplage entre modules"
+    - cohesion: "Cohésion des modules"
+    - dependency_depth: "Profondeur des dépendances"
+
+  maintainability:
+    - lines_per_function: "Lignes moyennes par fonction"
+    - parameters_per_function: "Paramètres moyens par fonction"
+    - functions_per_class: "Méthodes moyennes par classe"
+
+# Configuration pour différents langages
+language_specifics:
+  python:
+    file_extensions: [".py"]
+    parser: "ast"
+    features:
+      - decorators
+      - async_await
+      - generators
+      - context_managers
+      - metaclasses
+
+  javascript:
+    file_extensions: [".js", ".jsx"]
+    parser: "acorn"
+    features:
+      - arrow_functions
+      - promises
+      - async_await
+      - classes
+
+  typescript:
+    file_extensions: [".ts", ".tsx"]
+    parser: "typescript"
+    features:
+      - interfaces
+      - types
+      - generics
+      - decorators
+
+  go:
+    file_extensions: [".go"]
+    parser: "go/parser"
+    features:
+      - goroutines
+      - channels
+      - interfaces
+      - defer

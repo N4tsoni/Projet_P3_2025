@@ -96,3 +96,9 @@ neo4j_plugins/
 *.tmp
 *.temp
 .cache/
+backend/data/temp/*.webm
+backend/data/temp/*.wav
+backend/data/temp/*.mp3
+
+# Session notes
+SESSION_*.md

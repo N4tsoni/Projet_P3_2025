@@ -126,11 +126,11 @@ def get_tts_provider() -> TTSProvider:
     """
     provider_name = os.getenv("TTS_PROVIDER", "edge-tts")
 
-    if provider_name == "edge-tts":
+    if provider_name in ["edge-tts", "edge"]:
         voice = os.getenv("TTS_VOICE", "fr-FR-DeniseNeural")
         return EdgeTTSProvider(voice=voice)
 
-    elif provider_name == "coqui-local":
+    elif provider_name in ["coqui-local", "coqui"]:
         model = os.getenv("TTS_MODEL", "tts_models/fr/css10/vits")
         return CoquiTTSProvider(model_name=model)
 

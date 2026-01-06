@@ -27,7 +27,9 @@ Attendez 30 secondes que tout démarre.
 
 ## Étape 3: Tester !
 
-Ouvrez votre navigateur: **http://localhost:8000**
+Ouvrez votre navigateur: **http://localhost:5173** (Frontend Vue.js)
+
+> L'API backend est sur http://localhost:8000
 
 ### Premier test
 1. Maintenez le bouton microphone 🎤
