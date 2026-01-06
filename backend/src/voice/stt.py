@@ -143,7 +143,7 @@ def get_stt_provider() -> STTProvider:
     """
     provider_name = os.getenv("STT_PROVIDER", "whisper-local")
 
-    if provider_name == "whisper-local":
+    if provider_name in ["whisper-local", "whisper"]:
         model_name = os.getenv("STT_MODEL", "base")
         return WhisperLocalSTT(model_name=model_name)
 

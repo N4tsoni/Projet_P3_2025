@@ -1,236 +1,263 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Instructions pour Claude Code lors du travail sur ce projet.
 
-## Project Overview
+---
 
-Assistant vocal intelligent type "Jarvis" utilisant GraphRAG et Graphiti avec interface ESP32.
+## Vue d'Ensemble du Projet
 
-### Objectif
-Créer un assistant personnel vocal qui utilise GraphRAG (Graph Retrieval-Augmented Generation) avec un knowledge graph dynamique pour mémoriser et raisonner sur les informations personnelles fournies en conversation. L'assistant communique via un ESP32 avec capacités vocales.
+**Jarvis** - Assistant vocal intelligent avec knowledge graph dynamique utilisant GraphRAG et Graphiti.
+
+### Architecture
+
+**Frontend:**
+- Vue.js 3 + TypeScript + Vite
+- Element Plus pour UI
+- Atomic Design pattern
+- Port: 5173
+
+**Backend:**
+- FastAPI + Python 3.11
+- Whisper (STT local gratuit)
+- Edge TTS (synthèse vocale gratuite)
+- OpenRouter (LLM - Claude 3.5 Sonnet)
+- Graphiti + Neo4j (knowledge graph)
+- Port: 8000
+
+**Infrastructure:**
+- Docker + Docker Compose (3 services)
+- Poetry pour dépendances Python
+- Neo4j sur port 7474/7687
 
 ### Technologies Clés
 
-**Backend (✅ Opérationnel):**
-- **Docker & Docker Compose**: Containerisation et orchestration des services
-- **Poetry**: Gestion moderne des dépendances Python
-- **FastAPI**: API REST pour communication avec ESP32
-- **OpenRouter**: Accès à 100+ modèles LLM (Claude, GPT-4, Llama, etc.)
-- **Graphiti**: Framework pour knowledge graphs dynamiques (à intégrer)
-- **GraphRAG**: Recherche augmentée par graphe de connaissances (à intégrer)
-- **Neo4j**: Base de données graphe (containerisée)
-- **Python 3.10+**: Langage principal
+- **STT**: Whisper Local (OpenAI open-source)
+- **TTS**: Edge TTS Microsoft (voix fr-FR-DeniseNeural)
+- **LLM**: OpenRouter (accès à 100+ modèles)
+- **Knowledge Graph**: Graphiti + Neo4j
+- **Pipeline**: Audio → Whisper → Agent → Edge TTS → Audio
 
-**Vocal & Audio (✅ Opérationnel):**
-- **Whisper Local**: Reconnaissance vocale gratuite (OpenAI open-source)
-- **Groq**: Alternative STT rapide et gratuite (optionnel)
-- **Edge TTS**: Synthèse vocale gratuite Microsoft (voix fr-FR-DeniseNeural)
-- **Coqui TTS**: Alternative TTS locale (optionnel)
+---
 
-**Interface (✅ Opérationnel):**
-- **Interface Web**: HTML/CSS/JS moderne avec push-to-talk
-- **MediaRecorder API**: Capture audio navigateur
-- **Web Audio API**: Visualisation waveform
+## État Actuel
 
-**Hardware (📦 En commande):**
-- **ESP32**: Microcontrôleur avec WiFi/Bluetooth
-- **Microphone I2S**: Capture audio haute qualité
-- **Amplificateur + Speaker**: Sortie audio
-- **Wake word detection**: À implémenter (Porcupine ou Edge Impulse)
+### ✅ Opérationnel (Phases 1-3)
 
-## Architecture
+- Pipeline vocal complet fonctionnel
+- Interface Vue.js moderne avec glassmorphism
+- Enregistrement push-to-talk avec visualisation audio
+- Historique des conversations
+- API REST complète
+- Docker Compose avec 3 services
+- Analyseur de code Python (nouveau dans `backend/src/code_analysis/`)
 
-### Composants Principaux
+### 🔄 En Développement (Phase 4)
 
-1. **ESP32 Voice Interface**
-   - Capture audio via microphone I2S
-   - Wake word detection locale ("Hey Jarvis")
-   - Envoi audio vers backend via WiFi
-   - Réception et lecture de la réponse audio
+- Intégration Graphiti pour mémoire conversationnelle
+- Extraction automatique d'entités depuis transcriptions
+- GraphRAG pour enrichissement contextuel
 
-2. **Backend API (FastAPI)**
-   - `/api/voice/process`: Endpoint pour traitement vocal
-   - `/api/knowledge/add`: Ajout manuel de connaissances
-   - `/api/knowledge/query`: Requêtes sur le knowledge graph
-   - WebSocket pour streaming audio (optionnel)
+### 📦 Planifié (Phase 5+)
 
-3. **Voice Processing Pipeline**
-   - Speech-to-Text (Whisper/Google STT): Audio → Texte
-   - Agent conversationnel: Traitement de la requête
-   - Text-to-Speech (TTS): Réponse → Audio
-   - Retour vers ESP32
+- Firmware ESP32 (matériel en commande)
+- Wake word detection ("Hey Jarvis")
+- Tests unitaires et d'intégration
 
-4. **Knowledge Graph Dynamique (Graphiti)**
-   - Entités personnelles: Préférences, Contacts, Événements, Tâches, Notes
-   - Relations: Liens entre concepts et informations
-   - Mise à jour automatique depuis conversations
-   - Extraction d'entités depuis transcriptions
-
-5. **Agent Conversationnel GraphRAG**
-   - Compréhension du contexte conversationnel
-   - Recherche sémantique dans le knowledge graph
-   - Génération de réponses personnalisées
-   - Mémorisation des nouvelles informations
+---
 
 ## Structure du Projet
 
 ```
 Projet_P3/
-├── src/
-│   ├── api/            # FastAPI endpoints
-│   ├── graph/          # Gestion du knowledge graph (Graphiti)
-│   ├── rag/            # Système GraphRAG
-│   ├── agents/         # Agent conversationnel
-│   ├── voice/          # Speech-to-Text et Text-to-Speech
-│   ├── wake_word/      # Wake word detection
-│   └── models/         # Modèles de données (Pydantic)
-├── esp32/              # Code Arduino/PlatformIO pour ESP32
+├── frontend/          # Vue.js 3 + TypeScript
 │   ├── src/
-│   │   ├── audio_capture.cpp
-│   │   ├── wifi_manager.cpp
-│   │   └── main.cpp
-│   └── platformio.ini
-├── tests/              # Tests unitaires et d'intégration
-├── data/               # Données d'exemple et knowledge graph
-├── notebooks/          # Jupyter notebooks pour exploration
-├── config/             # Fichiers de configuration
-└── docs/               # Documentation
+│   │   ├── components/    # Atomic Design
+│   │   ├── stores/        # Pinia
+│   │   ├── services/      # API client
+│   │   └── types/         # TypeScript
+│   └── Dockerfile
+│
+├── backend/           # FastAPI
+│   ├── src/
+│   │   ├── api/          # Routes REST
+│   │   ├── agents/       # jarvis_agent.py
+│   │   ├── voice/        # stt.py + tts.py
+│   │   ├── code_analysis/  # Analyseur de code
+│   │   ├── graph/        # Graphiti (en cours)
+│   │   └── models/       # Pydantic models
+│   ├── config/
+│   ├── data/
+│   └── Dockerfile
+│
+├── esp32/             # Firmware (à développer)
+├── docs/              # Documentation
+├── docker-compose.yml
+├── Makefile
+└── TODO.md           # État et prochaines étapes
 ```
 
-## État Actuel du Projet
+---
 
-### ✅ Fonctionnalités Complétées
+## Commandes Essentielles
 
-**Interface Web de Test:**
-- Interface moderne à http://localhost:8000
-- Bouton push-to-talk fonctionnel
-- Visualisation audio temps réel
-- Affichage transcription et réponse
-- Lecture audio de la réponse
-
-**Pipeline Vocal Complet:**
-- STT: Whisper local (gratuit, pas de clé API)
-- Agent: OpenRouter avec Claude 3.5 Sonnet
-- TTS: Edge TTS (gratuit, voix françaises)
-- Integration complète dans FastAPI
-
-**Configuration:**
-- `.env` simplifié (10 lignes essentielles)
-- Docker + Poetry
-- Neo4j pour Graphiti
-- Prêt à utiliser
-
-### 🎯 Prochaines Étapes
-
-1. **Immédiat**: Tester le pipeline complet via interface web
-2. **Court terme**: Intégrer Graphiti pour mémoire persistante
-3. **Moyen terme**: Développer firmware ESP32 (matériel en commande)
-4. **Long terme**: Fonctionnalités avancées (multi-user, home automation)
-
-## Commandes de Développement
-
-### Docker
+### Démarrage
 ```bash
-# Build des images
-docker-compose build
-
-# Lancer tous les services
-docker-compose up
-
-# Lancer en arrière-plan
-docker-compose up -d
-
-# Voir les logs
-docker-compose logs -f
-
-# Arrêter les services
-docker-compose down
-
-# Arrêter et supprimer volumes (⚠️ perte de données)
-docker-compose down -v
+make build    # Build Docker images
+make up       # Lancer tous les services
+make down     # Arrêter
+make logs     # Voir logs
 ```
+
+### Accès Services
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+- Neo4j: http://localhost:7474
 
 ### Développement
 ```bash
-# Accéder au container de l'app
-docker-compose exec app bash
+# Backend - Ajouter dépendance
+docker-compose exec backend poetry add package-name
 
-# Ajouter une dépendance
-docker-compose exec app poetry add package-name
+# Backend - Tests
+docker-compose exec backend poetry run pytest
 
-# Ajouter une dépendance de dev
-docker-compose exec app poetry add --group dev package-name
-
-# Exécuter les tests
-docker-compose exec app poetry run pytest
-
-# Lancer l'application
-docker-compose exec app poetry run python src/main.py
-
-# Formater le code
-docker-compose exec app poetry run black src/
-docker-compose exec app poetry run ruff check src/
-
-# Type checking
-docker-compose exec app poetry run mypy src/
+# Frontend
+cd frontend && npm install && npm run dev
 ```
 
-### Neo4j
-- Interface web: http://localhost:7474
-- Bolt: bolt://localhost:7687
-- Credentials: voir .env
+---
 
-## Démarrage Rapide
+## Directives de Développement
 
-### Pour Tester Maintenant
+### Principes
 
-1. **Vérifier .env**: Votre clé OpenRouter doit être configurée
-2. **Lancer**: `make build && make up`
-3. **Ouvrir**: http://localhost:8000
-4. **Tester**: Maintenir bouton microphone, parler, relâcher
+1. **Modularité**: Chaque composant (STT, TTS, Agent, Graph) est indépendant
+2. **Async-first**: Utiliser async/await pour I/O
+3. **Type safety**: TypeScript frontend, Pydantic backend
+4. **Configuration centralisée**: `.env` pour backend
+5. **Atomic Design**: Frontend organisé en atoms → molecules → organisms → templates
 
-### Fichiers Importants
+### Code Backend
 
-- `START.md` - Guide démarrage ultra-rapide
-- `TODO.md` - Liste complète des tâches et progression
-- `docs/QUICK_START.md` - Configuration détaillée
-- `docs/WEB_INTERFACE.md` - Documentation interface web
+- Utiliser **FastAPI** pour nouveaux endpoints
+- **Pydantic** pour validation de données
+- **Loguru** pour logging
+- Services vocaux dans `src/voice/`
+- Agent conversationnel dans `src/agents/`
+- Code analysis dans `src/code_analysis/`
+
+### Code Frontend
+
+- **Vue 3 Composition API** + `<script setup>`
+- **TypeScript** strict
+- **Pinia** pour state management
+- **Element Plus** pour composants UI
+- Atomic Design dans `src/components/`
+
+### Graphiti & Knowledge Graph
+
+- Utiliser **Graphiti** pour knowledge graph dynamique
+- **Neo4j** comme backend de graphe
+- Entités: Person, Event, Task, Note, Preference, Contact
+- Relations: KNOWS, LIKES, SCHEDULED_FOR, RELATED_TO
+- Code dans `backend/src/graph/`
+
+---
 
 ## Workflow de Développement
 
-1. Vérifier TODO.md pour les tâches en cours
-2. Développer en suivant l'architecture modulaire
-3. Tester chaque composant individuellement
-4. Utiliser `make test` pour valider
-5. Intégrer progressivement les modules
+### Ajout de Fonctionnalités
+
+1. Vérifier TODO.md pour contexte
+2. Développer de manière modulaire
+3. Tester chaque composant
+4. Mettre à jour documentation si nécessaire
+
+### Tests
+
+- Tests unitaires avec pytest (backend)
+- Tests d'intégration pour pipeline complet
+- Validation manuelle via interface web
+
+### Configuration
+
+- `.env` backend: clés API, modèles, configurations
+- Pas de secrets dans le code versioned
+- `.env.example` comme template
+
+---
+
+## Points d'Attention
+
+### Performance
+
+- Whisper local peut être lent (modèle "tiny" ou "base" recommandé)
+- Edge TTS rapide et gratuit
+- Objectif latence totale: < 3s end-to-end
+
+### Sécurité
+
+- Clés API dans `.env` uniquement
+- CORS configuré pour développement local
+- Fichiers audio temporaires dans `backend/data/temp/` (ignorés par git)
+
+### ESP32 (futur)
+
+- Matériel en commande
+- I2S pour microphone (INMP441) et speaker (MAX98357A)
+- Wake word detection locale
+- Communication WiFi avec backend
+
+---
+
+## Documentation
+
+- **README.md**: Vue d'ensemble et démarrage rapide
+- **TODO.md**: État actuel et prochaines étapes
+- **ARCHITECTURE.md**: Architecture technique détaillée
+- **START.md**: Guide ultra-rapide 30 secondes
+- **docs/**: Documentation spécifique (QUICK_START, WEB_INTERFACE)
+
+---
 
 ## Domaine: Assistant Personnel
 
-L'assistant doit gérer:
-- **Informations personnelles**: Préférences, habitudes, contacts
-- **Événements**: Rendez-vous, anniversaires, rappels
-- **Connaissances**: Faits mémorisés, conversations passées
-- **Tâches**: Todo list, projets, objectifs
-- **Contexte conversationnel**: Comprendre les références et le contexte
-- **Home automation** (futur): Contrôle de dispositifs IoT
+Jarvis doit gérer:
+- Informations personnelles (préférences, contacts, habitudes)
+- Événements (rendez-vous, rappels, anniversaires)
+- Connaissances mémorisées depuis conversations
+- Tâches et projets
+- Contexte conversationnel
+- Home automation (futur)
 
-## Communication avec ESP32
+### Flow Conversationnel
 
-### Flow de conversation vocale
+1. **Capture**: Audio via microphone (web ou ESP32)
+2. **STT**: Whisper transcrit en texte
+3. **Agent**:
+   - Recherche dans knowledge graph (GraphRAG)
+   - Génération réponse via OpenRouter
+   - Extraction nouvelles entités à mémoriser
+4. **Mise à jour**: Graphiti stocke nouvelles informations
+5. **TTS**: Edge TTS génère audio réponse
+6. **Lecture**: Audio renvoyé à l'utilisateur
 
-1. **Wake Word**: ESP32 détecte "Hey Jarvis" localement
-2. **Enregistrement**: Capture audio de la question
-3. **Upload**: Envoi audio au backend via HTTP POST
-4. **Traitement**:
-   - STT: Audio → Texte
-   - Agent: Recherche GraphRAG + Génération réponse
-   - Mise à jour graphe si nouvelles infos
-   - TTS: Texte → Audio
-5. **Download**: ESP32 reçoit l'audio de réponse
-6. **Lecture**: Diffusion de la réponse
+---
 
-### Formats de communication
+## Ressources Utiles
 
-- **Audio upload**: WAV/PCM 16kHz mono
-- **Audio download**: MP3 ou WAV compressé
-- **Protocol**: HTTP/REST ou WebSocket pour streaming
+- **Graphiti**: https://github.com/getzep/graphiti
+- **OpenRouter**: https://openrouter.ai/docs
+- **Whisper**: https://github.com/openai/whisper
+- **Neo4j**: https://neo4j.com/docs/
+- **ESP32 Audio**: https://github.com/atomic14/esp32_audio
+
+---
+
+## Notes Importantes
+
+- Le projet utilise maintenant un frontend séparé (Vue.js) au lieu de l'ancien `static/`
+- `backend/src/code_analysis/` est un nouveau module pour analyser du code Python
+- Les fichiers temporaires audio (.webm) dans `backend/data/temp/` ne doivent pas être versionnés
+- OpenRouter permet d'accéder à de nombreux modèles LLM (Claude, GPT-4, Llama, etc.)
