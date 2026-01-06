@@ -57,16 +57,42 @@ class WhisperLocalSTT(STTProvider):
 
             logger.info(f"Transcribing audio: {audio_path}")
 
+            # Convert webm to wav for better compatibility with Whisper
+            converted_path = audio_path
+            if audio_path.suffix.lower() in ['.webm', '.ogg']:
+                from pydub import AudioSegment
+                logger.info(f"Converting {audio_path.suffix} to wav for better compatibility")
+
+                # Load and convert
+                audio = AudioSegment.from_file(str(audio_path))
+
+                # Debug: log audio properties
+                duration_sec = len(audio) / 1000.0
+                logger.info(f"Audio properties: duration={duration_sec:.2f}s, "
+                           f"channels={audio.channels}, sample_rate={audio.frame_rate}Hz, "
+                           f"sample_width={audio.sample_width}bytes, dBFS={audio.dBFS:.2f}")
+
+                converted_path = audio_path.with_suffix('.wav')
+                audio.export(str(converted_path), format='wav')
+                logger.info(f"Converted to: {converted_path}")
+
             # Whisper transcribe is CPU-bound, but for now we'll run it directly
             # In production, consider running in a thread pool
             result = self.model.transcribe(
-                str(audio_path),
+                str(converted_path),
                 language=language,
                 fp16=False,  # Set to True if GPU available
             )
 
+            # Clean up converted file if we created one
+            if converted_path != audio_path:
+                converted_path.unlink(missing_ok=True)
+
             text = result["text"].strip()
             logger.info(f"Transcription: {text}")
+
+            if not text:
+                logger.warning("Whisper returned empty transcription - audio may be too short or contain no speech")
 
             return text
 

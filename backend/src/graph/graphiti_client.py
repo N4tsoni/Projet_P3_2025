@@ -41,24 +41,18 @@ class GraphitiClient:
         self._initialize_graphiti()
 
     def _initialize_graphiti(self):
-        """Initialize Graphiti with Neo4j driver."""
+        """Initialize Graphiti with Neo4j connection."""
         try:
-            from graphiti_core.driver.neo4j_driver import Neo4jDriver
-
             logger.info(f"Initializing Graphiti with Neo4j at {self.neo4j_uri}")
 
-            # Create Neo4j driver
-            driver = Neo4jDriver(
+            # Initialize Graphiti directly with connection parameters
+            # Note: LLM client and embedder will use default OpenAI configuration
+            # from OPENAI_API_KEY environment variable
+            self.graphiti = Graphiti(
                 uri=self.neo4j_uri,
                 user=self.neo4j_user,
                 password=self.neo4j_password,
-                database=self.neo4j_database,
             )
-
-            # Initialize Graphiti
-            # Note: LLM client and embedder will use default OpenAI configuration
-            # from OPENAI_API_KEY environment variable
-            self.graphiti = Graphiti(graph_driver=driver)
 
             logger.info("Graphiti initialized successfully")
 
@@ -143,9 +137,9 @@ class GraphitiClient:
         """Close Graphiti connection."""
         if self.graphiti:
             try:
-                # Close the driver if it has a close method
-                if hasattr(self.graphiti.driver, 'close'):
-                    await self.graphiti.driver.close()
+                # Close the Graphiti connection
+                if hasattr(self.graphiti, 'close'):
+                    await self.graphiti.close()
                 logger.info("Graphiti connection closed")
             except Exception as e:
                 logger.error(f"Error closing Graphiti: {e}")
