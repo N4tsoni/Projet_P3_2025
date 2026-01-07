@@ -1,0 +1,7 @@
+name,age,occupation,company,location,relation_to,relation_type
+Alice Martin,32,Data Scientist,TechCorp,Paris,Bob Durant,KNOWS
+Bob Durant,45,Software Engineer,TechCorp,Paris,Alice Martin,WORKS_AT
+Claire Dubois,28,Product Manager,StartupX,Lyon,David Chen,KNOWS
+David Chen,35,CTO,StartupX,Lyon,Claire Dubois,WORKS_AT
+Emma Wilson,41,CEO,StartupX,Lyon,David Chen,RELATED_TO
+François Lopez,29,Designer,TechCorp,Paris,Alice Martin,KNOWS
