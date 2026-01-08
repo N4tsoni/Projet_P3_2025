@@ -84,6 +84,54 @@ class VoiceService:
             # Clean up temporary input audio
             self._cleanup_temp_file(audio_path)
 
+    async def process_text_input(
+        self,
+        text: str,
+        conversation_id: Optional[str] = None,
+        db: Optional[Session] = None,
+    ) -> Tuple[str, str, str]:
+        """
+        Process text input directly (without STT).
+
+        Args:
+            text: User's text message
+            conversation_id: Optional conversation ID to persist this interaction
+            db: Optional database session for conversation persistence
+
+        Returns:
+            Tuple of (text, agent_response, audio_url)
+
+        Raises:
+            ValueError: If text is empty or conversation not found
+            Exception: If processing fails
+        """
+        logger.info(f"Processing text input: {text[:50]}...")
+
+        # Generate unique request ID
+        request_id = str(uuid.uuid4())[:8]
+
+        # Validate text
+        if not text or len(text.strip()) == 0:
+            logger.warning("Empty text message")
+            raise ValueError("Le message ne peut pas être vide")
+
+        # Step 1: Process with agent
+        agent_response = await self._process_with_agent(text)
+
+        # Step 2: Text-to-Speech
+        audio_url = await self._synthesize_response(agent_response, request_id)
+
+        # Step 3: Persist conversation if conversation_id provided
+        if conversation_id and db:
+            await self._persist_interaction(
+                conversation_id, text, agent_response, audio_url, db
+            )
+
+        # TODO: Step 4: Update knowledge graph
+
+        logger.info(f"Text processing complete: {request_id}")
+        return text, agent_response, audio_url
+
     async def _persist_interaction(
         self,
         conversation_id: str,

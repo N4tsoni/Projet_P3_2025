@@ -333,6 +333,82 @@ class Neo4jService:
                 "edges": edges
             }
 
+    def search_entities_by_name(self, search_term: str, limit: int = 10) -> List[Dict[str, Any]]:
+        """
+        Search entities by name (case-insensitive partial match).
+
+        Args:
+            search_term: Search term to match against entity names
+            limit: Maximum number of results
+
+        Returns:
+            List of matching entities
+        """
+        with self.driver.session() as session:
+            result = session.run("""
+                MATCH (n)
+                WHERE toLower(n.name) CONTAINS toLower($search_term)
+                RETURN n, labels(n) as labels, elementId(n) as id
+                LIMIT $limit
+            """, search_term=search_term, limit=limit)
+
+            entities = []
+            for record in result:
+                node = record["n"]
+                entities.append({
+                    "id": record["id"],
+                    "name": node.get("name"),
+                    "type": record["labels"][0] if record["labels"] else "Unknown",
+                    "properties": dict(node)
+                })
+
+            return entities
+
+    def get_entity_with_relationships(
+        self,
+        entity_name: str,
+        max_relationships: int = 10
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Get an entity with its relationships.
+
+        Args:
+            entity_name: Name of the entity
+            max_relationships: Maximum number of relationships to return
+
+        Returns:
+            Dict with entity and its relationships, or None if not found
+        """
+        with self.driver.session() as session:
+            result = session.run("""
+                MATCH (n {name: $name})
+                OPTIONAL MATCH (n)-[r]->(m)
+                RETURN n, labels(n) as labels,
+                       collect({
+                           type: type(r),
+                           target_name: m.name,
+                           target_type: labels(m)[0],
+                           properties: properties(r)
+                       })[0..$limit] as relationships
+            """, name=entity_name, limit=max_relationships)
+
+            record = result.single()
+            if not record:
+                return None
+
+            node = record["n"]
+            return {
+                "entity": {
+                    "name": node.get("name"),
+                    "type": record["labels"][0] if record["labels"] else "Unknown",
+                    "properties": dict(node)
+                },
+                "relationships": [
+                    rel for rel in record["relationships"]
+                    if rel.get("target_name")  # Filter out None relationships
+                ]
+            }
+
     def clear_graph(self):
         """Delete all nodes and relationships. Use with caution!"""
         with self.driver.session() as session:

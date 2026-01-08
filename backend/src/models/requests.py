@@ -28,3 +28,11 @@ class ConversationCreateRequest(BaseModel):
 class ConversationRenameRequest(BaseModel):
     """Request to rename a conversation."""
     name: str = Field(..., description="New name for the conversation", min_length=1)
+
+
+# ==================== Voice/Text Requests ====================
+
+class TextMessageRequest(BaseModel):
+    """Request to send a text message (without voice)."""
+    text: str = Field(..., description="Text message to process", min_length=1)
+    conversation_id: Optional[str] = Field(None, description="Conversation ID to add this interaction to")

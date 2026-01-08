@@ -2,9 +2,11 @@
 Jarvis conversational agent using OpenRouter.
 """
 import os
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any
 from loguru import logger
 from openai import AsyncOpenAI
+
+from src.kg.services.neo4j_service import Neo4jService
 
 
 class JarvisAgent:
@@ -45,6 +47,10 @@ class JarvisAgent:
         # System prompt
         self.system_prompt = self._build_system_prompt()
 
+        # Knowledge Graph service (optional)
+        self.kg_service: Optional[Neo4jService] = None
+        self._init_kg_service()
+
         logger.info(f"Initialized Jarvis agent with model: {self.model}")
 
     def _build_system_prompt(self) -> str:
@@ -66,6 +72,78 @@ Consignes importantes:
 
 Tu es actuellement en phase de test et ton knowledge graph se construit progressivement."""
 
+    def _init_kg_service(self):
+        """Initialize Knowledge Graph service if available."""
+        try:
+            self.kg_service = Neo4jService()
+            self.kg_service.connect()
+            logger.info("Knowledge Graph service initialized")
+        except Exception as e:
+            logger.warning(f"Knowledge Graph not available: {e}")
+            self.kg_service = None
+
+    def _get_kg_context(self, user_message: str) -> str:
+        """
+        Retrieve relevant context from Knowledge Graph.
+
+        Args:
+            user_message: User's message to extract context for
+
+        Returns:
+            Formatted context string from KG
+        """
+        if not self.kg_service:
+            return ""
+
+        try:
+            # Extract potential entity names from message (simple word matching)
+            words = user_message.split()
+            entities_context = []
+
+            # Try to find entities that match words in the message
+            for word in words:
+                if len(word) < 3:  # Skip short words
+                    continue
+
+                # Search for entities by name (case-insensitive partial match)
+                entities = self.kg_service.search_entities_by_name(word.lower())
+
+                for entity in entities[:3]:  # Limit to 3 entities per word
+                    # Get entity with relationships
+                    entity_with_rels = self.kg_service.get_entity_with_relationships(
+                        entity.get('name')
+                    )
+
+                    if entity_with_rels:
+                        entities_context.append(entity_with_rels)
+
+            # Format context
+            if not entities_context:
+                return ""
+
+            context_parts = ["**Contexte du Knowledge Graph:**\n"]
+
+            for entity_data in entities_context[:5]:  # Limit to 5 entities
+                entity = entity_data.get('entity', {})
+                relationships = entity_data.get('relationships', [])
+
+                name = entity.get('name', 'Unknown')
+                entity_type = entity.get('type', 'Unknown')
+
+                context_parts.append(f"\n- {name} ({entity_type})")
+
+                # Add relationships
+                for rel in relationships[:3]:  # Limit to 3 relationships per entity
+                    rel_type = rel.get('type', 'RELATED_TO')
+                    target = rel.get('target_name', 'Unknown')
+                    context_parts.append(f"  → {rel_type} {target}")
+
+            return "\n".join(context_parts)
+
+        except Exception as e:
+            logger.warning(f"Failed to get KG context: {e}")
+            return ""
+
     async def chat(self, user_message: str) -> str:
         """
         Process a user message and return response.
@@ -79,16 +157,25 @@ Tu es actuellement en phase de test et ton knowledge graph se construit progress
         try:
             logger.info(f"User: {user_message}")
 
+            # Get Knowledge Graph context
+            kg_context = self._get_kg_context(user_message)
+
+            # Build enriched user message
+            enriched_message = user_message
+            if kg_context:
+                enriched_message = f"{kg_context}\n\n**Message utilisateur:** {user_message}"
+
             # Add user message to history
             self.conversation_history.append({
                 "role": "user",
-                "content": user_message,
+                "content": user_message,  # Store original message in history
             })
 
             # Build messages for API
             messages = [
                 {"role": "system", "content": self.system_prompt},
-                *self.conversation_history[-10:],  # Keep last 10 messages for context
+                *self.conversation_history[-10:][:-1],  # Previous history
+                {"role": "user", "content": enriched_message},  # Current message with KG context
             ]
 
             # Call OpenRouter
