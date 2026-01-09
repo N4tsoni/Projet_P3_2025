@@ -1,0 +1,40 @@
+{
+	"nodes":[
+		{"id":"jarvis-main","type":"text","text":"# 🤖 JARVIS\n\nAssistant Vocal Intelligent\n\nKnowledge Graph + GraphRAG","x":-340,"y":-520,"width":300,"height":180,"color":"1"},
+		{"id":"frontend","type":"file","file":"frontend/CLAUDE.md","x":-740,"y":-240,"width":280,"height":200,"color":"4"},
+		{"id":"backend","type":"file","file":"CLAUDE.md","x":60,"y":-240,"width":280,"height":200,"color":"5"},
+		{"id":"neo4j","type":"text","text":"# 🗄️ Neo4j\n\nKnowledge Graph Database\n\n- Nodes: Entities\n- Edges: Relations\n- GraphRAG queries","x":-340,"y":80,"width":300,"height":180,"color":"2"},
+		{"id":"pipeline","type":"file","file":"README_PIPELINE.md","x":460,"y":-240,"width":320,"height":230,"color":"3"},
+		{"id":"parsers","type":"text","text":"## 📄 Parsers\n\n- CSV ✅\n- JSON ✅\n- PDF ✅\n- TXT ✅","x":880,"y":-340,"width":200,"height":180,"color":"3"},
+		{"id":"stages","type":"text","text":"## ⚙️ Stages\n\n1. Parsing\n2. Chunking\n3. Embedding\n4. NER\n5. Extraction\n6. Transform\n7. Enrich\n8. Validate\n9. Storage","x":880,"y":-100,"width":200,"height":280,"color":"3"},
+		{"id":"embedding","type":"text","text":"## 🧠 Embeddings\n\nSentence-Transformers\n\n- all-MiniLM-L6-v2\n- 384 dimensions\n- Batch processing","x":1140,"y":-340,"width":240,"height":180,"color":"6"},
+		{"id":"ner","type":"text","text":"## 🏷️ NER\n\nspaCy\n\n- PERSON\n- ORG\n- GPE\n- LOC\n- DATE","x":1140,"y":-100,"width":240,"height":180,"color":"6"},
+		{"id":"llm","type":"text","text":"## 🤖 LLM\n\nClaude 3.5 Sonnet\nvia OpenRouter\n\n- Entity Extraction\n- Relation Extraction","x":1140,"y":120,"width":240,"height":180,"color":"6"},
+		{"id":"voice","type":"text","text":"## 🎤 Voice Pipeline\n\n**STT**: Whisper (local)\n**TTS**: Edge TTS (free)\n\nPush-to-talk interface","x":-1100,"y":-240,"width":280,"height":200,"color":"4"},
+		{"id":"frontend-tech","type":"text","text":"## 🎨 Frontend Stack\n\n- Vue 3 + TS\n- Vite\n- Element Plus\n- Tailwind CSS\n- Pinia\n- Atomic Design","x":-1100,"y":80,"width":280,"height":220,"color":"4"},
+		{"id":"backend-tech","type":"text","text":"## ⚙️ Backend Stack\n\n- FastAPI\n- Python 3.11\n- Asyncio\n- Pydantic\n- Poetry","x":60,"y":80,"width":280,"height":200,"color":"5"},
+		{"id":"docker","type":"text","text":"## 🐳 Docker\n\n3 Services:\n- Frontend\n- Backend\n- Neo4j","x":-340,"y":340,"width":300,"height":160,"color":"2"},
+		{"id":"docs","type":"file","file":"Home.md","x":-740,"y":-600,"width":280,"height":140,"color":"1"},
+		{"id":"arch","type":"file","file":"ARCHITECTURE.md","x":60,"y":-600,"width":280,"height":140,"color":"1"},
+		{"id":"pipeline-arch","type":"file","file":"PIPELINE_ARCHITECTURE.md","x":460,"y":-600,"width":320,"height":140,"color":"3"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"jarvis-main","fromSide":"bottom","toNode":"frontend","toSide":"right","color":"4"},
+		{"id":"e2","fromNode":"jarvis-main","fromSide":"bottom","toNode":"backend","toSide":"top","color":"5"},
+		{"id":"e3","fromNode":"frontend","fromSide":"bottom","toNode":"neo4j","toSide":"top","color":"4"},
+		{"id":"e4","fromNode":"backend","fromSide":"bottom","toNode":"neo4j","toSide":"top","color":"5"},
+		{"id":"e5","fromNode":"backend","fromSide":"right","toNode":"pipeline","toSide":"left","color":"3"},
+		{"id":"e6","fromNode":"pipeline","fromSide":"right","toNode":"parsers","toSide":"left","color":"3"},
+		{"id":"e7","fromNode":"pipeline","fromSide":"right","toNode":"stages","toSide":"left","color":"3"},
+		{"id":"e8","fromNode":"stages","fromSide":"right","toNode":"embedding","toSide":"bottom","color":"6"},
+		{"id":"e9","fromNode":"stages","fromSide":"right","toNode":"ner","toSide":"left","color":"6"},
+		{"id":"e10","fromNode":"stages","fromSide":"right","toNode":"llm","toSide":"left","color":"6"},
+		{"id":"e11","fromNode":"frontend","fromSide":"left","toNode":"voice","toSide":"right","color":"4"},
+		{"id":"e12","fromNode":"frontend","fromSide":"bottom","toNode":"frontend-tech","toSide":"top","color":"4"},
+		{"id":"e13","fromNode":"backend","fromSide":"bottom","toNode":"backend-tech","toSide":"top","color":"5"},
+		{"id":"e14","fromNode":"neo4j","fromSide":"bottom","toNode":"docker","toSide":"top","color":"2"},
+		{"id":"e15","fromNode":"docs","fromSide":"right","toNode":"jarvis-main","toSide":"left","color":"1"},
+		{"id":"e16","fromNode":"arch","fromSide":"left","toNode":"jarvis-main","toSide":"right","color":"1"},
+		{"id":"e17","fromNode":"pipeline-arch","fromSide":"bottom","toNode":"pipeline","toSide":"top","color":"3"}
+	]
+}

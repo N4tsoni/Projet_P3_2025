@@ -6,7 +6,7 @@ Instructions pour Claude Code lors du travail sur ce projet.
 
 ## Vue d'Ensemble du Projet
 
-**Jarvis** - Assistant vocal intelligent avec knowledge graph dynamique utilisant GraphRAG et Graphiti.
+**Jarvis** - Assistant vocal intelligent avec knowledge graph dynamique utilisant un pipeline d'agents IA (Claude) et Neo4j.
 
 ### Architecture
 
@@ -18,50 +18,62 @@ Instructions pour Claude Code lors du travail sur ce projet.
 
 **Backend:**
 - FastAPI + Python 3.11
-- Whisper (STT local gratuit)
+- Groq Whisper large-v3 (STT)
 - Edge TTS (synthèse vocale gratuite)
 - OpenRouter (LLM - Claude 3.5 Sonnet)
-- Graphiti + Neo4j (knowledge graph)
+- Pipeline KG avec agents IA + Neo4j
+- PostgreSQL (conversations)
 - Port: 8000
 
 **Infrastructure:**
-- Docker + Docker Compose (3 services)
+- Docker + Docker Compose (4 services)
 - Poetry pour dépendances Python
 - Neo4j sur port 7474/7687
+- PostgreSQL sur port 5432
 
 ### Technologies Clés
 
-- **STT**: Whisper Local (OpenAI open-source)
+- **STT**: Groq Whisper large-v3 (rapide et gratuit)
 - **TTS**: Edge TTS Microsoft (voix fr-FR-DeniseNeural)
-- **LLM**: OpenRouter (accès à 100+ modèles)
-- **Knowledge Graph**: Graphiti + Neo4j
-- **Pipeline**: Audio → Whisper → Agent → Edge TTS → Audio
+- **LLM**: OpenRouter - Claude 3.5 Sonnet (agent principal)
+- **Knowledge Graph**: Pipeline d'agents IA + Neo4j (sans Graphiti)
+- **Pipeline Vocal**: Audio → Groq STT → Agent → Edge TTS → Audio
+- **Pipeline KG**: Document → Parser → Entity Extractor → Relation Extractor → Neo4j
 
 ---
 
 ## État Actuel
 
-### ✅ Opérationnel (Phases 1-3)
+### ✅ Opérationnel (Phases 1-5)
 
+**Pipeline Vocal:**
 - Pipeline vocal complet fonctionnel
 - Interface Vue.js moderne avec glassmorphism
 - Enregistrement push-to-talk avec visualisation audio
-- Historique des conversations
+- Historique des conversations (PostgreSQL)
 - API REST complète
-- Docker Compose avec 3 services
-- Analyseur de code Python (nouveau dans `backend/src/code_analysis/`)
+- Docker Compose avec 4 services
 
-### 🔄 En Développement (Phase 4)
+**Knowledge Graph Builder (NOUVEAU - Phase 5):**
+- Pipeline d'agents IA pour extraction entités/relations
+- Interface KG Builder (upload, stats, graph viewer)
+- Support CSV (JSON, PDF, TXT à venir)
+- Neo4j direct (sans Graphiti Enterprise)
+- Gestion idempotente des duplicates (MERGE)
+- 5 stages: Parsing → Extraction → Validation → Storage
 
-- Intégration Graphiti pour mémoire conversationnelle
-- Extraction automatique d'entités depuis transcriptions
-- GraphRAG pour enrichissement contextuel
+### 🔄 En Développement (Phase 6)
 
-### 📦 Planifié (Phase 5+)
+- Graph viewer interactif visuel (D3.js/vis.js)
+- Support multi-formats (JSON, PDF, TXT)
+- GraphRAG: intégration KG dans contexte conversationnel
+- Enrichissement automatique via LLM
+
+### 📦 Planifié (Phase 7+)
 
 - Firmware ESP32 (matériel en commande)
 - Wake word detection ("Hey Jarvis")
-- Tests unitaires et d'intégration
+- Mémoire conversationnelle enrichie par KG
 
 ---
 
@@ -82,8 +94,14 @@ Projet_P3/
 │   │   ├── api/          # Routes REST
 │   │   ├── agents/       # jarvis_agent.py
 │   │   ├── voice/        # stt.py + tts.py
-│   │   ├── code_analysis/  # Analyseur de code
-│   │   ├── graph/        # Graphiti (en cours)
+│   │   ├── kg/           # Knowledge Graph Pipeline (NOUVEAU)
+│   │   │   ├── agents/       # Entity/Relation extractors
+│   │   │   ├── services/     # Neo4j, Orchestrator
+│   │   │   ├── models/       # Entity, Relation, Document
+│   │   │   ├── parsers/      # CSV, JSON, PDF, TXT
+│   │   │   └── pipeline/     # Stages et Pipeline
+│   │   ├── services/     # Voice, Conversation services
+│   │   ├── repositories/ # Data access layer
 │   │   └── models/       # Pydantic models
 │   ├── config/
 │   ├── data/
@@ -155,13 +173,15 @@ cd frontend && npm install && npm run dev
 - **Element Plus** pour composants UI
 - Atomic Design dans `src/components/`
 
-### Graphiti & Knowledge Graph
+### Knowledge Graph Builder
 
-- Utiliser **Graphiti** pour knowledge graph dynamique
-- **Neo4j** comme backend de graphe
-- Entités: Person, Event, Task, Note, Preference, Contact
-- Relations: KNOWS, LIKES, SCHEDULED_FOR, RELATED_TO
-- Code dans `backend/src/graph/`
+- **Pipeline d'agents IA** (sans Graphiti - nécessite Neo4j Enterprise)
+- **Neo4j Community** comme backend de graphe
+- **Agents Claude** pour extraction intelligente
+- Types d'entités: Person, Organization, Movie, Studio, Location, Concept, Generic
+- Types de relations: ACTED_IN, DIRECTED, PRODUCED_BY, WORKS_AT, KNOWS, RELATED_TO, LOCATED_IN, PART_OF
+- Code dans `backend/src/kg/`
+- Idempotent: MERGE pour éviter duplicates
 
 ---
 

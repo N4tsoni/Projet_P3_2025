@@ -1,6 +1,7 @@
 # TODO - Jarvis Assistant Vocal
 
 > Version à jour du projet - Dernière mise à jour: 2026-01-07
+> **Branche actuelle: KG** - Refonte complète du Knowledge Graph par pipeline d'agents IA
 
 ---
 
@@ -11,176 +12,219 @@
 **Infrastructure:**
 - [x] Docker Compose (4 services: frontend, backend, neo4j, postgres)
 - [x] Poetry pour gestion dépendances Python
-- [x] Configuration .env simplifiée
 - [x] PostgreSQL pour persistence des conversations
+- [x] Neo4j pour le Knowledge Graph
 
 **Frontend Vue.js 3:**
 - [x] Interface moderne avec TypeScript + Element Plus
-- [x] Atomic Design (atoms, molecules, organisms, templates)
+- [x] Atomic Design (atoms, molecules, organisms)
 - [x] Glassmorphism et animations
-- [x] VoiceRecorder avec push-to-talk et visualisation audio
-- [x] **ConversationSidebar** - Gestion complète des conversations
-- [x] **Historique des conversations persistant**
-- [x] Visualisation du knowledge graph (préparé)
-- [x] Responsive design (3 colonnes: sidebar | recorder | content)
+- [x] VoiceRecorder avec push-to-talk
+- [x] ConversationSidebar - Gestion conversations
+- [x] Historique persistant des conversations
+- [x] Responsive design (3 colonnes)
 
 **Backend FastAPI - Layered Architecture:**
-- [x] **Architecture en couches** (Routes → Services → Repositories → Models)
-- [x] API REST complète avec documentation auto-générée
-- [x] **Speech-to-Text: Groq Whisper large-v3** (10x plus rapide que local)
+- [x] Architecture en couches (Routes → Services → Repositories → Models)
+- [x] API REST complète
+- [x] Speech-to-Text: Groq Whisper large-v3
 - [x] Agent: OpenRouter avec Claude 3.5 Sonnet
-- [x] Text-to-Speech: Edge TTS (gratuit, voix fr-FR-DeniseNeural)
-- [x] Pipeline vocal complet: Audio → STT → Agent → TTS → Audio
-- [x] **Persistence PostgreSQL** avec SQLAlchemy
-- [x] **Auto-nommage des conversations** depuis premier message
-- [x] CRUD complet pour conversations et messages
+- [x] Text-to-Speech: Edge TTS
+- [x] Pipeline vocal: Audio → STT → Agent → TTS → Audio
+- [x] Persistence PostgreSQL avec SQLAlchemy
+- [x] Auto-nommage des conversations
+- [x] CRUD complet conversations/messages
 
-**Tests & Validation:**
+**Tests:**
 - [x] Tests unitaires pytest (voice_service, 92% couverture)
-- [x] 5 Jupyter notebooks pour tests interactifs :
-  - `01_test_stt_groq.ipynb` - Test Groq Whisper
-  - `02_test_tts_edge.ipynb` - Test Edge TTS
-  - `03_test_agent_openrouter.ipynb` - Test agent Claude
-  - `04_test_neo4j_graphiti.ipynb` - Test Neo4j/Graphiti
-  - `05_pipeline_complet.ipynb` - Test pipeline end-to-end
-- [x] Documentation complète (ARCHITECTURE.md, TESTING.md)
+- [x] 5 Jupyter notebooks pour tests interactifs
+- [x] Documentation complète
 
 ---
 
-## 🔄 En Cours (Phase 5)
+## ✅ **COMPLÉTÉ - Phase 5: Knowledge Graph par Pipeline d'Agents IA (Sprint 1)**
 
-### **Knowledge Graph & GraphRAG**
+### 🆕 **Nouvelle Approche KG Builder**
 
-**Note**: Neo4j Community Edition ne supporte pas les fonctions de similarité vectorielle natives nécessaires pour Graphiti. À évaluer:
-- Option 1: Migrer vers Neo4j Enterprise
-- Option 2: Utiliser alternative (Memgraph, etc.)
-- Option 3: Implémenter solution custom avec embeddings
+**Pourquoi ce changement ?**
+- ❌ Graphiti nécessite Neo4j Enterprise (fonctions vectorielles)
+- ✅ **Pipeline d'agents IA** = contrôle total, flexible, puissant
+- ✅ LLM (Claude) excellent pour extraction entités/relations
+- ✅ Support natif données structurées ET non-structurées
+- ✅ Évolutif et modulaire
 
-**Objectifs GraphRAG:**
-- [ ] Schéma du graphe pour entités conversationnelles
-  - Person, Event, Task, Note, Preference, Contact
-  - Relations: KNOWS, LIKES, SCHEDULED_FOR, RELATED_TO
-- [ ] Extraction automatique d'entités depuis transcriptions vocales
-- [ ] Mise à jour du graphe post-conversation
-- [ ] GraphRAG: Recherche sémantique dans le knowledge graph
-- [ ] Enrichissement du contexte de l'agent avec infos du graphe
+### **Architecture Pipeline KG**
+
+```
+Documents (CSV, JSON, PDF, TXT)
+    ↓
+Agent Parser (analyse format, extraction)
+    ↓
+Agent Entity Extractor (identifie entités + propriétés)
+    ↓
+Agent Relation Extractor (identifie relations)
+    ↓
+Neo4j Storage (CREATE nodes et edges)
+    ↓
+Agent Validator (cohérence, déduplication, enrichissement)
+```
+
+### **Tâches Phase 5**
+
+**Backend - Pipeline KG:**
+- [x] Créer structure `backend/src/kg/` (agents, services, models)
+- [x] Agent Parser - Analyse et extraction de documents (CSV)
+- [x] Agent Entity Extractor - Extraction d'entités typées (Claude)
+- [x] Agent Relation Extractor - Extraction de relations (Claude)
+- [x] Service Neo4j direct (sans Graphiti)
+- [x] Models Pydantic pour entités/relations
+- [x] Pipeline orchestrator (coordonne les agents)
+- [x] Routes API `/api/kg/*` (upload, process, query, graph)
+- [x] Support format CSV (JSON, PDF, TXT à venir Sprint 2)
+- [x] Déduplication de base (avancée Sprint 2)
+
+**Frontend - KG Builder:**
+- [x] Page dédiée "KG Builder" (`/kg-builder`)
+- [x] Upload zone (drag & drop fichiers)
+- [x] Processing status en temps réel (indicateurs de progression)
+- [x] KGFileUpload component avec validation
+- [x] KGStatistics component (compteurs nodes/relations par type)
+- [x] KGGraphViewer component (liste des nodes/edges)
+- [x] Navigation par onglets (Upload/Statistics/Graph)
+- [x] Store Pinia pour gestion état KG
+- [x] Intégration API complète
+- [ ] Graph viewer interactif visuel (D3.js ou vis.js) - Sprint 2
+- [ ] Recherche et filtrage avancé du graphe - Sprint 2
+- [ ] Export du graphe (JSON, Cypher) - Sprint 2
+
+**Tests & Validation:**
+- [x] Tests unitaires agents d'extraction
+- [x] Tests d'intégration pipeline complet
+- [x] Notebook démo complet (06_kg_pipeline_test.ipynb)
+- [x] Dataset test CSV (movies_sample.csv)
+- [x] Validation qualité extraction (via tests)
 
 ---
 
 ## 📦 Planifié (Phase 6+)
 
+### **Évolution KG Builder**
+
+**Support multi-sources:**
+- [ ] Upload API endpoints (intégration externe)
+- [ ] Scraping web agents
+- [ ] Base de données SQL/NoSQL sources
+- [ ] Synchronisation temps réel
+
+**Intelligence avancée:**
+- [ ] Enrichissement automatique via LLM
+- [ ] Résolution d'entités (entity linking)
+- [ ] Inférence de relations implicites
+- [ ] Clustering et communautés
+- [ ] Temporal knowledge graph (évolution dans le temps)
+
+**GraphRAG - Retrieval Augmented Generation:**
+- [ ] Intégration KG dans le contexte de l'agent vocal
+- [ ] Recherche sémantique dans le graphe
+- [ ] Réponses enrichies par le graphe
+- [ ] Questions sur le KG ("Qui connaît qui ?", "Quels événements en janvier ?")
+
 ### **ESP32 Hardware** (matériel en commande)
 
 **Setup Initial:**
 - [ ] Configuration PlatformIO pour ESP32
-- [ ] Driver I2S pour microphone INMP441
-- [ ] Driver I2S pour speaker MAX98357A
-- [ ] Tests basiques capture/lecture audio
+- [ ] Driver I2S micro + speaker
+- [ ] Tests capture/lecture audio
 
-**Wake Word & Communication:**
-- [ ] Wake word detection locale ("Hey Jarvis")
-- [ ] WiFi manager et client HTTP
-- [ ] Upload audio vers backend
-- [ ] Download et lecture réponse audio
-
-**Pipeline ESP32 Complet:**
-- [ ] Intégration: Wake word → Capture → Backend → Lecture
-- [ ] Gestion états (idle, listening, processing, speaking)
-- [ ] LED indicators pour feedback utilisateur
-- [ ] Optimisation latence matérielle
+**Pipeline complet:**
+- [ ] Wake word detection ("Hey Jarvis")
+- [ ] Communication WiFi avec backend
+- [ ] Gestion états et LED feedback
 
 ---
 
 ## 🚀 Fonctionnalités Futures
 
-### **Améliorations UX**
-- [ ] Recherche dans les conversations
-- [ ] Tags/catégories pour conversations
-- [ ] Export/import des conversations (JSON, texte)
-- [ ] Raccourcis clavier pour interface web
-- [ ] Mode conversation continue (sans push-to-talk)
-- [ ] Thèmes personnalisables (dark/light)
+### **KG Builder UX**
+- [ ] Templates de schémas prédéfinis (CRM, Events, People, etc.)
+- [ ] Mode wizard pour création guidée
+- [ ] Versioning du graphe (snapshots)
+- [ ] Collaboration multi-utilisateurs
+- [ ] Permissions et accès contrôlés
 
-### **Intelligence Avancée**
-- [ ] Support multi-utilisateurs (reconnaissance vocale)
-- [ ] Routines et automatisations personnalisées
-- [ ] Notifications proactives basées sur le contexte
+### **Assistant Vocal Avancé**
+- [ ] Support multi-utilisateurs
+- [ ] Routines et automatisations
+- [ ] Notifications proactives
 - [ ] Intégration calendrier/email
-- [ ] Commandes vocales rapides (timer, météo, calculs)
-
-### **Intégrations**
-- [ ] Home automation (contrôle dispositifs IoT)
-- [ ] API externes (météo, news, etc.)
-- [ ] Synchronisation cloud optionnelle
-
-### **Optimisations**
-- [ ] Cache intelligent des réponses fréquentes
-- [ ] Mode offline partiel
-- [ ] Déploiement Raspberry Pi
-- [ ] Tests de charge et performance
+- [ ] Home automation
 
 ---
 
-## 📂 Structure du Projet
+## 📂 Structure du Projet (Nouvelle)
 
 ```
 Projet_P3/
-├── frontend/              # Vue.js 3 + TypeScript + Element Plus
+├── frontend/
 │   ├── src/
-│   │   ├── components/   # Atomic Design
-│   │   │   ├── atoms/         # BaseButton, BaseBadge, etc.
-│   │   │   ├── molecules/     # StatCard, MessageBubble, etc.
-│   │   │   └── organisms/     # VoiceRecorder, ConversationSidebar, etc.
-│   │   ├── stores/       # Pinia (conversation store)
-│   │   ├── services/     # API client (axios)
-│   │   ├── types/        # TypeScript types
-│   │   └── App.vue
-│   └── Dockerfile
+│   │   ├── components/
+│   │   │   └── organisms/
+│   │   │       ├── VoiceRecorder.vue
+│   │   │       ├── ConversationSidebar.vue
+│   │   │       └── KGBuilder.vue (NOUVEAU)
+│   │   ├── views/
+│   │   │   └── KGBuilderView.vue (NOUVEAU)
+│   │   ├── stores/
+│   │   │   ├── conversation.ts
+│   │   │   └── kg.ts (NOUVEAU)
+│   │   └── services/
+│   │       └── api.ts (+ méthodes KG)
+│   └── ...
 │
-├── backend/              # FastAPI + Python 3.11
+├── backend/
 │   ├── src/
-│   │   ├── api/         # Layered Architecture
-│   │   │   ├── routes/       # voice, knowledge, conversations, health
-│   │   │   └── main.py       # FastAPI app
-│   │   ├── core/        # Configuration & Database
-│   │   │   ├── config.py     # Settings (Pydantic)
-│   │   │   └── database.py   # SQLAlchemy setup
-│   │   ├── models/      # Pydantic & SQLAlchemy models
-│   │   │   ├── requests.py
-│   │   │   ├── responses.py
-│   │   │   └── db_models.py  # Conversation, Message
-│   │   ├── services/    # Business Logic
+│   │   ├── api/routes/
+│   │   │   ├── voice.py
+│   │   │   ├── conversations.py
+│   │   │   ├── knowledge.py (refactoring)
+│   │   │   └── kg.py (NOUVEAU - KG Builder routes)
+│   │   ├── kg/ (NOUVEAU - Pipeline KG)
+│   │   │   ├── agents/
+│   │   │   │   ├── parser_agent.py
+│   │   │   │   ├── entity_extractor_agent.py
+│   │   │   │   ├── relation_extractor_agent.py
+│   │   │   │   └── validator_agent.py
+│   │   │   ├── services/
+│   │   │   │   ├── kg_service.py
+│   │   │   │   ├── neo4j_service.py
+│   │   │   │   └── pipeline_orchestrator.py
+│   │   │   ├── models/
+│   │   │   │   ├── entity.py
+│   │   │   │   ├── relation.py
+│   │   │   │   └── document.py
+│   │   │   └── parsers/
+│   │   │       ├── csv_parser.py
+│   │   │       ├── json_parser.py
+│   │   │       ├── pdf_parser.py
+│   │   │       └── txt_parser.py
+│   │   ├── services/
 │   │   │   ├── voice_service.py
 │   │   │   └── conversation_service.py
-│   │   ├── repositories/  # Data Access
+│   │   ├── repositories/
 │   │   │   └── conversation_repository.py
-│   │   ├── agents/      # jarvis_agent.py (OpenRouter)
-│   │   ├── voice/       # stt.py (Groq) + tts.py (Edge TTS)
-│   │   ├── graph/       # Graphiti integration (en attente)
-│   │   └── code_analysis/  # Analyseur de code (bonus)
-│   ├── tests/           # Tests pytest
-│   │   ├── conftest.py
-│   │   └── services/
-│   ├── notebooks/       # Jupyter notebooks de test
-│   ├── config/          # Configurations et schémas
-│   ├── data/            # Données et graphes
-│   └── Dockerfile
+│   │   └── ...
+│   ├── tests/
+│   │   └── kg/ (NOUVEAU - Tests pipeline)
+│   └── notebooks/
+│       └── 06_kg_pipeline_test.ipynb (NOUVEAU)
 │
-├── esp32/               # Firmware ESP32 (à développer)
-│   └── src/
+├── docs/
+│   ├── TODO.md (ce fichier)
+│   ├── ARCHITECTURE.md
+│   ├── KG_PIPELINE.md (NOUVEAU - Doc pipeline KG)
+│   └── ...
 │
-├── docs/                # Documentation
-│   ├── ARCHITECTURE.md      # Layered Architecture
-│   ├── TESTING.md           # Guide des tests
-│   ├── QUICK_START.md       # Démarrage rapide
-│   ├── WEB_INTERFACE.md     # Interface web
-│   ├── START.md             # Guide 30 secondes
-│   └── TODO.md              # Ce fichier
-│
-├── docker-compose.yml   # 4 services: frontend, backend, neo4j, postgres
-├── Makefile            # Commandes utiles
-├── CLAUDE.md           # Instructions pour Claude Code
-└── README.md           # Point d'entrée principal
+└── ...
 ```
 
 ---
@@ -189,155 +233,179 @@ Projet_P3/
 
 ### Docker
 ```bash
-make build          # Build les images
 make up            # Lancer tous les services
-make down          # Arrêter les services
-make logs          # Voir les logs
-make clean         # Nettoyer (⚠️ supprime les données)
-```
-
-### Accès aux Services
-```bash
-# Frontend: http://localhost:5173
-# Backend API: http://localhost:8000
-# API Docs (Swagger): http://localhost:8000/docs
-# Neo4j Browser: http://localhost:7474
-# PostgreSQL: localhost:5432 (jarvis/jarvis2024)
-# Jupyter Notebooks: http://localhost:8888
+make down          # Arrêter
+make logs          # Logs
 ```
 
 ### Développement Backend
 ```bash
-# Ajouter une dépendance
+# Ajouter dépendance
 docker compose exec backend poetry add package-name
 
-# Tests pytest
+# Tests
 docker compose exec backend pytest
 
-# Tests avec couverture
-docker compose exec backend pytest --cov=src --cov-report=html
-
-# Lancer Jupyter
+# Jupyter
 docker compose exec backend jupyter notebook \
   --ip=0.0.0.0 --port=8888 --no-browser --allow-root
-
-# Accéder au shell
-docker compose exec backend bash
 ```
 
-### Développement Frontend
+### Neo4j - Requêtes KG
 ```bash
-# Installation
-cd frontend && npm install
+# Via Python
+docker compose exec backend python
 
-# Dev local (hors Docker)
-npm run dev
-
-# Build production
-npm run build
-
-# Type check
-npm run type-check
+>>> from neo4j import GraphDatabase
+>>> driver = GraphDatabase.driver("bolt://neo4j:7687", auth=("neo4j", "graphrag2024"))
+>>> with driver.session() as session:
+...     result = session.run("MATCH (n) RETURN count(n)")
+...     print(result.single()[0])
 ```
 
-### Database
+### Accès Services
 ```bash
-# Accéder à PostgreSQL
-docker compose exec postgres psql -U jarvis -d jarvis
-
-# Voir les conversations
-docker compose exec postgres psql -U jarvis -d jarvis \
-  -c "SELECT id, name, created_at FROM conversations ORDER BY updated_at DESC;"
-
-# Voir les messages
-docker compose exec postgres psql -U jarvis -d jarvis \
-  -c "SELECT * FROM messages WHERE conversation_id='...';"
+# Frontend: http://localhost:5173
+# Backend API: http://localhost:8000/docs
+# Neo4j Browser: http://localhost:7474
+# PostgreSQL: localhost:5432
+# Jupyter: http://localhost:8888
 ```
 
 ---
 
-## 🎯 Prochaines Étapes Recommandées
+## 🎯 Plan d'Action - Branche KG
 
-**Court terme (cette semaine):**
-1. ✅ Système de conversations complet (fait)
-2. ✅ Auto-nommage des conversations (fait)
-3. Améliorer l'UI/UX (recherche, tags, export)
-4. Ajouter plus de tests (routes API, repositories)
+### **Sprint 1 - Fondations** ✅ COMPLÉTÉ
 
-**Moyen terme (ce mois):**
-1. Décider stratégie GraphRAG (Neo4j Enterprise vs alternative)
-2. Implémenter extraction d'entités vocales
-3. Tests d'intégration complets
-4. Développer firmware ESP32 (si matériel reçu)
+**Jour 1-2: Architecture & Setup**
+- [x] Nettoyer ancien code Graphiti/code_analysis
+- [x] Créer structure `backend/src/kg/`
+- [x] Setup Neo4j direct (models, service)
+- [x] Routes API de base `/api/kg/`
+- [ ] Frontend: page KG Builder (structure) - Sprint 2
 
-**Long terme (prochains mois):**
-1. Wake word detection sur ESP32
-2. Pipeline vocal ESP32 bout-en-bout
-3. Multi-utilisateurs et fonctionnalités avancées
-4. Home automation et intégrations externes
+**Jour 3-4: Premier Agent - CSV**
+- [x] Parser CSV avec Pandas
+- [x] Agent Entity Extractor (CSV structuré)
+- [x] Agent Relation Extractor (CSV)
+- [x] Storage Neo4j
+- [x] Test end-to-end CSV → Neo4j
+
+**Jour 5: Validation & Tests**
+- [x] Tests unitaires agents
+- [x] Notebook de démo
+- [x] Dataset test CSV
+- [ ] Graph viewer basique frontend - Sprint 2
+
+**✅ Sprint 1 COMPLÉTÉ - Pipeline KG complet opérationnel (Backend + Frontend)!**
+
+### **Sprint 2 - Extension (semaine prochaine)**
+- [ ] Support JSON, PDF, TXT
+- [ ] Agent Validator (déduplication)
+- [ ] Graph viewer avancé (D3.js)
+- [ ] Upload multi-fichiers
+- [ ] Processing status temps réel
+
+### **Sprint 3 - GraphRAG (après)**
+- [ ] Intégration KG → contexte agent vocal
+- [ ] Recherche sémantique dans KG
+- [ ] Questions sur le graphe
+- [ ] Enrichissement automatique
 
 ---
 
-## 📊 Métriques de Performance
+## 📊 Schéma KG Initial (Exemple)
 
-**Latences actuelles (mesuré):**
-- STT (Groq Whisper): ~0.9s
-- Agent (OpenRouter Claude): ~1-2s
-- TTS (Edge TTS): ~0.5s
-- **Total pipeline**: ~2.5-3.5s ✅ (objectif < 3s atteint)
+### **Types d'Entités**
+```python
+EntityType:
+  - Person (name, email, phone, role)
+  - Organization (name, industry, location)
+  - Event (name, date, location, description)
+  - Document (title, type, date, source)
+  - Concept (name, category, description)
+```
 
-**Couverture tests:**
-- voice_service: 92% ✅
-- Objectif global: >60%
+### **Types de Relations**
+```python
+RelationType:
+  - KNOWS (Person → Person)
+  - WORKS_AT (Person → Organization)
+  - ATTENDED (Person → Event)
+  - MENTIONS (Document → Person/Org/Concept)
+  - RELATED_TO (generic)
+  - HAPPENED_AT (Event → Location)
+  - CREATED_BY (Document → Person)
+```
 
 ---
 
 ## 📚 Ressources
 
 ### Documentation Projet
-- [README.md](../README.md) - Vue d'ensemble et démarrage
-- [ARCHITECTURE.md](ARCHITECTURE.md) - Architecture Layered en détail
-- [TESTING.md](TESTING.md) - Guide des tests et notebooks
-- [QUICK_START.md](QUICK_START.md) - Guide démarrage détaillé
-- [WEB_INTERFACE.md](WEB_INTERFACE.md) - Interface web
-- [START.md](START.md) - Démarrage ultra-rapide 30 secondes
+- [README.md](../README.md)
+- [ARCHITECTURE.md](ARCHITECTURE.md)
+- [KG_PIPELINE.md](KG_PIPELINE.md) (à créer)
+- [TESTING.md](TESTING.md)
 
-### Technologies Externes
-- **Graphiti**: https://github.com/getzep/graphiti
-- **OpenRouter**: https://openrouter.ai/docs
-- **Neo4j**: https://neo4j.com/docs/
-- **Groq Whisper**: https://console.groq.com/docs/speech-text
-- **Edge TTS**: https://github.com/rany2/edge-tts
-- **ESP32 Audio**: https://github.com/atomic14/esp32_audio
+### Technologies - KG Pipeline
+- **Neo4j Python Driver**: https://neo4j.com/docs/python-manual/current/
+- **LangChain** (optionnel pour agents): https://python.langchain.com/
+- **Pandas** (parsing CSV): https://pandas.pydata.org/
+- **PyPDF2** (parsing PDF): https://pypdf2.readthedocs.io/
+- **D3.js** (graph viz): https://d3js.org/
+- **vis.js** (alternative graph viz): https://visjs.org/
 
-### Hardware
-- **ESP32-S3 DevKit C** (recommandé pour I2S)
-- **INMP441** I2S Digital Microphone
-- **MAX98357A** I2S Amplifier
-- **Speaker 4Ω 3W**
-- **LED RGB** pour feedback visuel
+### LLM pour Agents
+- **OpenRouter API**: https://openrouter.ai/docs
+- **Claude Sonnet 4**: Excellent pour extraction structurée
+- **Prompt Engineering**: https://www.anthropic.com/claude/prompting
 
 ---
 
-## 🎉 Changelog Récent
+## 🎉 Changelog
 
-### 2026-01-07
-- ✅ Migration STT vers Groq Whisper (10x plus rapide)
-- ✅ Refactoring complet Layered Architecture
-- ✅ Ajout PostgreSQL pour persistence
-- ✅ Système de conversations complet (CRUD)
-- ✅ Auto-nommage des conversations depuis premier message
-- ✅ Frontend avec ConversationSidebar
-- ✅ Tests pytest + 5 Jupyter notebooks
-- ✅ Documentation complète (ARCHITECTURE.md, TESTING.md)
-- ✅ Nettoyage et organisation du projet
+### 2026-01-07 (soir) - Branche KG - Sprint 1 COMPLET ✅ + Corrections
+- ✅ Frontend KG Builder complet et opérationnel
+- ✅ KGFileUpload component (drag & drop, validation, progress)
+- ✅ KGStatistics component (dashboard stats)
+- ✅ KGGraphViewer component (liste nodes/edges)
+- ✅ Navigation par onglets (Upload/Statistics/Graph)
+- ✅ Store Pinia kg.ts pour state management
+- ✅ Corrections critiques pipeline:
+  - Fixed: entity.type.value sur string (use_enum_values=True)
+  - Fixed: Neo4j service calls (sync vs async)
+  - Fixed: Neo4j connect() manquant
+  - Fixed: document.mark_completed() arguments manquants
+  - Fixed: storage_data None handling
+- ✅ Pipeline testé et validé end-to-end
+- ✅ Gestion idempotente des duplicates (MERGE Neo4j)
+- ✅ 12 entités + 9 relations test stockées avec succès
 
-### 2026-01-06
-- ✅ Tests Graphiti (limitations Neo4j Community identifiées)
-- ✅ Pipeline vocal end-to-end fonctionnel
-- ✅ Interface Vue.js moderne avec glassmorphism
-- ✅ Docker Compose 3 services (ajout Neo4j)
+### 2026-01-07 (matin) - Branche KG - Sprint 1 Backend ✅
+- ✅ Nettoyage code Graphiti et code_analysis
+- ✅ TODO mis à jour avec nouvelle approche Pipeline KG
+- ✅ Architecture Pipeline d'agents IA complète
+- ✅ Models Pydantic (Entity, Relation, Document)
+- ✅ Service Neo4j direct (MERGE, batch operations)
+- ✅ Parser CSV avec auto-détection (encoding, délimiteur)
+- ✅ Agent Entity Extractor (Claude via OpenRouter)
+- ✅ Agent Relation Extractor (Claude via OpenRouter)
+- ✅ Pipeline Orchestrator (coordination complète)
+- ✅ Routes API `/api/kg/*` (8 endpoints)
+- ✅ Dataset test Movies (10 films, 45 entités, 78 relations)
+- ✅ Tests end-to-end pytest
+- ✅ Notebook démo interactif (06_kg_pipeline_test.ipynb)
+- ✅ Documentation complète (KG_PIPELINE.md)
+
+### 2026-01-07 - Main
+- ✅ Système conversations complet (PostgreSQL)
+- ✅ Auto-nommage conversations
+- ✅ Migration Groq Whisper
+- ✅ Layered Architecture
+- ✅ Tests + Documentation
 
 ---
 
-**Projet opérationnel et prêt pour la phase suivante !** 🚀
+**Branche KG - Objectif: Knowledge Graph Builder complet par agents IA** 🚀

@@ -1,0 +1,28 @@
+# Pipeline Dependencies for Knowledge Graph Construction
+# Add these to your main requirements.txt or install separately
+
+# Core parsing
+pandas>=2.0.0
+chardet>=5.0.0
+
+# PDF parsing (choose one)
+pdfplumber>=0.10.0  # Recommended for better text extraction
+# OR
+pypdf>=3.0.0  # Lighter alternative
+
+# Embeddings
+sentence-transformers>=2.2.0
+torch>=2.0.0  # Required by sentence-transformers
+transformers>=4.30.0  # Required by sentence-transformers
+
+# NER (Named Entity Recognition)
+spacy>=3.5.0
+
+# Spacy models (download separately):
+# python -m spacy download en_core_web_sm  # English small
+# python -m spacy download en_core_web_md  # English medium (better accuracy)
+# python -m spacy download fr_core_news_sm  # French small
+
+# Optional: Advanced features
+# faiss-cpu>=1.7.4  # For fast vector similarity search
+# nltk>=3.8  # For advanced text processing

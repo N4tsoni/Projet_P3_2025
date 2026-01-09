@@ -1,0 +1,9 @@
+name,company,role,email,phone,location,skills,notes
+Alice Martin,TechCorp,Lead Developer,alice@techcorp.com,+33612345678,Paris,"Python,FastAPI,Vue.js","Expert in backend development. Works on the AI assistant project."
+Bob Johnson,DataLab,Data Scientist,bob@datalab.io,+33687654321,Lyon,"Machine Learning,Neo4j,GraphRAG","Specializes in knowledge graphs and graph databases."
+Claire Dubois,TechCorp,UX Designer,claire@techcorp.com,+33698765432,Paris,"Figma,UI/UX,Design Systems","Created the glassmorphism design for Jarvis."
+David Chen,CloudInc,DevOps Engineer,david@cloudinc.com,+1-555-0123,San Francisco,"Docker,Kubernetes,AWS","Manages infrastructure for distributed systems."
+Emma Wilson,TechCorp,Product Manager,emma@techcorp.com,+33676543210,Paris,"Agile,Scrum,Product Strategy","Leads the Jarvis project roadmap."
+Frank Mueller,DataLab,ML Engineer,frank@datalab.io,+49-30-12345,Berlin,"PyTorch,NLP,Claude API","Implements LLM-based entity extraction agents."
+Grace Lee,TechCorp,Backend Developer,grace@techcorp.com,+1-555-0199,Remote,"Python,PostgreSQL,Neo4j","Works on knowledge graph pipeline with Alice."
+Henri Lefebvre,StartupX,CEO,henri@startupx.fr,+33654321098,Paris,"Leadership,Strategy,Fundraising","Founded StartupX in 2020. Looking to integrate Jarvis."

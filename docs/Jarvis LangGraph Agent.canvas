@@ -1,0 +1,28 @@
+{
+	"nodes":[
+		{"id":"agent","type":"text","text":"# Jarvis Agent\nLangGraph","x":400,"y":-200,"width":200,"height":120,"color":"1"},
+		{"id":"node1","type":"text","text":"Node 1\n**NER Extraction**","x":0,"y":100,"width":180,"height":100,"color":"3"},
+		{"id":"node2","type":"text","text":"Node 2\n**Semantic Retrieval**","x":220,"y":100,"width":180,"height":100,"color":"3"},
+		{"id":"node3","type":"text","text":"Node 3\n**Ranking**","x":440,"y":100,"width":180,"height":100,"color":"3"},
+		{"id":"node4","type":"text","text":"Node 4\n**Context Building**","x":660,"y":100,"width":180,"height":100,"color":"3"},
+		{"id":"node5","type":"text","text":"Node 5\n**LLM Call**","x":880,"y":100,"width":180,"height":100,"color":"3"},
+		{"id":"node6","type":"text","text":"Node 6\n**Memory**","x":1100,"y":100,"width":180,"height":100,"color":"3"},
+		{"id":"ner","type":"text","text":"NERService\nspaCy","x":0,"y":280,"width":180,"height":80,"color":"4"},
+		{"id":"vector","type":"text","text":"VectorStore\nNeo4j Vector","x":220,"y":280,"width":180,"height":80,"color":"4"},
+		{"id":"neo4j","type":"text","text":"Neo4j\nKnowledge Graph","x":440,"y":280,"width":180,"height":80,"color":"2"},
+		{"id":"openai","type":"text","text":"Claude 3.5\nOpenRouter","x":880,"y":280,"width":180,"height":80,"color":"6"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"agent","fromSide":"bottom","toNode":"node1","toSide":"top"},
+		{"id":"e2","fromNode":"node1","fromSide":"right","toNode":"node2","toSide":"left"},
+		{"id":"e3","fromNode":"node2","fromSide":"right","toNode":"node3","toSide":"left"},
+		{"id":"e4","fromNode":"node3","fromSide":"right","toNode":"node4","toSide":"left"},
+		{"id":"e5","fromNode":"node4","fromSide":"right","toNode":"node5","toSide":"left"},
+		{"id":"e6","fromNode":"node5","fromSide":"right","toNode":"node6","toSide":"left"},
+		{"id":"e7","fromNode":"node1","fromSide":"bottom","toNode":"ner","toSide":"top","color":"4"},
+		{"id":"e8","fromNode":"node2","fromSide":"bottom","toNode":"vector","toSide":"top","color":"4"},
+		{"id":"e9","fromNode":"vector","fromSide":"right","toNode":"neo4j","toSide":"left","color":"2"},
+		{"id":"e10","fromNode":"node3","fromSide":"bottom","toNode":"neo4j","toSide":"top","color":"2"},
+		{"id":"e11","fromNode":"node5","fromSide":"bottom","toNode":"openai","toSide":"top","color":"6"}
+	]
+}

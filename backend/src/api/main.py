@@ -9,7 +9,7 @@ from loguru import logger
 
 from src.core.config import get_settings
 from src.core.database import init_db
-from src.api.routes import voice_router, knowledge_router, health_router, conversations_router
+from src.api.routes import voice_router, knowledge_router, health_router, conversations_router, kg_router
 
 # Get settings
 settings = get_settings()
@@ -39,6 +39,7 @@ app.include_router(health_router)  # Health checks at root level
 app.include_router(voice_router)  # /api/voice/*
 app.include_router(knowledge_router)  # /api/knowledge/*
 app.include_router(conversations_router)  # /api/conversations/*
+app.include_router(kg_router)  # /api/kg/*
 
 
 @app.on_event("startup")

@@ -1,0 +1,13 @@
+{
+  "alwaysUpdateLinks": true,
+  "newFileLocation": "current",
+  "attachmentFolderPath": "assets",
+  "useMarkdownLinks": false,
+  "showFrontmatter": true,
+  "showLineNumber": true,
+  "spellcheck": false,
+  "strictLineBreaks": false,
+  "defaultViewMode": "source",
+  "readableLineLength": true,
+  "livePreview": true
+}
