@@ -103,3 +103,5 @@ backend/data/temp/*.mp3
 # Session notes
 SESSION_*.md
 docs/.obsidian/workspace.json
+CLAUDE.md
+*/CLAUDE.md
