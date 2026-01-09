@@ -45,36 +45,63 @@
 
 ## ✅ État Actuel
 
-### **Phase 3: OPÉRATIONNEL** ✅
+### **Phase 4: KNOWLEDGE GRAPH OPÉRATIONNEL** ✅
 
-Le pipeline vocal complet est **fonctionnel et testé** avec une interface moderne:
+Le système complet avec **Knowledge Graph dynamique** et **agent LangGraph** est **fonctionnel et testé**:
 
 ```
-Audio → Whisper STT → Claude Agent → Edge TTS → Audio Response
+Audio → Whisper STT → LangGraph Agent → Neo4j KG → Edge TTS → Audio Response
+                            ↓
+                    [NER → Semantic Search → Ranking → Context Building]
 ```
 
 **Ce qui fonctionne aujourd'hui:**
+
+#### Frontend & Interface
 - ✅ **Frontend Vue.js 3** avec TypeScript et Atomic Design
 - ✅ Interface moderne avec glassmorphism et animations
 - ✅ Push-to-talk vocal avec visualisation waveform temps réel
 - ✅ Historique des conversations avec lecture audio
-- ✅ Visualisation du knowledge graph
-- ✅ Transcription vocale en français (Whisper local)
-- ✅ Agent conversationnel intelligent (Claude via OpenRouter)
-- ✅ Synthèse vocale en français (Edge TTS - voix Denise)
-- ✅ Docker + Docker Compose avec 3 services
-- ✅ Neo4j prêt pour knowledge graph
-- ✅ API REST FastAPI complète
+- ✅ **Knowledge Graph Builder** avec upload de documents (CSV, JSON, PDF, TXT)
+- ✅ **Animation de progression** du pipeline avec bonhomme qui court 🏃‍♂️
+- ✅ Visualisation du knowledge graph (stats + entités)
 
-**En cours d'implémentation:**
-- 🔄 Intégration Graphiti pour mémoire persistante (Phase 4)
-- 🔄 Extraction automatique d'entités depuis conversations
-- 🔄 GraphRAG pour enrichissement contextuel
+#### Agent Conversationnel
+- ✅ **Agent LangGraph** modulaire avec 6 nodes:
+  - Node 1: **NER Extraction** (spaCy)
+  - Node 2: **Semantic Retrieval** (Neo4j Vector Search)
+  - Node 3: **Ranking** (similarity + type match + centrality)
+  - Node 4: **Context Building**
+  - Node 5: **LLM Call** (Claude 3.5 Sonnet)
+  - Node 6: **Memory Persistence** (PostgreSQL)
+- ✅ **Recherche vectorielle** native dans Neo4j (embeddings all-MiniLM-L6-v2)
+- ✅ **GraphRAG** pour enrichissement contextuel des réponses
+
+#### Knowledge Graph Pipeline
+- ✅ **Pipeline modulaire** avec 9 stages configurables:
+  1. **Parsing** - Lecture du document
+  2. **Chunking** - Découpage en chunks
+  3. **Embedding** - Génération d'embeddings
+  4. **NER** - Extraction d'entités nommées
+  5. **Extraction** - Extraction LLM (entités + relations)
+  6. **Transformation** - Normalisation des données
+  7. **Enrichment** - Enrichissement des entités
+  8. **Validation** - Validation des données
+  9. **Storage** - Stockage dans Neo4j
+- ✅ **Auto-indexing** des entités dans Neo4j Vector Index
+- ✅ Support multi-formats (CSV, JSON, PDF, TXT, XLSX, XML)
+
+#### Infrastructure
+- ✅ Docker + Docker Compose avec 3 services
+- ✅ Neo4j avec Vector Search activé
+- ✅ PostgreSQL pour persistance conversations
+- ✅ API REST FastAPI complète
 
 **Planifié:**
 - 📦 Firmware ESP32 (matériel en commande - Phase 5)
 - 📦 Wake word detection ("Hey Jarvis")
 - 📦 Tests unitaires et d'intégration
+- 📦 Visualisation interactive du graphe (D3.js/Cytoscape)
 
 ---
 
@@ -138,48 +165,52 @@ docker compose ps
 ### Vue d'Ensemble
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     FRONTEND (Vue.js 3)                     │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │  Voice       │  │ Conversation │  │  Knowledge   │      │
-│  │  Recorder    │  │  History     │  │  Graph Viz   │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
-│         │                  │                  │             │
-│         └──────────────────┴──────────────────┘             │
-│                            │ Axios API calls                │
-└────────────────────────────┼────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────┐
+│                      FRONTEND (Vue.js 3)                       │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐     │
+│  │  Voice       │  │ Conversation │  │  KG Builder      │     │
+│  │  Recorder    │  │  History     │  │  + Pipeline 🏃‍♂️  │     │
+│  └──────────────┘  └──────────────┘  └──────────────────┘     │
+│         │                  │                    │              │
+│         └──────────────────┴────────────────────┘              │
+│                            │ Axios API                         │
+└────────────────────────────┼───────────────────────────────────┘
                              │ http://localhost:5173/api
                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   BACKEND (FastAPI)                         │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  /api/voice/process    POST  (Audio → Response)      │  │
-│  │  /api/health           GET   (Health check)          │  │
-│  │  /api/knowledge/graph  GET   (Graph data)            │  │
-│  └──────────────────────────────────────────────────────┘  │
-│         │                      │                            │
-│         ▼                      ▼                            │
-│  ┌────────────┐         ┌────────────┐                     │
-│  │  Whisper   │         │  Edge TTS  │                     │
-│  │    STT     │         │    TTS     │                     │
-│  └────────────┘         └────────────┘                     │
-│         │                      ▲                            │
-│         │    "Bonjour"         │ MP3 audio                 │
-│         ▼                      │                            │
-│  ┌─────────────────────────────┴──────────────────┐        │
-│  │   Claude 3.5 Sonnet Agent (OpenRouter)         │        │
-│  └─────────────────────────────┬──────────────────┘        │
-│                                 │                           │
-│                                 ▼                           │
-│  ┌──────────────────────────────────────────────┐          │
-│  │   Graphiti + Neo4j Knowledge Graph           │          │
-│  └──────────────────────────────────────────────┘          │
-└─────────────────────────────────────────────────────────────┘
-                                 │
-                                 ▼
-                        ┌──────────────┐
-                        │   Neo4j DB   │
-                        └──────────────┘
+┌────────────────────────────────────────────────────────────────┐
+│                     BACKEND (FastAPI)                          │
+│  ┌──────────────────────────────────────────────────────────┐ │
+│  │  /api/voice/process        POST  (Audio → Response)      │ │
+│  │  /api/kg/upload-and-process POST  (Doc → KG)            │ │
+│  │  /api/kg/graph/stats       GET   (Graph stats)          │ │
+│  │  /api/conversations        GET   (History)              │ │
+│  └──────────────────────────────────────────────────────────┘ │
+│         │                                                      │
+│         ▼                                                      │
+│  ┌────────────┐    ┌──────────────────────────────────┐       │
+│  │  Whisper   │───→│   LangGraph Agent (6 Nodes)      │       │
+│  │    STT     │    │                                  │       │
+│  └────────────┘    │  1. NER Extraction (spaCy)       │       │
+│                    │  2. Semantic Retrieval (Neo4j)   │       │
+│  ┌────────────┐    │  3. Ranking (multi-factor)       │       │
+│  │  Edge TTS  │←───│  4. Context Building             │       │
+│  │    TTS     │    │  5. LLM Call (Claude 3.5)        │       │
+│  └────────────┘    │  6. Memory Persist (PostgreSQL)  │       │
+│                    └────────────┬─────────────────────┘       │
+│                                 │                              │
+│                                 ▼                              │
+│  ┌──────────────────────────────────────────────────────┐     │
+│  │  KG Pipeline (9 Stages)                              │     │
+│  │  Parsing → Chunking → Embedding → NER → Extraction   │     │
+│  │  → Transformation → Enrichment → Validation → Storage│     │
+│  └──────────────────────────────┬───────────────────────┘     │
+└─────────────────────────────────┼────────────────────────────┘
+                                  │
+                                  ▼
+                    ┌──────────────────────────┐
+                    │   Neo4j (Graph + Vector) │
+                    │   + PostgreSQL (History) │
+                    └──────────────────────────┘
 ```
 
 ### Structure des Dossiers
@@ -211,18 +242,38 @@ Projet_P3/
 │   ├── src/
 │   │   ├── main.py               # Point d'entrée
 │   │   ├── api/
-│   │   │   └── main.py          # FastAPI app
+│   │   │   ├── main.py          # FastAPI app
+│   │   │   └── routes/
+│   │   │       ├── kg.py        # Routes Knowledge Graph
+│   │   │       └── voice.py     # Routes Voice
 │   │   ├── agents/
-│   │   │   └── jarvis_agent.py  # Agent conversationnel
+│   │   │   ├── jarvis_agent.py  # Legacy wrapper
+│   │   │   └── jarvis/          # LangGraph Agent
+│   │   │       ├── graph.py     # Graph orchestrator
+│   │   │       ├── state.py     # AgentState
+│   │   │       ├── nodes/       # 6 node functions
+│   │   │       └── services/
+│   │   │           ├── vector_store.py  # Neo4j Vector Search
+│   │   │           └── ner_service.py   # spaCy NER
+│   │   ├── kg/                  # Knowledge Graph Pipeline
+│   │   │   ├── pipeline/        # Modular pipeline
+│   │   │   │   ├── pipeline.py  # Pipeline class
+│   │   │   │   ├── factory.py   # Pipeline factory
+│   │   │   │   └── stages/      # 9 pipeline stages
+│   │   │   ├── services/
+│   │   │   │   ├── neo4j_service.py  # Neo4j client
+│   │   │   │   └── pipeline_orchestrator.py
+│   │   │   ├── agents/          # Specialized agents
+│   │   │   └── models/          # Entity/Relation models
 │   │   ├── voice/
 │   │   │   ├── stt.py           # Speech-to-Text
 │   │   │   └── tts.py           # Text-to-Speech
-│   │   ├── graph/
-│   │   │   └── graphiti_client.py # Knowledge graph
+│   │   ├── services/
+│   │   │   └── conversation_service.py  # PostgreSQL
 │   │   └── models/              # Modèles Pydantic
 │   ├── tests/                   # Tests
-│   ├── config/
-│   │   └── graphiti_config.yaml
+│   ├── data/
+│   │   └── kg_uploads/          # Uploaded documents
 │   ├── pyproject.toml           # Dépendances Poetry
 │   ├── Dockerfile               # Image Python 3.11
 │   └── .env                     # Configuration
@@ -281,9 +332,12 @@ Voir `frontend/CLAUDE.md` pour la documentation complète.
 | **Python** | 3.11 | Langage principal |
 | **FastAPI** | 0.108.0 | API REST async |
 | **Uvicorn** | 0.25.0 | Serveur ASGI |
-| **Neo4j** | 5.15 | Base de données graphe |
-| **Graphiti** | 0.3.0 | Framework knowledge graph |
-| **LangChain** | 0.1.0 | Framework LLM |
+| **Neo4j** | 5.15 | Base de données graphe + Vector Search |
+| **PostgreSQL** | - | Persistance conversations |
+| **LangGraph** | 0.2.0 | Agent orchestration |
+| **LangChain** | 0.3.0 | Framework LLM |
+| **spaCy** | 3.7.0 | NER extraction |
+| **sentence-transformers** | 2.2.2 | Embeddings (all-MiniLM-L6-v2) |
 | **Docker** | - | Containerisation |
 
 ### Voice Processing
@@ -437,14 +491,19 @@ Les variables d'environnement sont gérées via `vite.config.ts` avec proxy vers
 - [x] Whisper STT + Edge TTS
 - [x] Agent Claude 3.5 Sonnet
 
-### 🔄 Phase 4: Knowledge Graph (En cours)
+### ✅ Phase 4: Knowledge Graph & LangGraph Agent (Complété)
 
-- [ ] Définir schéma entités (Person, Event, Task, Preference, Note)
-- [ ] Extraction automatique entités depuis conversations
-- [ ] Mise à jour automatique knowledge graph
-- [ ] GraphRAG pour enrichissement contexte
-- [ ] Recherche sémantique dans le graphe
-- [ ] Visualisation interactive du graphe (D3.js/Cytoscape)
+- [x] **Agent LangGraph** modulaire avec 6 nodes
+- [x] **NER Extraction** avec spaCy pour détecter entités
+- [x] **Recherche vectorielle** native dans Neo4j
+- [x] **Ranking multi-facteurs** (similarity + type + centrality)
+- [x] **GraphRAG** pour enrichissement contextuel
+- [x] **Pipeline KG modulaire** avec 9 stages configurables
+- [x] Support multi-formats (CSV, JSON, PDF, TXT, XLSX, XML)
+- [x] **Auto-indexing** des entités dans Neo4j Vector Index
+- [x] Interface d'upload avec animation de progression 🏃‍♂️
+- [x] Visualisation stats + entités du graphe
+- [ ] Visualisation interactive du graphe (D3.js/Cytoscape) - *Planifié*
 
 ### 📦 Phase 5: ESP32 Hardware (Matériel en commande)
 
@@ -456,11 +515,12 @@ Les variables d'environnement sont gérées via `vite.config.ts` avec proxy vers
 
 ### 📦 Phase 6: Fonctionnalités Avancées
 
-- [ ] Multi-utilisateurs
+- [ ] Multi-utilisateurs avec authentification
 - [ ] Home automation (MQTT/Zigbee)
-- [ ] Tests E2E frontend + backend
-- [ ] CI/CD
-- [ ] Monitoring
+- [ ] Tests unitaires + E2E complets
+- [ ] CI/CD (GitHub Actions)
+- [ ] Monitoring et alerting
+- [ ] API streaming pour progression temps réel
 
 **Voir [TODO.md](TODO.md) pour les détails complets.**
 
