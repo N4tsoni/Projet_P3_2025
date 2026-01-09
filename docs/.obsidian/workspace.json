@@ -11,14 +11,17 @@
             "id": "main-content",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "canvas",
               "state": {
-                "file": "STT_Configuration.md",
-                "mode": "source",
-                "source": false
+                "file": "Jarvis LangGraph Agent.canvas",
+                "viewState": {
+                  "x": 549.8855201068695,
+                  "y": 304.81831908681875,
+                  "zoom": -0.2566563935923176
+                }
               },
-              "icon": "lucide-file",
-              "title": "STT_Configuration"
+              "icon": "lucide-layout-dashboard",
+              "title": "Jarvis LangGraph Agent"
             }
           }
         ]
@@ -100,7 +103,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "STT_Configuration.md",
+                "file": "Jarvis LangGraph Agent.canvas",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -110,7 +113,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for STT_Configuration"
+              "title": "Backlinks for Jarvis LangGraph Agent"
             }
           },
           {
@@ -139,12 +142,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "STT_Configuration.md",
+                "file": "Jarvis LangGraph Agent.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from STT_Configuration"
+              "title": "Outgoing links from Jarvis LangGraph Agent"
             }
           }
         ]
@@ -189,31 +192,33 @@
   },
   "active": "main-content",
   "lastOpenFiles": [
+    "Jarvis LangGraph Agent.canvas.tmp.1234133.1767880629922",
+    "Jarvis Architecture.canvas",
+    "PIPELINE_ARCHITECTURE.md",
+    "KG_PIPELINE.md",
+    "README_PIPELINE.md",
     "SPRINT1_COMPLETE.md",
+    "WEB_INTERFACE.md",
+    "Jarvis LangGraph Agent.canvas",
+    "Jarvis LangGraph Agent.canvas.tmp.1234133.1767879748800",
+    "STT_Configuration.md",
+    "TESTING.md",
+    "TODO.md",
+    "START.md",
+    "README.md",
+    "QUICK_START.md",
+    "IMPLEMENTATION_SUMMARY.md",
+    "Home.md",
+    "CLAUDE.md",
+    "ARCHITECTURE.md",
     "SPRINT1_COMPLETE.md.tmp.1234133.1767807373890",
     "TODO.md.tmp.1234133.1767807199130",
     "TODO.md.tmp.1234133.1767807198926",
     "TODO.md.tmp.1234133.1767807198719",
-    "Home.md",
-    "KG_PIPELINE.md",
-    "PIPELINE_ARCHITECTURE.md",
-    "Jarvis Architecture.canvas",
-    "IMPLEMENTATION_SUMMARY.md",
     "Home.md.tmp.25397.1767800243311",
     "Home.md.tmp.25397.1767800242963",
     "Home.md.tmp.25397.1767800242613",
-    "STT_Configuration.md",
     "STT_Configuration.md.tmp.25397.1767800242280",
-    "Home.md.tmp.25397.1767800241831",
-    "Home.md.tmp.25397.1767800241661",
-    "QUICK_START.md",
-    "README.md",
-    "README_PIPELINE.md",
-    "START.md",
-    "WEB_INTERFACE.md",
-    "TODO.md",
-    "TESTING.md",
-    "CLAUDE.md",
-    "ARCHITECTURE.md"
+    "Home.md.tmp.25397.1767800241831"
   ]
 }

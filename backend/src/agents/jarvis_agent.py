@@ -1,17 +1,21 @@
 """
-Jarvis conversational agent using OpenRouter.
+Jarvis conversational agent - Legacy wrapper for backward compatibility.
+Delegates to new LangGraph implementation.
 """
 import os
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional
 from loguru import logger
-from openai import AsyncOpenAI
+from langchain_core.messages import HumanMessage, AIMessage
 
-from src.kg.services.neo4j_service import Neo4jService
+from src.agents.jarvis.graph import get_agent_graph
 
 
 class JarvisAgent:
     """
     Conversational agent for Jarvis using OpenRouter.
+
+    This is a legacy wrapper that maintains backward compatibility
+    while delegating to the new LangGraph-based implementation.
     """
 
     def __init__(
@@ -24,183 +28,68 @@ class JarvisAgent:
         Initialize Jarvis agent.
 
         Args:
-            api_key: OpenRouter API key
-            model: Model to use (e.g., 'anthropic/claude-3.5-sonnet')
-            temperature: Generation temperature
+            api_key: OpenRouter API key (now read from env in graph)
+            model: Model to use (now read from env in graph)
+            temperature: Generation temperature (now read from env in graph)
         """
-        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
-        if not self.api_key:
+        # Validate API key
+        api_key = api_key or os.getenv("OPENROUTER_API_KEY")
+        if not api_key:
             raise ValueError("OPENROUTER_API_KEY not found")
 
-        self.model = model or os.getenv("OPENROUTER_MODEL", "anthropic/claude-3.5-sonnet")
-        self.temperature = temperature
+        # Get LangGraph implementation
+        self.graph = get_agent_graph()
 
-        # OpenRouter uses OpenAI SDK with custom base URL
-        self.client = AsyncOpenAI(
-            api_key=self.api_key,
-            base_url="https://openrouter.ai/api/v1",
-        )
-
-        # Conversation history
+        # Conversation history (for backward compatibility)
         self.conversation_history: List[Dict[str, str]] = []
 
-        # System prompt
-        self.system_prompt = self._build_system_prompt()
+        logger.info("Initialized Jarvis agent (LangGraph-based)")
 
-        # Knowledge Graph service (optional)
-        self.kg_service: Optional[Neo4jService] = None
-        self._init_kg_service()
-
-        logger.info(f"Initialized Jarvis agent with model: {self.model}")
-
-    def _build_system_prompt(self) -> str:
-        """Build the system prompt for Jarvis."""
-        return """Tu es Jarvis, un assistant personnel vocal intelligent et serviable.
-
-Ton rôle:
-- Aider l'utilisateur avec ses questions et tâches quotidiennes
-- Mémoriser les informations importantes que l'utilisateur partage
-- Être concis et naturel dans tes réponses (adapté pour la synthèse vocale)
-- Être amical, professionnel et efficace
-
-Consignes importantes:
-- Réponds de manière concise (2-3 phrases maximum sauf si détails demandés)
-- Utilise un ton conversationnel et naturel
-- Si l'utilisateur te donne une information à retenir, confirme que tu l'as mémorisée
-- Si tu ne sais pas quelque chose, dis-le honnêtement
-- Évite les listes à puces dans tes réponses vocales, privilégie le texte fluide
-
-Tu es actuellement en phase de test et ton knowledge graph se construit progressivement."""
-
-    def _init_kg_service(self):
-        """Initialize Knowledge Graph service if available."""
-        try:
-            self.kg_service = Neo4jService()
-            self.kg_service.connect()
-            logger.info("Knowledge Graph service initialized")
-        except Exception as e:
-            logger.warning(f"Knowledge Graph not available: {e}")
-            self.kg_service = None
-
-    def _get_kg_context(self, user_message: str) -> str:
-        """
-        Retrieve relevant context from Knowledge Graph.
-
-        Args:
-            user_message: User's message to extract context for
-
-        Returns:
-            Formatted context string from KG
-        """
-        if not self.kg_service:
-            return ""
-
-        try:
-            # Extract potential entity names from message (simple word matching)
-            words = user_message.split()
-            entities_context = []
-
-            # Try to find entities that match words in the message
-            for word in words:
-                if len(word) < 3:  # Skip short words
-                    continue
-
-                # Search for entities by name (case-insensitive partial match)
-                entities = self.kg_service.search_entities_by_name(word.lower())
-
-                for entity in entities[:3]:  # Limit to 3 entities per word
-                    # Get entity with relationships
-                    entity_with_rels = self.kg_service.get_entity_with_relationships(
-                        entity.get('name')
-                    )
-
-                    if entity_with_rels:
-                        entities_context.append(entity_with_rels)
-
-            # Format context
-            if not entities_context:
-                return ""
-
-            context_parts = ["**Contexte du Knowledge Graph:**\n"]
-
-            for entity_data in entities_context[:5]:  # Limit to 5 entities
-                entity = entity_data.get('entity', {})
-                relationships = entity_data.get('relationships', [])
-
-                name = entity.get('name', 'Unknown')
-                entity_type = entity.get('type', 'Unknown')
-
-                context_parts.append(f"\n- {name} ({entity_type})")
-
-                # Add relationships
-                for rel in relationships[:3]:  # Limit to 3 relationships per entity
-                    rel_type = rel.get('type', 'RELATED_TO')
-                    target = rel.get('target_name', 'Unknown')
-                    context_parts.append(f"  → {rel_type} {target}")
-
-            return "\n".join(context_parts)
-
-        except Exception as e:
-            logger.warning(f"Failed to get KG context: {e}")
-            return ""
-
-    async def chat(self, user_message: str) -> str:
+    async def chat(self, user_message: str, conversation_id: str = "default") -> str:
         """
         Process a user message and return response.
 
         Args:
             user_message: User's message
+            conversation_id: Conversation ID for persistence
 
         Returns:
             Agent's response
         """
         try:
-            logger.info(f"User: {user_message}")
+            logger.info(f"User: {user_message[:50]}...")
 
-            # Get Knowledge Graph context
-            kg_context = self._get_kg_context(user_message)
+            # Convert history to LangChain messages
+            messages = self._convert_history_to_messages()
 
-            # Build enriched user message
-            enriched_message = user_message
-            if kg_context:
-                enriched_message = f"{kg_context}\n\n**Message utilisateur:** {user_message}"
-
-            # Add user message to history
-            self.conversation_history.append({
-                "role": "user",
-                "content": user_message,  # Store original message in history
-            })
-
-            # Build messages for API
-            messages = [
-                {"role": "system", "content": self.system_prompt},
-                *self.conversation_history[-10:][:-1],  # Previous history
-                {"role": "user", "content": enriched_message},  # Current message with KG context
-            ]
-
-            # Call OpenRouter
-            response = await self.client.chat.completions.create(
-                model=self.model,
-                messages=messages,
-                temperature=self.temperature,
-                max_tokens=int(os.getenv("LLM_MAX_TOKENS", "500")),
+            # Call graph
+            response = await self.graph.chat(
+                user_input=user_message,
+                conversation_id=conversation_id,
+                messages=messages
             )
 
-            assistant_message = response.choices[0].message.content.strip()
+            # Update legacy history
+            self.conversation_history.append({"role": "user", "content": user_message})
+            self.conversation_history.append({"role": "assistant", "content": response})
 
-            # Add assistant response to history
-            self.conversation_history.append({
-                "role": "assistant",
-                "content": assistant_message,
-            })
+            logger.info(f"Jarvis: {response[:50]}...")
 
-            logger.info(f"Jarvis: {assistant_message}")
-
-            return assistant_message
+            return response
 
         except Exception as e:
             logger.error(f"Agent chat failed: {e}")
             raise
+
+    def _convert_history_to_messages(self) -> List:
+        """Convert legacy history format to LangChain messages."""
+        messages = []
+        for msg in self.conversation_history:
+            if msg["role"] == "user":
+                messages.append(HumanMessage(content=msg["content"]))
+            elif msg["role"] == "assistant":
+                messages.append(AIMessage(content=msg["content"]))
+        return messages
 
     def clear_history(self):
         """Clear conversation history."""

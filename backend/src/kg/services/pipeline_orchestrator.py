@@ -84,6 +84,9 @@ class PipelineOrchestrator:
 
             if context.is_successful():
                 logger.success(f"Pipeline completed successfully for {file_path.name}")
+
+                # Auto-index entities in vector store
+                await self._auto_index_entities(context)
             else:
                 logger.error(f"Pipeline completed with errors for {file_path.name}")
 
@@ -177,6 +180,54 @@ class PipelineOrchestrator:
             counts[item_type] = counts.get(item_type, 0) + 1
         return counts
 
+    async def _auto_index_entities(self, context: PipelineContext):
+        """
+        Automatically index entities in vector store after successful pipeline execution.
+
+        Args:
+            context: Pipeline execution context with entities
+        """
+        try:
+            from src.agents.jarvis.services.vector_store import get_vector_store
+
+            # Get entities from context (use enriched if available)
+            entities_to_index = context.enriched_entities or context.entities
+
+            if not entities_to_index:
+                logger.debug("No entities to index")
+                return
+
+            logger.info(f"Auto-indexing {len(entities_to_index)} entities in vector store...")
+
+            # Get vector store
+            vector_store = get_vector_store()
+
+            # Convert entities to dicts if needed
+            entity_dicts = []
+            for entity in entities_to_index:
+                if hasattr(entity, 'to_neo4j_props'):
+                    # Entity object
+                    entity_dict = {
+                        "name": entity.name,
+                        "type": entity.type.value if hasattr(entity.type, 'value') else str(entity.type),
+                        "properties": entity.to_neo4j_props()
+                    }
+                elif isinstance(entity, dict):
+                    entity_dict = entity
+                else:
+                    continue
+
+                entity_dicts.append(entity_dict)
+
+            # Add to vector store
+            await vector_store.add_entities(entity_dicts)
+
+            logger.success(f"✓ Auto-indexed {len(entity_dicts)} entities in vector store")
+
+        except Exception as e:
+            # Don't fail the pipeline if indexing fails
+            logger.warning(f"Failed to auto-index entities: {e}")
+
     async def process_file(
         self,
         file_path: Path,
@@ -216,8 +267,13 @@ class PipelineOrchestrator:
                 document=document
             )
 
-            # Build and return result
+            # Build result
             result = self._build_result_from_context(context, document)
+
+            # Auto-index entities if successful
+            if context.is_successful():
+                await self._auto_index_entities(context)
+
             return result
 
         except Exception as e:
